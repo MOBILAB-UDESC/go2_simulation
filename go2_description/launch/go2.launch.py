@@ -8,8 +8,11 @@ from launch.substitutions import Command, FindExecutable, LaunchConfiguration, P
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
+from ament_index_python.packages import get_package_share_directory
+
 # if is a XACRO file, disocment this line
 import xacro
+import os
 
 def generate_launch_description():
     # Launch Arguments
@@ -73,7 +76,7 @@ def generate_launch_description():
                 [PathJoinSubstitution([FindPackageShare('ros_gz_sim'),
                                        'launch',
                                        'gz_sim.launch.py'])]),
-            launch_arguments=[('gz_args', [' -r -v 4 empty.sdf'])]),
+            launch_arguments=[('gz_args', [' -r -v 4 ' + os.path.join(get_package_share_directory('go2_description'), 'worlds/empty_world.sdf')])]),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=gz_spawn_entity,
