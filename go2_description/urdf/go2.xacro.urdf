@@ -1401,5 +1401,19 @@
       <parameters>$(find go2_description)/config/go2.yaml</parameters>
     </plugin>
   </gazebo>
+
+  <gazebo reference="imu">
+    <sensor name="imu_sensor" type="imu">
+    <always_on>1</always_on>
+    <update_rate>4</update_rate>  
+    <visualize>true</visualize> 
+    <topic>imu</topic>
+  </sensor>
+</gazebo>
+<gazebo>
+  <plugin filename="libgz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+  <parameters>$(find go2_description)/config/go2.yaml</parameters>
+  </plugin>
+</gazebo>
   
 </robot>

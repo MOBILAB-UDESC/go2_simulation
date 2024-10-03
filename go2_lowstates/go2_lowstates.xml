@@ -1,0 +1,7 @@
+<library path="go2_lowstates">
+  <class name="go2_lowstates/Go2Lowstates" type="go2_lowstates::Go2Lowstates" base_class_type="controller_interface::ControllerInterface">
+  <description>
+    The differential drive controller transforms linear and angular velocity messages into signals for each wheel(s) for a differential drive robot.
+  </description>
+  </class>
+</library>

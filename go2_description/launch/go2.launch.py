@@ -69,6 +69,19 @@ def generate_launch_description():
         arguments=["go2_controller", "--controller-manager", "/controller_manager"],
     )
 
+    go2_low_states_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["go2_lowstates", "--controller-manager", "/controller_manager"],
+    )
+
+    
+    bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        arguments=["/imu@sensor_msgs/msg/Imu@gz.msgs.IMU"],
+    )    
+
     return LaunchDescription([
         # Launch gazebo environment
         IncludeLaunchDescription(
@@ -89,6 +102,12 @@ def generate_launch_description():
                 on_exit=[go2_controller_spawner],
             )
         ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=go2_controller_spawner,
+                on_exit=[go2_low_states_spawner],
+            )
+        ),
         node_robot_state_publisher,
         gz_spawn_entity,
         # Launch Arguments
@@ -96,4 +115,5 @@ def generate_launch_description():
             'use_sim_time',
             default_value=use_sim_time,
             description='If true, use simulated clock'),
+            bridge,
     ])

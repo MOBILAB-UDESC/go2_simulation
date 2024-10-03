@@ -22,11 +22,13 @@ private:
 
         auto low_cmd = go2_interfaces::msg::LowCmd();
 
-        if (toggle_pos){
+        if (toggle_pos)
+        {
             _desPos = _startPos;
             toggle_pos = false;
         }
-        else{
+        else
+        {
             _desPos = _targetPos_1;
             toggle_pos = true;
         }
@@ -34,12 +36,12 @@ private:
         for (int j = 0; j < 12; j++)
         {
             // low_cmd.motor_cmd[j].q = (1 - i) * _startPos[j] + i * _targetPos_1[j];
-            
+
             low_cmd.motor_cmd[j].q = _desPos[j];
 
             low_cmd.motor_cmd[j].dq = 0;
-            low_cmd.motor_cmd[j].kp = 60.0;
-            low_cmd.motor_cmd[j].kd = 5.0;
+            low_cmd.motor_cmd[j].kp = 40.0;
+            low_cmd.motor_cmd[j].kd = 6.0;
             low_cmd.motor_cmd[j].tau = 0;
         }
 
@@ -57,13 +59,13 @@ private:
     float i;
 
     bool toggle_pos = false;
-    float* _desPos;
+    float *_desPos;
 
     // ThreadPtr lowCmdWriteThreadPtr;
     // float _startPos[12] = {-0.05, 0.05, -1.18, -0.05, 0.05, -1.18, -0.05, -1.5, 1.18, -0.05, -1.5, 1.18};
     float _startPos[12] = {0.0, 1.36, -2.65, 0.0, 1.36, -2.65, -0.2, 1.36, -2.65, 0.2, 1.36, -2.65};
 
-    float _targetPos_1[12] = {0.0, 0.5, -1.5, 0.0, 1.36, -2.65, -0.2, 1.36, -2.65, 0.2, 1.36, -2.65};
+    float _targetPos_1[12] = {0.0, 0.5, -1.05, 0.0, 0.5, -1.05, -0.2, 0.5, -1.05, 0.2, 0.5, -1.05};
 
     // float _targetPos_2[12] = {0.0, 0.67, -1.3, 0.0, 0.67, -1.3,
     //                           0.0, 0.67, -1.3, 0.0, 0.67, -1.3};
