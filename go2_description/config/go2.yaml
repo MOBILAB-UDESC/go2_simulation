@@ -64,5 +64,7 @@ go2_lowstates:
     state_interfaces:
       - position
       - velocity
+      - effort
+      # - acceleration
 
     robot_states_feedback_rate: 100.0

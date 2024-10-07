@@ -74,7 +74,6 @@ def generate_launch_description():
         executable="spawner",
         arguments=["go2_lowstates", "--controller-manager", "/controller_manager"],
     )
-
     
     bridge = Node(
         package="ros_gz_bridge",

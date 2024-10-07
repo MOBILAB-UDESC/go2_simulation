@@ -67,7 +67,7 @@ namespace go2_controller
     controller_interface::InterfaceConfiguration
     Go2Controller::state_interface_configuration() const
     {
-        // std::cout << "hey4" << std::endl;
+        std::cout << "hey4" << std::endl;
         controller_interface::InterfaceConfiguration state_interfaces_config;
         state_interfaces_config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
         state_interfaces_config.names.reserve(joint_names_.size() * state_interface_types_.size());
@@ -194,7 +194,7 @@ namespace go2_controller
         // };
 
         joints_reference_subscriber_ = get_node()->create_subscription<lowCmd>(
-            "~/LowReferences", rclcpp::SystemDefaultsQoS(), 
+            "~/LowReferences", rclcpp::SystemDefaultsQoS(),
             [this](const std::shared_ptr<lowCmd> msg) -> void
             {
                 std::lock_guard<std::mutex> lock(this->mutex_controller);

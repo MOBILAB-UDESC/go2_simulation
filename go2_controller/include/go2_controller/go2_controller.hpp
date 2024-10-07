@@ -103,10 +103,10 @@ namespace go2_controller
 
         // float _targetPos_1[12] = {0.0, 0, 0, 0.0, 1.36, -2.65, -0.2, 1.36, -2.65, 0.2, 1.36, -2.65};
 
-        void publish_joint_control_signal()
+        void publish_joint_control_signal() // está sendo publicado pois é um publisher, no caso de subscriber não exite esse item
         {
             auto message = std_msgs::msg::Float64MultiArray();
-            for(long unsigned int i{0}; i < sizeof(commanded_effort)/sizeof(double); i++)
+            for (long unsigned int i{0}; i < sizeof(commanded_effort) / sizeof(double); i++)
                 message.data.push_back(commanded_effort[i]);
 
             joints_control_publisher_->publish(message);
