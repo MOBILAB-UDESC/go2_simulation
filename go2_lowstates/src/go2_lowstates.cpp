@@ -228,10 +228,10 @@ namespace go2_lowstates
         {
             // get the joint position
 
-            lowStates_msg.motor_state[index].q = joint_state_interface_[0][index].get().get_value();
+            lowStates_msg.motor_state[index].q = joint_state_interface_[0][index].get().get_optional().value();
 
             // get the joint velocity
-            lowStates_msg.motor_state[index].dq = joint_state_interface_[1][index].get().get_value();
+            lowStates_msg.motor_state[index].dq = joint_state_interface_[1][index].get().get_optional().value();
 
             // get the joint acceleration
             // lowStates_msg.motor_state[index].ddq = joint_state_interface_[2][index].get().get_value();

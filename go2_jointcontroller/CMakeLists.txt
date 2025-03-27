@@ -17,7 +17,7 @@ find_package(pinocchio REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(unitree_go REQUIRED)
-
+find_package(ament_index_cpp REQUIRED)
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
@@ -37,6 +37,7 @@ target_include_directories(${PROJECT_NAME}
     rclcpp_lifecycle
     std_msgs
     unitree_go
+    
 )
  
 ament_target_dependencies(${PROJECT_NAME}
@@ -47,6 +48,7 @@ ament_target_dependencies(${PROJECT_NAME}
   hardware_interface
   std_msgs
   unitree_go
+  ament_index_cpp
 )
 
   pluginlib_export_plugin_description_file(controller_interface go2_jointcontroller.xml)

@@ -21,7 +21,7 @@ namespace go2_jointcontroller
           model()
     {
         const auto package_share_path = ament_index_cpp::get_package_share_directory("go2_description");
-        const auto xacro_path = std::filesystem::path(package_share_path) / "urdf" / "go2.xacro.urdf";
+        const auto xacro_path = std::filesystem::path(package_share_path) / "urdf" / "go2.urdf.xacro";
         const auto urdf_path = std::filesystem::temp_directory_path() / "go2.urdf";
 
         // Convert Xacro to URDF using ROS 2 xacro CLI
@@ -36,10 +36,17 @@ namespace go2_jointcontroller
 
         std::cout << "Converted Xacro to URDF: " << urdf_path << std::endl;
 
-        // Create a set of Pinocchio models and data.
-        pinocchio::urdf::buildModel(urdf_path, model);
+        std::ifstream urdf_check(urdf_path);
+        if (!urdf_check.good())
+        {
+            std::cerr << "URDF file does not exist or can't be opened: " << urdf_path << std::endl;
+            return;
+        }
 
-        data = std::make_shared<pinocchio::Data>(model);
+        // Create a set of Pinocchio models and data.
+        // pinocchio::urdf::buildModel(urdf_path.string(), model, true);
+
+        // data = std::make_shared<pinocchio::Data>(model);
         control_mode = 1;
         // std::cout << model.name << std::endl;
 

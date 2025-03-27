@@ -41,7 +41,7 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("go2_description"), "urdf", "go2.xacro.urdf"]
+                [FindPackageShare("go2_description"), "urdf", "go2.urdf.xacro"]
             ),
         ]
     )
