@@ -4,7 +4,7 @@
     <xacro:macro name="torso" params="simulation fixed_base">
 
     <!-- World frame -->
-    <link name="world"/> 
+    <!-- <link name="world"/>  -->
 
     <!-- <xacro:if value="${simulation}">
       <xacro:if value="${fixed_base}">
@@ -18,8 +18,8 @@
 
     <!-- Movable base in simulation OR real robot -->
     <!-- <xacro:unless value="${fixed_base}"> -->
-      <link name="odom"/>
-      
+      <!-- <link name="odom"/> -->
+<!--       
       <joint name="world_to_odom" type="fixed">
         <parent link="world"/>
         <child link="odom"/>
@@ -28,7 +28,7 @@
       <joint name="odom_to_base" type="fixed">
         <parent link="odom"/>
         <child link="base_link"/>
-      </joint>
+      </joint> -->
     <!-- </xacro:unless> -->
 
     <!-- Base link -->
