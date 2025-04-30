@@ -6,6 +6,8 @@
     <!-- World frame -->
     <!-- <link name="world"/>  -->
 
+     <!-- <link name="odom"/>  -->
+
     <!-- <xacro:if value="${simulation}">
       <xacro:if value="${fixed_base}">
         <joint name="world_to_base" type="fixed">
@@ -19,13 +21,13 @@
     <!-- Movable base in simulation OR real robot -->
     <!-- <xacro:unless value="${fixed_base}"> -->
       <!-- <link name="odom"/> -->
-<!--       
-      <joint name="world_to_odom" type="fixed">
+      
+      <!-- <joint name="world_to_odom" type="fixed">
         <parent link="world"/>
-        <child link="odom"/>
-      </joint>
+        <child link="base_link"/>
+      </joint> -->
 
-      <joint name="odom_to_base" type="fixed">
+      <!-- <joint name="odom_to_base" type="fixed">
         <parent link="odom"/>
         <child link="base_link"/>
       </joint> -->
