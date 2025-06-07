@@ -6,11 +6,7 @@
 #include "rclcpp/logging.hpp"
 #include "rclcpp/parameter.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
-// #include "rclcpp/qos.hpp"
-// #include "rclcpp/qos_event.hpp"
 #include "rclcpp/time.hpp"
-// #include "rclcpp_action/create_server.hpp"
-// #include "rclcpp_action/server_goal_handle.hpp"
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
@@ -32,7 +28,6 @@ namespace go2_lowstates
         {
             auto_declare<std::vector<std::string>>("joints", joint_names_);
             auto_declare<std::vector<std::string>>("state_interfaces", state_interface_types_);
-            auto_declare<double>("up_rate", 200.0);
         }
         catch (const std::exception &e)
         {
@@ -78,12 +73,6 @@ namespace go2_lowstates
         {
             RCLCPP_WARN(logger, "'joints' parameter is empty.");
         }
-
-        auto _update_rate = get_node()->get_parameter("up_rate").get_value<double>();
-        sample_time = 1.0 / _update_rate;
-
-        std::cout << "------------" << std::endl;
-        std::cout << sample_time << std::endl;
 
         // State interface checking
         state_interface_types_ = get_node()->get_parameter("state_interfaces").as_string_array();
@@ -146,17 +135,6 @@ namespace go2_lowstates
                 lowStates_msg.imu_state.rpy[2] = yaw;
             });
 
-        // effort_subscriber_ = get_node()->create_subscription<effortstates>(
-        //     "/go2_controller/LowCommands", rclcpp::SystemDefaultsQoS(),
-        //     [this](const std::shared_ptr<effortstates> msg) -> void
-        //     {
-        //         std::lock_guard<std::mutex> lock(this->mutex_controller);
-        //         for (auto index{0}; index < 12; index++)
-        //         {
-        //             tau[index] = msg->data[index];
-        //         }
-        //     });
-
         go2_lowstates_publisher = get_node()->create_publisher<lowStates>("/lowstate", 10);
         return CallbackReturn::SUCCESS;
     }
@@ -198,25 +176,16 @@ namespace go2_lowstates
     controller_interface::return_type Go2Lowstates::update(
         const rclcpp::Time &time, const rclcpp::Duration & /*period*/)
     {
-        if (last_update_time_ == 0)
-        {
-            last_update_time_ = time.nanoseconds();
-        }
+        (void)(time);
+        const auto logger = get_node()->get_logger();
+        std::lock_guard<std::mutex> lock(this->mutex_controller);
+        Go2Lowstates::get_joints_info();
 
-        // Compute time difference since last update
-        elapsed_time = (time.nanoseconds() - last_update_time_) * 1e-9; // Convert ns to seconds
+        lowStates_msg.tick = time.nanoseconds();
 
-        // const auto logger = get_node()->get_logger();
-        if (elapsed_time >= sample_time) // Run every 4ms (250Hz)
-        {
-            const auto logger = get_node()->get_logger();
-            std::lock_guard<std::mutex> lock(this->mutex_controller);
-            Go2Lowstates::get_joints_info();
-
-            // publish_joint_control_signal();
-            go2_lowstates_publisher->publish(lowStates_msg);
-            last_update_time_ = time.nanoseconds(); // Reset timer
-        }
+        // publish_joint_control_signal();
+        go2_lowstates_publisher->publish(lowStates_msg);
+            
         return controller_interface::return_type::OK;
     }
 
@@ -227,14 +196,10 @@ namespace go2_lowstates
         for (auto index{0}; index < 12; index++)
         {
             // get the joint position
-
-            lowStates_msg.motor_state[index].q = joint_state_interface_[0][index].get().get_optional().value();
+            lowStates_msg.motor_state[index].q = joint_state_interface_[0][index].get().get_optional().value_or(0);
 
             // get the joint velocity
-            lowStates_msg.motor_state[index].dq = joint_state_interface_[1][index].get().get_optional().value();
-
-            // get the joint acceleration
-            // lowStates_msg.motor_state[index].ddq = joint_state_interface_[2][index].get().get_value();
+            lowStates_msg.motor_state[index].dq = joint_state_interface_[1][index].get().get_optional().value_or(0);
 
             // get the joint effort
             lowStates_msg.motor_state[index].tau_est = tau[index];

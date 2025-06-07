@@ -1,27 +1,42 @@
 #include "go2_jointcontroller/go2_jointcontroller.hpp"
-#include <string>
-#include <vector>
+#include <unitree/robot/channel/channel_publisher.hpp>
+#include <unitree/robot/channel/channel_subscriber.hpp>
 
-#include "lifecycle_msgs/msg/state.hpp"
-#include "rclcpp/logging.hpp"
-#include "rclcpp/parameter.hpp"
-#include "hardware_interface/types/hardware_interface_type_values.hpp"
-#include "rclcpp/time.hpp"
-#include "rclcpp_lifecycle/lifecycle_node.hpp"
-#include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
-#include "rclcpp_lifecycle/state.hpp"
-#include <pinocchio/algorithm/center-of-mass.hpp>
+#include <string>
+
+constexpr double PosStopF = (2.146E+9f);
+constexpr double VelStopF = (16000.0f);
+using namespace unitree::robot;
 
 namespace go2_jointcontroller
 {
 
     Go2JointController::Go2JointController()
-        : controller_interface::ControllerInterface(),
-          joint_names_({}),
-          model()
+        : controller_interface::ControllerInterface()
+        , model()
+        , _q(12)
+        , _qd(12)
+        , _tau(12)
+        , _effort(12)
+        , kp(12)
+        , kd(12)
+        , ki(12)
+        , q_e(12)
+        , qi_e(12)
+        , dq_e(12)
+        , qr(12)
+        , dqr(12)
+        , update_rate(0)
+        , _percent(0)
+        , _duration(1000)
+        , _started(false)
+        , _startPos(12)
+        , _targetPos(12)
+        , _lowTick(0)
+        , control_mode(1)
     {
         const auto package_share_path = ament_index_cpp::get_package_share_directory("go2_description");
-        const auto xacro_path = std::filesystem::path(package_share_path) / "urdf" / "go2.urdf.xacro";
+        const auto xacro_path = std::filesystem::path(package_share_path) / "urdf" / "go2.xacro";
         const auto urdf_path = std::filesystem::temp_directory_path() / "go2.urdf";
 
         // Convert Xacro to URDF using ROS 2 xacro CLI
@@ -35,55 +50,42 @@ namespace go2_jointcontroller
         }
 
         std::cout << "Converted Xacro to URDF: " << urdf_path << std::endl;
-
-        std::ifstream urdf_check(urdf_path);
-        if (!urdf_check.good())
-        {
-            std::cerr << "URDF file does not exist or can't be opened: " << urdf_path << std::endl;
-            return;
-        }
-
+        
         // Create a set of Pinocchio models and data.
-        // pinocchio::urdf::buildModel(urdf_path.string(), model, true);
+        pinocchio::urdf::buildModel(urdf_path, pinocchio::JointModelFreeFlyer(), model);
 
-        // data = std::make_shared<pinocchio::Data>(model);
-        control_mode = 1;
-        // std::cout << model.name << std::endl;
-
-        // for (int i = 0; i < 13; i++)
-        // {
-        //     std::cout << model.names[i] << std::endl;
-        //     std::cout << "---" << std::endl;
-        // }
+        model.gravity.linear(Eigen::Vector3d(0, 0, -9.8));
+        data = std::make_shared<pinocchio::Data>(model);
     }
 
     controller_interface::CallbackReturn Go2JointController::on_init()
     {
         try
         {
-            auto_declare<std::vector<std::string>>("joints", joint_names_);
-            auto_declare<double>("gain.Kp", 60.0);
-            auto_declare<double>("gain.Kd", 5.0);
-            auto_declare<double>("up_rate", 200.0);
+            auto_declare<std::vector<double>>("joints.initpos", _targetPos);
+            auto_declare<std::string>("network_interface", "eth0");
+            auto_declare<bool>("simulation", false);
+
+            std::vector<double> zeros(12, 0.0);
+            auto_declare<std::vector<double>>("gain.PD.Kp", zeros);
+            auto_declare<std::vector<double>>("gain.PD.Kd", zeros);
+            auto_declare<std::vector<double>>("gain.PDG.Kp", zeros);
+            auto_declare<std::vector<double>>("gain.PDG.Kd", zeros);
+            auto_declare<std::vector<double>>("gain.PID.Kp", zeros);
+            auto_declare<std::vector<double>>("gain.PID.Kd", zeros);
+            auto_declare<std::vector<double>>("gain.PID.Ki", zeros);
+            auto_declare<std::vector<double>>("gain.PIDG.Kp", zeros);
+            auto_declare<std::vector<double>>("gain.PIDG.Kd", zeros);
+            auto_declare<std::vector<double>>("gain.PIDG.Ki", zeros);
+            auto_declare<int>("control_mode", control_mode);
+            
+            auto_declare<int>("update_rate", update_rate);
         }
         catch (const std::exception &e)
         {
             fprintf(stderr, "Exception thrown during init stage with message: %s \n", e.what());
             return CallbackReturn::ERROR;
         }
-        gravidade.resize(3);
-        q.resize(12);
-        dq.resize(12);
-        kp.resize(12);
-        kd.resize(12);
-        tau.resize(12);
-        tauG.resize(12);
-        q_e.resize(12);
-        dq_e.resize(12);
-        qr.resize(12);
-        dqr.resize(12);
-        effort.resize(12);
-        commanded_effort.resize(12);
 
         return CallbackReturn::SUCCESS;
     }
@@ -93,6 +95,7 @@ namespace go2_jointcontroller
     {
         return {controller_interface::interface_configuration_type::NONE};
     }
+
     controller_interface::InterfaceConfiguration
     Go2JointController::state_interface_configuration() const
     {
@@ -103,28 +106,21 @@ namespace go2_jointcontroller
     Go2JointController::on_configure(
         const rclcpp_lifecycle::State &)
     {
-
         auto logger = get_node()->get_logger();
 
-        // Read parameters from ROS parameter server
-
-        joint_names_ = get_node()->get_parameter("joints").as_string_array();
-        if (joint_names_.empty())
+        _targetPos = get_node()->get_parameter("joints.initpos").get_value<std::vector<double>>();
+        if (_targetPos.size() != 12)
         {
-            RCLCPP_ERROR(logger, "No joint names found in parameters.");
+            RCLCPP_ERROR(logger, "Initial joints postures 'initpos' vector does note have size 12, verify yaml file.");
             return CallbackReturn::FAILURE;
         }
-        auto kp_gain_ = get_node()->get_parameter("gain.Kp").get_value<double>();
-        auto kd_gain_ = get_node()->get_parameter("gain.Kd").get_value<double>();
-        auto _update_rate = get_node()->get_parameter("up_rate").get_value<double>();
-        sample_time = 1.0 / _update_rate;
 
-        for (size_t i = 0; i < 12; i++)
-        {
-            kp[i] = kp_gain_;
-            kd[i] = kd_gain_;
-            tau[i] = 0.0;
-        }
+        control_mode = get_node()->get_parameter("control_mode").get_value<int>();
+
+        selectControlMode(control_mode);
+
+        update_rate = get_node()->get_parameter("update_rate").get_value<int>();
+
         // TODO: use the name of topic from the YAML file
         lowstate_subscriber_ = get_node()->create_subscription<lowStates>(
             "/lowstate", rclcpp::SystemDefaultsQoS(),
@@ -134,27 +130,25 @@ namespace go2_jointcontroller
 
                 for (auto index{0}; index < 12; index++)
                 {
-                    q[index] = msg->motor_state[index].q;
-
-                    dq[index] = msg->motor_state[index].dq;
+                    _q[index] = msg->motor_state[index].q;
+                    _qd[index] = msg->motor_state[index].dq;
                 }
+                _lowTick = msg->tick;
             });
 
         controller_reference_subscriber_ = get_node()->create_subscription<lowCmd>(
             "go2_jointcontroller/JointControllerReferences", rclcpp::SystemDefaultsQoS(),
             [this](const std::shared_ptr<lowCmd> msg) -> void
-
             {
                 std::lock_guard<std::mutex> lock(this->mutex_controller);
-                control_mode = msg->reserve;
 
                 for (int index = 0; index < 12; index++)
                 {
                     qr[index] = msg->motor_cmd[index].q;
                     dqr[index] = msg->motor_cmd[index].dq;
-                    kd[index] = msg->motor_cmd[index].kd;
-                    kp[index] = msg->motor_cmd[index].kp;
-                    tau[index] = msg->motor_cmd[index].tau;
+                    // kd[index] = msg->motor_cmd[index].kd;
+                    // kp[index] = msg->motor_cmd[index].kp;
+                    // tau[index] = msg->motor_cmd[index].tau;
                 }
             });
 
@@ -165,21 +159,87 @@ namespace go2_jointcontroller
         lowCmd_msg.level_flag = 0xFF;
         lowCmd_msg.gpio = 0;
 
-        for (int i = 0; i < 12; i++)
+        for(int i=0; i<20; i++)
         {
-            lowCmd_msg.motor_cmd[i].mode = 0x01; // Modo servo (PMSM)
+            lowCmd_msg.motor_cmd[i].mode = 0x01;   // motor switch to servo (PMSM) mode
+            lowCmd_msg.motor_cmd[i].q = PosStopF;
+            lowCmd_msg.motor_cmd[i].kp = 0;
+            lowCmd_msg.motor_cmd[i].dq = VelStopF;
+            lowCmd_msg.motor_cmd[i].kd = 0;
+            lowCmd_msg.motor_cmd[i].tau = 0;
+        }
+
+        if(!get_node()->get_parameter("simulation").get_value<bool>())
+        {
+            ChannelFactory::Instance()->Init(0, get_node()->get_parameter("network_interface").get_value<std::string>());
+
+            MotionSwitcherClient msc;
+            /*init MotionSwitcherClient*/
+            msc.SetTimeout(10.0f); 
+            msc.Init();
+            /*Shut down motion control-related service*/
+            while(queryMotionStatus(msc))
+            {
+                std::cout << "Try to deactivate the motion control-related service." << std::endl;
+                int32_t ret = msc.ReleaseMode(); 
+                if (ret == 0) {
+                    std::cout << "ReleaseMode succeeded." << std::endl;
+                } else {
+                    std::cout << "ReleaseMode failed. Error code: " << ret << std::endl;
+                }
+                sleep(5);
+            }
         }
 
         return CallbackReturn::SUCCESS;
+    }
+
+    void Go2JointController::selectControlMode(int mode)
+    {
+        if(mode == 1)
+        {
+            kp = get_node()->get_parameter("gain.PD.Kp").get_value<std::vector<double>>();
+            kd = get_node()->get_parameter("gain.PD.Kd").get_value<std::vector<double>>();
+            ki = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        }
+        else if(mode == 2)
+        {
+            kp = get_node()->get_parameter("gain.PDG.Kp").get_value<std::vector<double>>();
+            kd = get_node()->get_parameter("gain.PDG.Kd").get_value<std::vector<double>>();
+            ki = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        }
+        else if(mode == 3)
+        {
+            kp = get_node()->get_parameter("gain.PID.Kp").get_value<std::vector<double>>();
+            kd = get_node()->get_parameter("gain.PID.Kd").get_value<std::vector<double>>();
+            ki = get_node()->get_parameter("gain.PID.Ki").get_value<std::vector<double>>();
+        }
+        else if(mode == 4)
+        {
+            kp = get_node()->get_parameter("gain.PIDG.Kp").get_value<std::vector<double>>();
+            kd = get_node()->get_parameter("gain.PIDG.Kd").get_value<std::vector<double>>();
+            ki = get_node()->get_parameter("gain.PIDG.Ki").get_value<std::vector<double>>();
+        }
+        else
+        {
+            kd = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+            kp = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+            ki = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        }
     }
 
     controller_interface::CallbackReturn Go2JointController::on_activate(const rclcpp_lifecycle::State &)
     {
         RCLCPP_INFO(get_node()->get_logger(), "Activating Go2JointController...");
 
-        // Reset torques and errors
-        for (auto &t : tau)
-            t = 0.0;
+        // Wait for a valid reading from robot low states
+        while(_lowTick == 0);
+
+        for(int i=0; i<12; i++)
+        {
+            _startPos[i] = _q[i];
+            qr[i] = _targetPos[i];
+        }
 
         return CallbackReturn::SUCCESS;
     }
@@ -188,114 +248,121 @@ namespace go2_jointcontroller
     {
         RCLCPP_INFO(get_node()->get_logger(), "Deactivating Go2JointController...");
 
-        // Stop sending commands
-        for (auto &t : tau)
-            t = 0.0;
-
         return CallbackReturn::SUCCESS;
     }
 
     controller_interface::return_type Go2JointController::update(
-        const rclcpp::Time &time, const rclcpp::Duration & /*period*/)
+        const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
     {
-
-        if (last_update_time_ == 0)
+        const auto logger = get_node()->get_logger();
+        try
         {
-            last_update_time_ = time.nanoseconds();
-        }
-
-        // Compute time difference since last update
-        elapsed_time = (time.nanoseconds() - last_update_time_) * 1e-9; // Convert ns to seconds
-
-        // const auto logger = get_node()->get_logger();
-        if (elapsed_time >= sample_time) // Run every 4ms (250Hz)
-        {
-
             std::lock_guard<std::mutex> lock(this->mutex_controller);
+            if(!_started)
             {
-
-                try
+                _percent += 1.0 / _duration;
+                _percent = _percent > 1 ? 1 : _percent;
+                if (_percent < 1)
                 {
-                    control_mode = 1;
-                    switch (control_mode)
+                    for (int j = 0; j < 12; j++)
                     {
+                        lowCmd_msg.motor_cmd[j].q = (1 - _percent) * _startPos[j] + _percent * _targetPos[j];
+                        lowCmd_msg.motor_cmd[j].dq = 0.0;
+                        lowCmd_msg.motor_cmd[j].kp = 50.0;
+                        lowCmd_msg.motor_cmd[j].kd = 0.7;
+                        lowCmd_msg.motor_cmd[j].tau = 0;
+                    }
+                }
+                else
+                {
+                    _started = true;
+                }
+            }
+            else
+            {
+                _effort = computePID();
+                switch (control_mode)
+                {
                     case 1: // PD only
-                        for (int j = 0; j < 12; j++)
-                        {
-                            lowCmd_msg.motor_cmd[j].q = qr[j];
-                            lowCmd_msg.motor_cmd[j].dq = dqr[j];
-                            lowCmd_msg.motor_cmd[j].kp = kp[j];
-                            lowCmd_msg.motor_cmd[j].kd = kd[j];
-                            lowCmd_msg.motor_cmd[j].tau = 0;
-                        }
+                    case 3: // PID
+                        _tau = Eigen::VectorXd::Zero(12);
                         break;
 
                     case 2: // PD + Gravity Compensation
-
-                        computePD();
-                        computeG();
-                        for (int j = 0; j < 12; j++)
-                        {
-                            lowCmd_msg.motor_cmd[j].q = 0;
-                            lowCmd_msg.motor_cmd[j].dq = 0;
-                            lowCmd_msg.motor_cmd[j].kp = 0;
-                            lowCmd_msg.motor_cmd[j].kd = 0;
-                            lowCmd_msg.motor_cmd[j].tau = commanded_effort[j] + tauG[j];
-                        }
+                    case 4: // PID + Gravity Compensation
+                        _tau = computeTotalGravityCompensation(_q);
                         break;
 
                     default:
-                        RCLCPP_ERROR(get_node()->get_logger(), "Invalid control mode: %d", control_mode);
+                        RCLCPP_ERROR(logger, "Invalid control mode: %d", control_mode);
                         return controller_interface::return_type::ERROR;
-                    }
-
-                    // Publish the control message
-                    lowCmd_msg.crc = crc32_core((uint32_t *)&lowCmd_msg, (sizeof(lowCmd) >> 2) - 1);
-                    joints_cmd_publisher_->publish(lowCmd_msg);
-
-                    return controller_interface::return_type::OK;
                 }
-                catch (const std::exception &e)
+                for (int j = 0; j < 12; j++)
                 {
-
-                    RCLCPP_ERROR(get_node()->get_logger(), "Exception in update(): %s", e.what());
-                    return controller_interface::return_type::ERROR;
+                    lowCmd_msg.motor_cmd[j].q = 0;
+                    lowCmd_msg.motor_cmd[j].dq = 0;
+                    lowCmd_msg.motor_cmd[j].kp = 0;
+                    lowCmd_msg.motor_cmd[j].kd = 0;
+                    lowCmd_msg.motor_cmd[j].tau = _effort[j] + _tau[j];
                 }
             }
+            
+            // Publish the control message
+            get_crc(lowCmd_msg);
+            joints_cmd_publisher_->publish(lowCmd_msg);
 
-            last_update_time_ = time.nanoseconds(); // Reset timer
+            return controller_interface::return_type::OK;
         }
-        return controller_interface::return_type::OK;
+        catch (const std::exception &e)
+        {
+            RCLCPP_ERROR(logger, "Exception in update(): %s", e.what());
+            return controller_interface::return_type::ERROR;
+        }
     }
 
-    void Go2JointController::computeG()
+    Eigen::VectorXd Go2JointController::computeTotalGravityCompensation(Eigen::VectorXd q)
     {
-        Eigen::VectorXd tau = pinocchio::rnea(model, *data, q, v, a);
-        tauG = data->tau.transpose();
+        Eigen::VectorXd q_act = Eigen::VectorXd::Zero(19);
+
+        q_act.segment(0, 6) = Eigen::VectorXd::Zero(6);
+        q_act.segment(7, 12) = q;
+
+        //Atualiza cinemática direta para garantir que frames estejam atualizados
+        pinocchio::forwardKinematics(model, *data, q_act);
+
+        //above function is the same of pinocchio::rnea(model, *data, qcerto, Eigen::VectorXd::Zero(model.nv), Eigen::VectorXd::Zero(model.nv));
+        pinocchio::computeGeneralizedGravity(model, *data, q_act);
+
+        return data->g.segment(6, 12);
     }
 
-    void Go2JointController::computePD()
+    Eigen::VectorXd Go2JointController::computePID()
     {
+        Eigen::VectorXd effort(12);
+
         for (auto index{0}; index < 12; index++)
         {
-            q_e[index] = qr[index] - q[index];
-            dq_e[index] = dqr[index] - dq[index];
-            commanded_effort[index] = kp[index] * q_e[index] + 1 * dq_e[index];
+            q_e[index] = qr[index] - _q[index];
+            dq_e[index] = dqr[index] - _qd[index];
+            qi_e[index] += (q_e[index] / update_rate);
+
+            effort[index] = kp[index] * q_e[index] + kd[index] * dq_e[index] + ki[index] * qi_e[index];
         }
+
+        return effort;
     }
 
     uint32_t Go2JointController::crc32_core(uint32_t *ptr, uint32_t len)
     {
-        unsigned int xbit = 0;
-        unsigned int data = 0;
-        unsigned int CRC32 = 0xFFFFFFFF;
-        const unsigned int dwPolynomial = 0x04c11db7;
-
-        for (unsigned int i = 0; i < len; i++)
+        uint32_t xbit = 0;
+        uint32_t data = 0;
+        uint32_t CRC32 = 0xFFFFFFFF;
+        const uint32_t dwPolynomial = 0x04c11db7;
+        for (uint32_t i = 0; i < len; i++)
         {
             xbit = 1 << 31;
             data = ptr[i];
-            for (unsigned int bits = 0; bits < 32; bits++)
+            for (uint32_t bits = 0; bits < 32; bits++)
             {
                 if (CRC32 & 0x80000000)
                 {
@@ -303,19 +370,103 @@ namespace go2_jointcontroller
                     CRC32 ^= dwPolynomial;
                 }
                 else
-                {
                     CRC32 <<= 1;
-                }
-
                 if (data & xbit)
                     CRC32 ^= dwPolynomial;
+    
                 xbit >>= 1;
             }
         }
-
         return CRC32;
     }
+
+
+    void Go2JointController::get_crc(lowCmd& msg)
+    {
+        LowCmd raw{};
+        memcpy(&raw.head[0], &msg.head[0], 2);
+
+        raw.levelFlag=msg.level_flag;
+        raw.frameReserve=msg.frame_reserve;
+
+        memcpy(&raw.SN[0],&msg.sn[0], 8);
+        memcpy(&raw.version[0], &msg.version[0], 8);
+
+        raw.bandWidth=msg.bandwidth;
+
+
+        for(int i = 0; i<20; i++)
+        {
+            raw.motorCmd[i].mode=msg.motor_cmd[i].mode;
+            raw.motorCmd[i].q=msg.motor_cmd[i].q;
+            raw.motorCmd[i].dq=msg.motor_cmd[i].dq;
+            raw.motorCmd[i].tau=msg.motor_cmd[i].tau;
+            raw.motorCmd[i].Kp=msg.motor_cmd[i].kp;
+            raw.motorCmd[i].Kd=msg.motor_cmd[i].kd;
+
+            memcpy(&raw.motorCmd[i].reserve[0], &msg.motor_cmd[i].reserve[0], 12);
+        }
+
+        raw.bms.off=msg.bms_cmd.off;
+        memcpy(&raw.bms.reserve[0],&msg.bms_cmd.reserve[0],  3);
+
+
+        memcpy(&raw.wirelessRemote[0], &msg.wireless_remote[0], 40);
+
+        memcpy(&raw.led[0], &msg.led[0],  12);  // go2
+        memcpy(&raw.fan[0], &msg.fan[0],  2);
+        raw.gpio=msg.gpio;    // go2
+
+        raw.reserve=msg.reserve;
+
+        raw.crc=crc32_core((uint32_t *)&raw, (sizeof(LowCmd)>>2)-1);
+        msg.crc=raw.crc;
+
+        
+    }
+
+    int Go2JointController::queryMotionStatus(MotionSwitcherClient& msc)
+    {
+        std::string robotForm,motionName;
+        int motionStatus;
+        int32_t ret = msc.CheckMode(robotForm,motionName);
+        if (ret == 0) {
+            std::cout << "CheckMode succeeded." << std::endl;
+        } else {
+            std::cout << "CheckMode failed. Error code: " << ret << std::endl;
+        }
+        if(motionName.empty())
+        {
+            std::cout << "The motion control-related service is deactivated." << std::endl;
+            motionStatus = 0;
+        }
+        else
+        {
+            std::string serviceName = queryServiceName(robotForm,motionName);
+            std::cout << "Service: "<< serviceName<< " is activate" << std::endl;
+            motionStatus = 1;
+        }
+        return motionStatus;
+    }
+
+    std::string Go2JointController::queryServiceName(std::string form,std::string name)
+    {
+        if(form == "0")
+        {
+            if(name == "normal" ) return "sport_mode"; 
+            if(name == "ai" ) return "ai_sport"; 
+            if(name == "advanced" ) return "advanced_sport"; 
+        }
+        else
+        {
+            if(name == "ai-w" ) return "wheeled_sport(go2W)"; 
+            if(name == "normal-w" ) return "wheeled_sport(b2W)";
+        }
+        return "";
+    }
 }
+
+
 
 #include <pluginlib/class_list_macros.hpp>
 PLUGINLIB_EXPORT_CLASS(

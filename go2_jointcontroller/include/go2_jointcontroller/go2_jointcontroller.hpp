@@ -1,27 +1,27 @@
 #ifndef GO2_JOINTCONTROLLER__GO2_JOINTCONTROLLER_HPP_
 #define GO2_JOINTCONTROLLER__GO2_JOINTCONTROLLER_HPP_
 
-#include "controller_interface/controller_interface.hpp"
-#include "controller_interface/helpers.hpp"
-#include "hardware_interface/types/hardware_interface_type_values.hpp"
-
-#include <rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp>
-#include <std_msgs/msg/float64_multi_array.hpp>
 #include <vector>
 #include <string>
 #include <mutex>
+#include <filesystem>
 
-#include "std_msgs/msg/float64_multi_array.hpp"
+#include "controller_interface/controller_interface.hpp"
 
 #include "unitree_go/msg/low_state.hpp"
 #include "unitree_go/msg/low_cmd.hpp"
 
-#include <filesystem>
-#include <pinocchio/algorithm/model.hpp>
-#include <pinocchio/algorithm/rnea.hpp>
+#include "pinocchio/multibody/model.hpp"
+#include "pinocchio/multibody/data.hpp"
 #include "pinocchio/parsers/urdf.hpp"
+#include "pinocchio/algorithm/rnea.hpp"
+#include "pinocchio/algorithm/kinematics.hpp"
 
 #include "ament_index_cpp/get_package_share_directory.hpp"
+
+#include "unitree/robot/b2/motion_switcher/motion_switcher_client.hpp"
+
+using namespace unitree::robot::b2;
 
 namespace go2_jointcontroller
 {
@@ -59,49 +59,94 @@ namespace go2_jointcontroller
         controller_interface::CallbackReturn on_deactivate(
             const rclcpp_lifecycle::State &previous_state) override;
 
-        void computeG();
 
-        void computePD();
+        Eigen::VectorXd computeTotalGravityCompensation(Eigen::VectorXd q);
+
+        Eigen::VectorXd computePID();
+
+        void selectControlMode(int mode);
 
         uint32_t crc32_core(uint32_t *ptr, uint32_t len);
+        void get_crc(lowCmd& msg);
+
+        typedef struct
+        {
+            uint8_t off; // off 0xA5
+            std::array<uint8_t, 3> reserve;
+        } BmsCmd;
+
+        typedef struct
+        {
+            uint8_t mode; // desired working mode
+            float q;	  // desired angle (unit: radian)
+            float dq;	  // desired velocity (unit: radian/second)
+            float tau;	  // desired output torque (unit: N.m)
+            float Kp;	  // desired position stiffness (unit: N.m/rad )
+            float Kd;	  // desired velocity stiffness (unit: N.m/(rad/s) )
+            std::array<uint32_t, 3> reserve;
+        } MotorCmd; // motor control
+
+        typedef struct
+        {
+            std::array<uint8_t, 2> head;
+            uint8_t levelFlag;
+            uint8_t frameReserve;
+                
+            std::array<uint32_t, 2> SN;
+            std::array<uint32_t, 2> version;
+            uint16_t bandWidth;
+            std::array<MotorCmd, 20> motorCmd;
+            BmsCmd bms;
+            std::array<uint8_t, 40> wirelessRemote;
+            std::array<uint8_t, 12> led;
+            std::array<uint8_t, 2> fan;
+            uint8_t gpio;
+            uint32_t reserve;
+            
+            uint32_t crc;
+        } LowCmd; 
 
     protected:
-        std::vector<std::string> joint_names_;
-
         pinocchio::Model model;
         std::shared_ptr<pinocchio::Data> data;
 
-        Eigen::VectorXd gravidade;
-        Eigen::VectorXd q;
-        Eigen::VectorXd dq;
-        Eigen::VectorXd kp;
-        Eigen::VectorXd kd;
-        Eigen::VectorXd tauG;
-        Eigen::VectorXd tau;
+        Eigen::VectorXd _q;
+        Eigen::VectorXd _qd;
+        Eigen::VectorXd _tau;
+        Eigen::VectorXd _effort;
+
+        std::vector<double> kp;
+        std::vector<double> kd;
+        std::vector<double> ki;
         Eigen::VectorXd q_e;
+        Eigen::VectorXd qi_e;
         Eigen::VectorXd dq_e;
+
         Eigen::VectorXd qr;
         Eigen::VectorXd dqr;
-        Eigen::VectorXd effort;
-        Eigen::VectorXd commanded_effort;
 
-        Eigen::VectorXd v = Eigen::VectorXd::Zero(12);
-        Eigen::VectorXd a = Eigen::VectorXd::Zero(12);
+        int update_rate;
 
         lowCmd lowCmd_msg;
+
+        double _percent;
+        double _duration;
+        bool _started;
+        std::vector<double> _startPos;
+        std::vector<double> _targetPos;
+        uint32_t _lowTick;
 
         rclcpp::Publisher<lowCmd>::SharedPtr joints_cmd_publisher_;
 
         rclcpp::Subscription<lowCmd>::SharedPtr controller_reference_subscriber_;
         rclcpp::Subscription<lowStates>::SharedPtr lowstate_subscriber_;
 
-        uint32_t control_mode = 0;
+        uint32_t control_mode;
 
         std::mutex mutex_controller;
 
-        double sample_time = 0;
-        double elapsed_time = 0;
-        double last_update_time_ = 0;
+        int queryMotionStatus(MotionSwitcherClient& msc);
+        std::string queryServiceName(std::string form,std::string name);
     };
 
 }

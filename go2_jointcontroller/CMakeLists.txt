@@ -5,6 +5,10 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(controller_interface REQUIRED)
@@ -17,7 +21,13 @@ find_package(pinocchio REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(unitree_go REQUIRED)
-find_package(ament_index_cpp REQUIRED)
+# find_package(unitree_sdk2 REQUIRED)
+
+## Check system architecture
+message(STATUS "Current system architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+
+add_subdirectory(unitree_sdk2)
+
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
@@ -30,14 +40,11 @@ add_library( ${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME} 
   PUBLIC
     include
-    controller_interface
-    hardware_interface
-    pluginlib
-    rclcpp
-    rclcpp_lifecycle
-    std_msgs
-    unitree_go
-    
+)
+
+target_link_libraries(${PROJECT_NAME}
+  pinocchio::pinocchio
+  unitree_sdk2
 )
  
 ament_target_dependencies(${PROJECT_NAME}
@@ -48,36 +55,29 @@ ament_target_dependencies(${PROJECT_NAME}
   hardware_interface
   std_msgs
   unitree_go
-  ament_index_cpp
 )
 
-  pluginlib_export_plugin_description_file(controller_interface go2_jointcontroller.xml)
+pluginlib_export_plugin_description_file(controller_interface go2_jointcontroller.xml)
 
-  install( TARGETS ${PROJECT_NAME} DESTINATION
-   lib
-  )
+install(TARGETS ${PROJECT_NAME} DESTINATION lib)
+install(DIRECTORY include DESTINATION include/go2_jointcontroller)
+install(FILES ${DDS_LIBRARIES} DESTINATION lib)
 
-  install (DIRECTORY include
-  DESTINATION include/go2_jointcontroller
-   )
+ament_export_include_directories(
+  include
+)
 
-   ament_export_include_directories(
-    include
-   )
-
-   ament_export_libraries (
-    go2_jointcontroller
-   )
-   
-   ament_export_dependencies(
-    controller_interface
-    pluginlib
-    rclcpp
-    rclcpp_lifecycle
-    go2_interfaces
-   )
-
-  target_link_libraries(${PROJECT_NAME} pinocchio::pinocchio)
+ament_export_libraries (
+  go2_jointcontroller
+)
+  
+ament_export_dependencies(
+  controller_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  go2_interfaces
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

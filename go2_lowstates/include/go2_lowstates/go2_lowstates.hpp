@@ -46,18 +46,6 @@ namespace go2_lowstates
         controller_interface::CallbackReturn on_deactivate(
             const rclcpp_lifecycle::State &previous_state) override;
 
-        // // GO2_CONTROLLER_PUBLIC
-        // controller_interface::CallbackReturn on_cleanup(
-        //     const rclcpp_lifecycle::State &previous_state) override;
-
-        // // GO2_CONTROLLER_PUBLIC
-        // controller_interface::CallbackReturn on_error(
-        //     const rclcpp_lifecycle::State &previous_state) override;
-
-        // // GO2_CONTROLLER_PUBLIC
-        // controller_interface::CallbackReturn on_shutdown(
-        //     const rclcpp_lifecycle::State &previous_state) override;
-
     private:
         void get_joints_info();
 
@@ -84,10 +72,6 @@ namespace go2_lowstates
             hardware_interface::HW_IF_EFFORT,
         };
 
-        // const std::vector<std::string> allowed_command_interface_types_ = {
-        //     hardware_interface::HW_IF_EFFORT,
-        // };
-
         template <typename T>
         using InterfaceReferences = std::vector<std::vector<std::reference_wrapper<T>>>;
 
@@ -102,9 +86,6 @@ namespace go2_lowstates
         rclcpp::Subscription<imuStates>::SharedPtr imu_subscriber_;       // subscrevendo as informações do tipo imuStates no ponteiro imu_subscriber_
         rclcpp::Subscription<effortstates>::SharedPtr effort_subscriber_; // subscrevendo as informações do tipo std_msgs.... no ponteiro effort_subscriber_
 
-        double sample_time = 0;
-        double elapsed_time = 0;
-        double last_update_time_ = 0;
     };
 
 }

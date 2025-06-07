@@ -1,6 +1,6 @@
 controller_manager:
   ros__parameters:
-    update_rate: 1000  # Hz
+    update_rate: 500  # Hz
 
     go2_actuator:
       type: go2_actuator/Go2Actuator
@@ -11,22 +11,24 @@ controller_manager:
     go2_jointcontroller:
       type: go2_jointcontroller/Go2JointController
 
-
 go2_actuator:
   ros__parameters:
+    update_rate: 500
+
     joints:
-      - FR_hip_joint
-      - FR_thigh_joint
-      - FR_calf_joint
-      - FL_hip_joint
-      - FL_thigh_joint
-      - FL_calf_joint
-      - RL_hip_joint
-      - RL_thigh_joint
-      - RL_calf_joint
-      - RR_hip_joint
-      - RR_thigh_joint
-      - RR_calf_joint
+      names:
+        - 1_FR_hip_joint
+        - 1_FR_thigh_joint
+        - 1_FR_calf_joint
+        - 2_FL_hip_joint
+        - 2_FL_thigh_joint
+        - 2_FL_calf_joint
+        - 3_RR_hip_joint
+        - 3_RR_thigh_joint
+        - 3_RR_calf_joint
+        - 4_RL_hip_joint
+        - 4_RL_thigh_joint
+        - 4_RL_calf_joint
 
     command_interfaces: 
       - effort
@@ -36,56 +38,51 @@ go2_actuator:
       - velocity
       - effort
 
-    gain:
-      Kp: 60.0
-      Kd: 5.0
-
-    up_rate: 1000.0
-          
-    joints_references: [ 0.0, 1.36, -2.65, 0.0, 1.36, -2.65, -0.2, 1.36, -2.65, 0.2, 1.36, -2.65]
-    
-
 go2_lowstates:
   ros__parameters:
-    joints:
-      - FR_hip_joint
-      - FR_thigh_joint
-      - FR_calf_joint
-      - FL_hip_joint
-      - FL_thigh_joint
-      - FL_calf_joint
-      - RL_hip_joint
-      - RL_thigh_joint
-      - RL_calf_joint
-      - RR_hip_joint
-      - RR_thigh_joint
-      - RR_calf_joint
-
+    update_rate: 500
+    
+    joints:     
+      - 1_FR_hip_joint
+      - 1_FR_thigh_joint
+      - 1_FR_calf_joint
+      - 2_FL_hip_joint
+      - 2_FL_thigh_joint
+      - 2_FL_calf_joint
+      - 3_RR_hip_joint
+      - 3_RR_thigh_joint
+      - 3_RR_calf_joint
+      - 4_RL_hip_joint
+      - 4_RL_thigh_joint
+      - 4_RL_calf_joint
 
     state_interfaces:
       - position
       - velocity
 
-    up_rate: 1000.0
-
 go2_jointcontroller:
   ros__parameters:
-    joints:
-      - FR_hip_joint
-      - FR_thigh_joint
-      - FR_calf_joint
-      - FL_hip_joint
-      - FL_thigh_joint
-      - FL_calf_joint
-      - RL_hip_joint
-      - RL_thigh_joint
-      - RL_calf_joint
-      - RR_hip_joint
-      - RR_thigh_joint
-      - RR_calf_joint
+    update_rate: 250
 
-    up_rate: 250.0
+    simulation: true
+    network_interface: eth0
+    control_mode: 1
+    
+    joints:
+      initpos: [0.0, 1.50, -2.65, 0.0, 1.50, -2.65, 0.0, 1.50, -2.65, 0.0, 1.50, -2.65] # fold position
 
     gain:
-      Kp: 60.0
-      Kd: 5.0
+      PD:
+        Kp: [60.0, 60.0, 40.0, 60.0, 60.0, 40.0, 60.0, 60.0, 40.0, 60.0, 60.0, 40.0]
+        Kd: [0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7]
+      PDG:
+        Kp: [50.0, 50.0, 25.0, 50.0, 50.0, 25.0, 50.0, 50.0, 25.0, 50.0, 50.0, 25.0]
+        Kd: [0.7, 0.7, 0.4, 0.7, 0.7, 0.4, 0.7, 0.7, 0.4, 0.7, 0.7, 0.4]
+      PID:
+        Kp: [60.0, 50.0, 50.0, 60.0, 50.0, 50.0, 60.0, 50.0, 50.0, 60.0, 50.0, 50.0]
+        Kd: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        Ki: [45.0, 25.0, 0.0, 45.0, 25.0, 0.0, 45.0, 25.0, 0.0, 45.0, 25.0, 0.0]
+      PIDG:
+        Kp: [60.0, 40.0, 30.0, 60.0, 40.0, 30.0, 60.0, 40.0, 30.0, 60.0, 40.0, 30.0]
+        Kd: [0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6]
+        Ki: [30.0, 20.0, 0.0, 30.0, 20.0, 0.0, 30.0, 20.0, 0.0, 30.0, 20.0, 0.0]
