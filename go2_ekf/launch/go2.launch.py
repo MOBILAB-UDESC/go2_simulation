@@ -121,7 +121,7 @@ def generate_launch_description():
 
     go2_ekf_node = Node(
         package="go2_ekf",
-        executable="go2_ekf",
+        executable="go2_fixed_covariance",
         output="screen",
     )
 

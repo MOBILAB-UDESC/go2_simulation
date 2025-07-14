@@ -37,6 +37,7 @@ add_executable(go2_fixed_covariance src/go2_fixed_covariance.cpp)
 ament_target_dependencies(go2_fixed_covariance 
   rclcpp 
   sensor_msgs
+  unitree_go
 )
 
 install(TARGETS 

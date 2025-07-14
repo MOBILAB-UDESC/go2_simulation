@@ -17,8 +17,8 @@ public:
 
         // Inicializa posições
         float startPos[12]   = {0.0, 1.50, -2.65, 0.0, 1.50, -2.65, 0.0, 1.50, -2.65,  0.0, 1.50, -2.65}; //fold
-        float targetPos1[12] = {0.5, 1.30, -1.36, 0.0, 1.50, -2.65, 0.0, 1.50, -2.65,  0.0, 1.50, -2.65}; //FL extend
-        float targetPos2[12] = {0.5, 1.30, -1.36, 0.0, 1.50, -2.65, 0.0, 1.50, -2.65, -0.5, 1.30, -1.36}; //FL and RR extend 
+        float targetPos1[12] = {0.0, 0.80, -1.36, 0.0, 0.80, -1.36, 0.0, 0.80, -1.36,  0.0, 0.80, -1.36}; //extended
+        float targetPos2[12] = {0.0, 0.80, -1.36, 0.0, 0.80, -1.36, 0.0, 0.80, -1.36,  0.0, 0.80, -1.36}; //extended
 
         std::copy(std::begin(startPos), std::end(startPos), sequence[0]);
         std::copy(std::begin(targetPos1), std::end(targetPos1), sequence[1]);
