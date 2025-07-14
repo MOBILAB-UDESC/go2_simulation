@@ -50,6 +50,8 @@ def generate_launch_description():
 
     robot_description = {"robot_description": robot_description_content}
 
+    robot_localization_file_path = os.path.join(FindPackageShare(package='go2_ekf').find('go2_ekf'), 'config/ekf.yaml')
+
     # ───── Nodes ─────
     node_robot_state_publisher = Node(
         package="robot_state_publisher",
@@ -125,6 +127,15 @@ def generate_launch_description():
         output="screen",
     )
 
+    robot_localization_node = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        output='screen',
+        parameters=[robot_localization_file_path, 
+        {'use_sim_time': use_sim_time}]
+    )
+
     rviz_config_path = PathJoinSubstitution([
         FindPackageShare("go2_description"),
         "rviz",
@@ -196,6 +207,7 @@ def generate_launch_description():
         joint_controller_then_remap,
         # lowstates_then_rviz,
         imu_bridge,
-        go2_ekf_node,
+        # go2_ekf_node,
+        robot_localization_node,
         ros_gz_bridge,
     ])
