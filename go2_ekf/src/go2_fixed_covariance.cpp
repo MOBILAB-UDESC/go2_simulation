@@ -28,25 +28,25 @@ private:
 
 
     // Inject fake covariances
-    patched.orientation_covariance[0] = 0.001;
+    patched.orientation_covariance[0] = 0.01;
     patched.orientation_covariance[1] = 0.0;
     patched.orientation_covariance[2] = 0.0;
     patched.orientation_covariance[3] = 0.0;
-    patched.orientation_covariance[4] = 0.001;
+    patched.orientation_covariance[4] = 0.01;
     patched.orientation_covariance[5] = 0.0;
     patched.orientation_covariance[6] = 0.0;
     patched.orientation_covariance[7] = 0.0;
-    patched.orientation_covariance[8] = 0.001;
+    patched.orientation_covariance[8] = 0.01;
 
-    patched.angular_velocity_covariance[0] = 0.001;
+    patched.angular_velocity_covariance[0] = 0.01;
     patched.angular_velocity_covariance[1] = 0.0;
     patched.angular_velocity_covariance[2] = 0.0;
     patched.angular_velocity_covariance[3] = 0.0;
-    patched.angular_velocity_covariance[4] = 0.001;
+    patched.angular_velocity_covariance[4] = 0.01;
     patched.angular_velocity_covariance[5] = 0.0;
     patched.angular_velocity_covariance[6] = 0.0;
     patched.angular_velocity_covariance[7] = 0.0;
-    patched.angular_velocity_covariance[8] = 0.001;
+    patched.angular_velocity_covariance[8] = 0.01;
 
     patched.linear_acceleration_covariance[0] = 0.01;
     patched.linear_acceleration_covariance[1] = 0.0;

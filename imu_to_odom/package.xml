@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>imu_to_odom</name>
+  <version>0.0.0</version>
+  <description>finds odom through IMU integration, based on eth odom predict </description>
+
+  <author email="ztaylor@ethz.ch">Zachary Taylor</author>
+
+  <maintainer email="ztaylor@ethz.ch">Zachary Taylor</maintainer>
+
+  <license>BSD</license>
+
+  <!-- <depend>roscpp</depend>
+  <depend>roslib</depend>
+  <depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>minkindr</depend>
+  <depend>minkindr_conversions</depend> -->
+  <!-- <depend>eigen_catkin</depend> -->
+
+    <!-- Buildtool dependency -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Export the package -->
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
