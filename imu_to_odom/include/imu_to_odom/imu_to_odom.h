@@ -1,78 +1,80 @@
 #ifndef IMU_TO_ODOM_IMU_TO_ODOM_H_
 #define IMU_TO_ODOM_IMU_TO_ODOM_H_ 
 
-#include <geometry_msgs/TransformStamped.h>
-#include <kindr/minimal/quat-transformation.h>
-#include <minkindr_conversions/kindr_msg.h>
-#include <nav_msgs/Odometry.h>
-#include <ros/ros.h>
-#include <sensor_msgs/Imu.h>
-#include <tf/transform_broadcaster.h>
-#include <list>
+#include "rclcpp/rclcpp.hpp"
+#include "unitree_go/msg/low_state.hpp"
+#include "sensor_msgs/msg/imu.hpp"
+#include "nav_msgs/msg/odometry.hpp"
 
-#include <tf2/LinearMath/Quaternion.h>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <eigen3/Eigen/Dense>
+
+
+// #include <geometry_msgs/TransformStamped.h>
+// #include <kindr/minimal/quat-transformation.h>
+// #include <minkindr_conversions/kindr_msg.h>
+// #include <nav_msgs/Odometry.h>
+// #include <ros/ros.h>
+// #include <sensor_msgs/Imu.h>
+// #include <tf/transform_broadcaster.h>
+// #include <list>
+
+// #include <tf2/LinearMath/Quaternion.h>
+// #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
 #include <math.h>
 
-typedef kindr::minimal::QuatTransformation Transformation;
-typedef kindr::minimal::RotationQuaternion Rotation;
-typedef Transformation::Vector3 Vector3;
+// typedef kindr::minimal::QuatTransformation Transformation;
+// typedef kindr::minimal::RotationQuaternion Rotation;
+// typedef Transformation::Vector3 Vector3;
 
-class OdomPredictor {
- public:
-  OdomPredictor(const ros::NodeHandle& nh, const ros::NodeHandle& nh_private);
+class OdomPredictor : public rclcpp::Node
+{
+public:
 
-  // void odometryCallback(const nav_msgs::OdometryConstPtr& msg);
+  OdomPredictor();
+ 
+  void lowstateCallback(const unitree_go::msg::LowState::SharedPtr msg);
 
-  void imuCallback(const sensor_msgs::ImuConstPtr& msg);
-
-  void imuBiasCallback(const sensor_msgs::ImuConstPtr& msg);
 
  private:
-  void integrateIMUData(const sensor_msgs::Imu& msg);
+  
+  void integrateIMUData(const unitree_go::msg::LowState::SharedPtr msg);
 
   void publishOdometry();
 
-  void publishTF();
+  // void publishTF();
 
-  bool has_imu_meas = false;
-  bool have_odom_;
-  bool have_bias_;
+  bool has_imu_meas;
+  // bool have_odom_;
 
-  ros::NodeHandle nh_;
-  ros::NodeHandle nh_private_;
+  rclcpp::Subscription<unitree_go::msg::LowState>::SharedPtr imu_sub_;
 
-  ros::Subscriber imu_sub_;
-  ros::Subscriber imu_bias_sub_;
-  //ros::Subscriber odometry_sub_;
+  rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
+  // ros::Publisher transform_pub_;
 
-  ros::Publisher odom_pub_;
-  ros::Publisher transform_pub_;
+  // tf::TransformBroadcaster br_;
 
-  tf::TransformBroadcaster br_;
+  // int max_imu_queue_length_;
 
-  int max_imu_queue_length_;
-
-  std::list<sensor_msgs::Imu> imu_queue_;
+  std::list<unitree_go::msg::LowState> states_queue_;
 
   int seq_;
-  std::string frame_id_;
-  std::string child_frame_id_;
+  // std::string frame_id_;
+  // std::string child_frame_id_;
 
-  ros::Time estimate_timestamp_;
-  Transformation transform_;
-  Vector3 linear_velocity_;
-  Vector3 angular_velocity_;
+  uint32_t estimate_timestamp_;
+  // Transformation transform_;
+  Eigen::Vector3d linear_velocity_;
+  Eigen::Vector3d angular_velocity_;
 
-  Vector3 imu_linear_acceleration_bias_ = {0, 0, 0};
-  Vector3 imu_angular_velocity_bias_ = {0, 0, 0};
+  Eigen::Vector3d imu_linear_acceleration_bias_;
+  Eigen::Vector3d imu_angular_velocity_bias_;
 
-  boost::array<double, 36ul> pose_covariance_;
-  boost::array<double, 36ul> twist_covariance_;
+  // boost::array<double, 36ul> pose_covariance_;
+  // boost::array<double, 36ul> twist_covariance_;
 
-  Rotation orientation_;
-  bool have_orientation_ = true;
+  // Rotation orientation_;
+  bool have_orientation_;
 };
 
 #endif  // IMU_TO_ODOM_IMU_TO_ODOM_H_

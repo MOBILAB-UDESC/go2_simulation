@@ -16,11 +16,12 @@
   <depend>nav_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>geometry_msgs</depend>
-  <depend>minkindr</depend>
-  <depend>minkindr_conversions</depend> -->
-  <!-- <depend>eigen_catkin</depend> -->
+-->
 
-    <!-- Buildtool dependency -->
+  <depend>unitree_go</depend>
+  <depend>eigen</depend>
+
+  <!-- Buildtool dependency -->
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <!-- Export the package -->
