@@ -63,7 +63,8 @@ public:
   // std::string child_frame_id_;
 
   uint32_t estimate_timestamp_;
-  // Transformation transform_;
+
+  Eigen::Affine3d transform_;
   Eigen::Vector3d linear_velocity_;
   Eigen::Vector3d angular_velocity_;
 

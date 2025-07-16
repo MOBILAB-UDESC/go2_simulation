@@ -7,6 +7,7 @@ OdomPredictor::OdomPredictor()
   , imu_linear_acceleration_bias_(0, 0, 0)
   , imu_angular_velocity_bias_(0, 0, 0)
   , have_orientation_(true)
+  , transform_(Eigen::Affine3d::Identity())
   // , have_odom_(false)
   // , have_bias_(false) 
 {
@@ -128,13 +129,13 @@ void OdomPredictor::integrateIMUData(const unitree_go::msg::LowState::SharedPtr 
   const Eigen::Quaterniond half_delta_rotation(angle_axis);
 
   if (!have_orientation_) {
-  //   transform_.getRotation() = transform_.getRotation() * half_delta_rotation;
+    transform_.rotation() = transform_.rotation().coeffs() * half_delta_rotation;
   }
 
   // find changes in linear velocity and position
   const Eigen::Vector3d delta_linear_velocity = 
       delta_time * (imu_linear_acceleration +
-                    // transform_.getRotation().inverse().rotate(kGravity) -
+                    transform_.rotation().inverse().rotate(kGravity).coeffs() -
                     imu_linear_acceleration_bias_);
   // transform_.getPosition() =
   //     transform_.getPosition() +
