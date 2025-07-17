@@ -28,7 +28,7 @@ OdomPredictor::OdomPredictor()
   imu_sub_ = this->create_subscription<unitree_go::msg::LowState>("lowstate", kROSQueueLength, std::bind(&OdomPredictor::lowstateCallback, this, std::placeholders::_1));
  // Initialize broadcaster PARA ROS2:
   odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("imu_odometry", kROSQueueLength);
-  transform_ = this->create_publisher<geometry_msgs::msg::TransformStamped>("imu_transform", kROSQueueLength);
+  transform_pub_ = this->create_publisher<geometry_msgs::msg::TransformStamped>("imu_transform", kROSQueueLength);
 
   
   // transform_pub_ = nh_private_.advertise<geometry_msgs::TransformStamped>(
@@ -227,7 +227,7 @@ void OdomPredictor::publishOdometry() {
   msg.twist.twist.angular.y = angular_velocity_.y();
   msg.twist.twist.angular.z = angular_velocity_.z();
 
-  odom_pub_->publish(msg)
+  odom_pub_->publish(msg);
 
 
   // nav_msgs::Odometry msg;
@@ -268,7 +268,7 @@ void OdomPredictor::publishTransform() {
   msg.transform.rotation.z = q.z();
   msg.transform.rotation.w = q.w();
 
-  transform_->publish(msg);
+  transform_pub_->publish(msg);
 }
 
 //   geometry_msgs::TransformStamped msg;

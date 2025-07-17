@@ -51,8 +51,8 @@ public:
   rclcpp::Subscription<unitree_go::msg::LowState>::SharedPtr imu_sub_;
 
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_pub_;
-  // ros::Publisher transform_pub_;
-
+  // rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr transform_pub_;
+  rclcpp::Publisher<geometry_msgs::msg::TransformStamped>::SharedPtr transform_pub_;
   // tf::TransformBroadcaster br_;
 
   int max_imu_queue_length_;
@@ -71,6 +71,8 @@ public:
 
   Eigen::Vector3d imu_linear_acceleration_bias_;
   Eigen::Vector3d imu_angular_velocity_bias_;
+  
+
 
   // boost::array<double, 36ul> pose_covariance_;
   // boost::array<double, 36ul> twist_covariance_;
