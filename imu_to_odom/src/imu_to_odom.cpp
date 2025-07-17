@@ -122,20 +122,22 @@ void OdomPredictor::integrateIMUData(const unitree_go::msg::LowState::SharedPtr 
   angular_velocity_ = final_angular_velocity;
 
   // apply half of the rotation delta
-  double angle = delta_angle.norm()/2; // Calculate the angle (magnitude of the vector)
+  double angle = delta_angle.norm(); // Calculate the angle (magnitude of the vector)
   Eigen::Vector3d axis = delta_angle.normalized(); // Normalize the vector to get the axis
-  Eigen::AngleAxisd angle_axis(angle, axis);
+  Eigen::AngleAxisd angle_axis(angle/2, axis);
 
   const Eigen::Quaterniond half_delta_rotation(angle_axis);
 
   if (!have_orientation_) {
-    transform_.rotation() = transform_.rotation().coeffs() * half_delta_rotation;
+    // transform_.rotation() = transform_.rotation() * half_delta_rotation;
+
+    rotation_ = rotation_ * half_delta_rotation;
   }
 
   // find changes in linear velocity and position
   const Eigen::Vector3d delta_linear_velocity = 
       delta_time * (imu_linear_acceleration +
-                    transform_.rotation().inverse().rotate(kGravity).coeffs() -
+                    // rotation_.inverse().rotate(kGravity) -
                     imu_linear_acceleration_bias_);
   // transform_.getPosition() =
   //     transform_.getPosition() +
@@ -143,10 +145,13 @@ void OdomPredictor::integrateIMUData(const unitree_go::msg::LowState::SharedPtr 
   //         delta_time * (linear_velocity_ + delta_linear_velocity / 2.0));
   // linear_velocity_ += delta_linear_velocity;
 
-  // if (!have_orientation_) {
+  transform_.translation() += transform_.rotation() * (delta_time * (linear_velocity_ + delta_linear_velocity / 2.0));
+    linear_velocity_ += delta_linear_velocity;
+
+  if (!have_orientation_) {
   // // apply the other half of the rotation delta
   //   transform_.getRotation() = transform_.getRotation() * half_delta_rotation;
-  // }
+  }
 
   estimate_timestamp_ = msg->tick;
 }

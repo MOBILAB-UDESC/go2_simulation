@@ -65,6 +65,8 @@ public:
   uint32_t estimate_timestamp_;
 
   Eigen::Affine3d transform_;
+  Eigen::Quaterniond rotation_;
+
   Eigen::Vector3d linear_velocity_;
   Eigen::Vector3d angular_velocity_;
 
