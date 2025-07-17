@@ -12,9 +12,16 @@ find_package(Eigen3 REQUIRED)
 # find_package(rosidl_runtime_c REQUIRED)
 # find_package(rosidl REQUIRED)
 # find_package(std_msgs REQUIRED)
+# CMakeLists.txt
+find_package(tf2 REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(eigen3_cmake_module REQUIRED)
+
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${Eigen3_INCLUDE_DIRS}
 )
 
 add_library(${PROJECT_NAME}

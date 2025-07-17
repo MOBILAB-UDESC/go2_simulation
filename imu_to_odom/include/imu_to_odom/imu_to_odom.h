@@ -5,7 +5,7 @@
 #include "unitree_go/msg/low_state.hpp"
 #include "sensor_msgs/msg/imu.hpp"
 #include "nav_msgs/msg/odometry.hpp"
-
+#include <geometry_msgs/msg/transform_stamped.hpp>
 #include <eigen3/Eigen/Dense>
 
 
@@ -41,6 +41,7 @@ public:
   void integrateIMUData(const unitree_go::msg::LowState::SharedPtr msg);
 
   void publishOdometry();
+  void publishTransform();
 
   // void publishTF();
 
@@ -54,16 +55,17 @@ public:
 
   // tf::TransformBroadcaster br_;
 
-  // int max_imu_queue_length_;
+  int max_imu_queue_length_;
 
   std::list<unitree_go::msg::LowState> states_queue_;
 
   int seq_;
-  // std::string frame_id_;
-  // std::string child_frame_id_;
+  std::string frame_id_;
+  std::string child_frame_id_;
 
   uint32_t estimate_timestamp_;
   // Transformation transform_;
+  Eigen::Affine3d transform_;
   Eigen::Vector3d linear_velocity_;
   Eigen::Vector3d angular_velocity_;
 
@@ -75,6 +77,8 @@ public:
 
   // Rotation orientation_;
   bool have_orientation_;
+
+
 };
 
 #endif  // IMU_TO_ODOM_IMU_TO_ODOM_H_

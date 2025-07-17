@@ -17,6 +17,17 @@
   <depend>sensor_msgs</depend>
   <depend>geometry_msgs</depend>
 -->
+  <!-- <depend>tf2</depend>
+  <depend>tf2_geometry_msgs</depend> -->
+
+ <depend>rclcpp</depend>
+ <depend>geometry_msgs</depend>
+ <depend>nav_msgs</depend>
+ <depend>tf2_ros</depend>
+ <depend>tf2_geometry_msgs</depend>
+ <depend>sensor_msgs</depend>  <!-- Se usar mensagens de IMU padrão -->
+ <!-- Eigen3 (Álgebra Linear) -->
+ <depend>eigen3_cmake_module</depend>
 
   <depend>unitree_go</depend>
   <depend>eigen</depend>
