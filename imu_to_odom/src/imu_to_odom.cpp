@@ -2,8 +2,7 @@
 #include <Eigen/Geometry>
 #include <geometry_msgs/msg/transform_stamped.hpp>
 
-
-// CLASS INITIALIZATION
+  // CLASS INITIALIZATION
 OdomPredictor::OdomPredictor()
   : Node("OdomPredictor")
   , seq_(0)
@@ -20,7 +19,7 @@ OdomPredictor::OdomPredictor()
 {
   // nh_private.param("max_imu_queue_length", max_imu_queue_length_, 1000);
  // EQUIVALENTE PARA ROS2: 
-    this->declare_parameter<int>("max_imu_queue_length", 1000);
+  this->declare_parameter<int>("max_imu_queue_length", 1000);
   max_imu_queue_length_ = this->get_parameter("max_imu_queue_length").as_int();
   transform_.setIdentity(); 
 
@@ -39,7 +38,7 @@ OdomPredictor::OdomPredictor()
   geometry_msgs::msg::Pose pose;// Cria uma pose zerada
   pose.position.x = 0;
   pose.position.y = 0;
-  pose.position.z = 0.5;  // Altura inicial sugerida (0.5m)
+  pose.position.z = 0.2;  // Altura inicial sugerida (0.2m)
   pose.orientation.x = 0;
   pose.orientation.y = 0;
   pose.orientation.z = 0;
@@ -94,16 +93,16 @@ void OdomPredictor::lowstateCallback(const unitree_go::msg::LowState::SharedPtr 
   // }
 
 
-  if (msg->tick < states_queue_.back().tick) {
-    RCLCPP_ERROR_STREAM(rclcpp::get_logger("imu_to_odom"),
-                        "Latest LowState message occured at time: "
-                          << msg->tick
-                          << ". This is before the previously received LowState "
-                              "message that ouccured at: "
-                          << states_queue_.back().tick
-                          << ". The current states queue will be reset.");
-    states_queue_.clear();
-  }
+  // if (msg->tick < states_queue_.back().tick) {
+  //   RCLCPP_ERROR_STREAM(rclcpp::get_logger("imu_to_odom"),
+  //                       "Latest LowState message occured at time: "
+  //                         << msg->tick
+  //                         << ". This is before the previously received LowState "
+  //                             "message that ouccured at: "
+  //                         << states_queue_.back().tick
+  //                         << ". The current states queue will be reset.");
+  //   states_queue_.clear();
+  // }
 
   states_queue_.push_back(*msg);//KEEP DATA IN THE QUEUE
 
@@ -123,17 +122,26 @@ void OdomPredictor::lowstateCallback(const unitree_go::msg::LowState::SharedPtr 
   ++seq_;
 }
 
-void OdomPredictor::integrateIMUData(const unitree_go::msg::LowState::SharedPtr msg) {
-  if (!has_imu_meas) {
-    estimate_timestamp_ = msg->tick;//ARMAZENA TIMESTAMP PRIMEIRA MEAS
+  void OdomPredictor::integrateIMUData(const unitree_go::msg::LowState::SharedPtr msg) {
+  
+    rclcpp::Time current_time = this->now(); 
+
+  // if (!has_imu_meas) {
+  //   estimate_timestamp_ = msg->tick;//ARMAZENA TIMESTAMP PRIMEIRA MEAS
+  //   has_imu_meas = true;
+  //   return;
+  // }
+
+    if (!has_imu_meas) {
+    estimate_timestamp_ = current_time;//ARMAZENA TIMESTAMP PRIMEIRA MEAS
     has_imu_meas = true;
     return;
   }
 
-  const double delta_time = msg->tick - estimate_timestamp_;// TEMPO DESDE A ULTIMA MEDIÇÃO
+  const double delta_time =( current_time - estimate_timestamp_).seconds();// TEMPO DESDE A ULTIMA MEDIÇÃO
+  estimate_timestamp_ = current_time;
 
   //DADOS IMU
-
   const Eigen::Vector3d kGravity(0.0, 0.0, -9.81);
 
   Eigen::Vector3d imu_linear_acceleration, imu_angular_velocity;
@@ -164,9 +172,9 @@ void OdomPredictor::integrateIMUData(const unitree_go::msg::LowState::SharedPtr 
 
   //find changes in linear velocity and position- INTEGRAÇÃO LINEAR
   const Eigen::Vector3d delta_linear_velocity = 
-      delta_time * (imu_linear_acceleration +
-                    transform_.linear().transpose() * kGravity - //PARA ROS2            
-                    imu_linear_acceleration_bias_);
+      delta_time * (imu_linear_acceleration 
+                     - transform_.linear().transpose() * kGravity  //PARA ROS2            
+                   - imu_linear_acceleration_bias_);
 
 
   //ATUALIZA A VEL MEDIA USANDO DELTA TIME
@@ -195,7 +203,7 @@ void OdomPredictor::integrateIMUData(const unitree_go::msg::LowState::SharedPtr 
   }
   
 
-  estimate_timestamp_ = msg->tick;
+  // estimate_timestamp_ = msg->tick;
 }
 
 

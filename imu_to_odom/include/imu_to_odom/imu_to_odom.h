@@ -63,7 +63,9 @@ public:
   std::string frame_id_;
   std::string child_frame_id_;
 
-  uint32_t estimate_timestamp_;
+  // uint32_t estimate_timestamp_;
+  rclcpp::Time estimate_timestamp_;
+
   // Transformation transform_;
   Eigen::Affine3d transform_;
   Eigen::Vector3d linear_velocity_;
