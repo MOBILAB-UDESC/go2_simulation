@@ -7,13 +7,12 @@ OdomPredictor::OdomPredictor()
   , imu_linear_acceleration_bias_(0, 0, 0)
   , imu_angular_velocity_bias_(0, 0, 0)
   , have_orientation_(true)
-  , transform_(Eigen::Affine3d::Identity())
   // , have_odom_(false)
   // , have_bias_(false) 
 {
-  // nh_private.param("max_imu_queue_length", max_imu_queue_length_, 1000);
 
   constexpr size_t kROSQueueLength = 100;
+  
   imu_sub_ = this->create_subscription<unitree_go::msg::LowState>("lowstate", kROSQueueLength, std::bind(&OdomPredictor::lowstateCallback, this, std::placeholders::_1));
  
   odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("imu_odometry", kROSQueueLength);
@@ -48,8 +47,8 @@ OdomPredictor::OdomPredictor()
   //                     0 0 0 0 1 0 
   //                     0 0 0 0 0 1};
   // */
-  // linear_velocity_ = {0, 0, 0};
-  // angular_velocity_ = {0, 0, 0};
+  linear_velocity_ = {0, 0, 0};
+  angular_velocity_ = {0, 0, 0};
   // /*
   // twist_covariance_ = {1 0 0 0 0 0
   //                     0 1 0 0 0 0 
@@ -102,6 +101,14 @@ void OdomPredictor::lowstateCallback(const unitree_go::msg::LowState::SharedPtr 
   ++seq_;
 }
 
+// void OdomPredictor::imuBiasCallback(const sensor_msgs::ImuConstPtr& msg) {
+//   tf::vectorMsgToKindr(msg->linear_acceleration,
+//                        &imu_linear_acceleration_bias_);
+//   tf::vectorMsgToKindr(msg->angular_velocity, &imu_angular_velocity_bias_);
+
+//   have_bias_ = true;
+// }
+
 void OdomPredictor::integrateIMUData(const unitree_go::msg::LowState::SharedPtr msg) {
   if (!has_imu_meas) {
     estimate_timestamp_ = msg->tick;
@@ -111,46 +118,39 @@ void OdomPredictor::integrateIMUData(const unitree_go::msg::LowState::SharedPtr 
 
   const double delta_time = msg->tick - estimate_timestamp_;
 
-  const Eigen::Vector3d kGravity(0.0, 0.0, -9.81);
+  const Vector3 kGravity(0.0, 0.0, -9.81);
 
-  Eigen::Vector3d imu_linear_acceleration, imu_angular_velocity;
-  imu_linear_acceleration << msg->imu_state.accelerometer[0], msg->imu_state.accelerometer[1], msg->imu_state.accelerometer[2];
-  imu_angular_velocity << msg->imu_state.gyroscope[0], msg->imu_state.gyroscope[1], msg->imu_state.gyroscope[2];
+  Vector3 imu_linear_acceleration, imu_angular_velocity;
+  vectorMsgToKindr(msg->imu_state.accelerometer, &imu_linear_acceleration);
+  vectorMsgToKindr(msg->imu_state.gyroscope, &imu_angular_velocity);
 
-  const Eigen::Vector3d final_angular_velocity = (imu_angular_velocity - imu_angular_velocity_bias_);
-  const Eigen::Vector3d delta_angle = delta_time * (final_angular_velocity + angular_velocity_) / 2.0;
+  const Vector3 final_angular_velocity =
+      (imu_angular_velocity - imu_angular_velocity_bias_);
+  const Vector3 delta_angle =
+      delta_time * (final_angular_velocity + angular_velocity_) / 2.0;
   angular_velocity_ = final_angular_velocity;
 
   // apply half of the rotation delta
-  double angle = delta_angle.norm(); // Calculate the angle (magnitude of the vector)
-  Eigen::Vector3d axis = delta_angle.normalized(); // Normalize the vector to get the axis
-  Eigen::AngleAxisd angle_axis(angle/2, axis);
-
-  const Eigen::Quaterniond half_delta_rotation(angle_axis);
+  const Rotation half_delta_rotation = Rotation::exp(delta_angle / 2.0);
 
   if (!have_orientation_) {
-    // transform_.rotation() = transform_.rotation() * half_delta_rotation;
-
-    rotation_ = rotation_ * half_delta_rotation;
+    transform_.getRotation() = transform_.getRotation() * half_delta_rotation;
   }
 
   // find changes in linear velocity and position
-  const Eigen::Vector3d delta_linear_velocity = 
+  const Vector3 delta_linear_velocity =
       delta_time * (imu_linear_acceleration +
-                    // rotation_.inverse().rotate(kGravity) -
+                    transform_.getRotation().inverse().rotate(kGravity) -
                     imu_linear_acceleration_bias_);
-  // transform_.getPosition() =
-  //     transform_.getPosition() +
-  //     transform_.getRotation().rotate(
-  //         delta_time * (linear_velocity_ + delta_linear_velocity / 2.0));
-  // linear_velocity_ += delta_linear_velocity;
-
-  transform_.translation() += transform_.rotation() * (delta_time * (linear_velocity_ + delta_linear_velocity / 2.0));
-    linear_velocity_ += delta_linear_velocity;
+  transform_.getPosition() =
+      transform_.getPosition() +
+      transform_.getRotation().rotate(
+          delta_time * (linear_velocity_ + delta_linear_velocity / 2.0));
+  linear_velocity_ += delta_linear_velocity;
 
   if (!have_orientation_) {
-  // // apply the other half of the rotation delta
-  //   transform_.getRotation() = transform_.getRotation() * half_delta_rotation;
+  // apply the other half of the rotation delta
+    transform_.getRotation() = transform_.getRotation() * half_delta_rotation;
   }
 
   estimate_timestamp_ = msg->tick;
@@ -187,4 +187,15 @@ void OdomPredictor::publishOdometry() {
 //   transform_pub_.publish(msg);
 //   br_.sendTransform(msg);
 // }
+
+// template <typename Scalar>
+void OdomPredictor::vectorMsgToKindr(const std::array<float, 3>& msg, Eigen::Vector3d* kindr) {
+  if (kindr == nullptr)
+    return;
+  Eigen::Vector3d kindr_double;
+  kindr_double(0) = msg[0]; 
+  kindr_double(1) = msg[1]; 
+  kindr_double(2) = msg[2]; 
+  *kindr = kindr_double;
+}
 
