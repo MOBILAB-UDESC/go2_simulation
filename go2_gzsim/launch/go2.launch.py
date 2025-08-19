@@ -98,6 +98,13 @@ def generate_launch_description():
         output="screen",
     )
 
+    go2_rgc = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["go2_rgc", "--controller-manager", "/controller_manager"],
+        output="screen",
+    )  
+
     bridge_params = os.path.join(
         get_package_share_directory("go2_gzsim"),
         "config",
@@ -154,10 +161,10 @@ def generate_launch_description():
         )
     )
 
-    lowstates_then_rviz = RegisterEventHandler(
+    joint_controller_then_rgc = RegisterEventHandler(
         event_handler=OnExecutionComplete(
             target_action=go2_joint_controller,
-            on_completion=[rviz_node],
+            on_completion=[go2_rgc],
         )
     )
 
@@ -189,6 +196,7 @@ def generate_launch_description():
         spawn_then_actuator,
         joint_controller_then_remap,
         # lowstates_then_rviz,
+        joint_controller_then_rgc,
         imu_bridge,
         ros_gz_bridge,
     ])

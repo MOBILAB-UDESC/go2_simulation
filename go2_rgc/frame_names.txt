@@ -1,0 +1,16 @@
+[gazebo-1] Link Frame 6: 1_FR_hip
+[gazebo-1] Link Frame 8: 1_FR_thigh
+[gazebo-1] Link Frame 10: 1_FR_calf
+[gazebo-1] Link Frame 12: 1_FR_foot
+[gazebo-1] Link Frame 14: 2_FL_hip
+[gazebo-1] Link Frame 16: 2_FL_thigh
+[gazebo-1] Link Frame 18: 2_FL_calf
+[gazebo-1] Link Frame 20: 2_FL_foot
+[gazebo-1] Link Frame 22: 3_RR_hip
+[gazebo-1] Link Frame 24: 3_RR_thigh
+[gazebo-1] Link Frame 26: 3_RR_calf
+[gazebo-1] Link Frame 28: 3_RR_foot
+[gazebo-1] Link Frame 30: 4_RL_hip
+[gazebo-1] Link Frame 32: 4_RL_thigh
+[gazebo-1] Link Frame 34: 4_RL_calf
+[gazebo-1] Link Frame 36: 4_RL_foot

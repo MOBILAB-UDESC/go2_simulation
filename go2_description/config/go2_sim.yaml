@@ -11,6 +11,9 @@ controller_manager:
     go2_jointcontroller:
       type: go2_jointcontroller/Go2JointController
 
+    go2_rgc:
+      type: go2_rgc/Go2RGC
+
 go2_actuator:
   ros__parameters:
     update_rate: 500
@@ -86,3 +89,9 @@ go2_jointcontroller:
         Kp: [60.0, 40.0, 30.0, 60.0, 40.0, 30.0, 60.0, 40.0, 30.0, 60.0, 40.0, 30.0]
         Kd: [0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6]
         Ki: [30.0, 20.0, 0.0, 30.0, 20.0, 0.0, 30.0, 20.0, 0.0, 30.0, 20.0, 0.0]
+
+go2_rgc:
+  ros__parameters:
+    update_rate: 1
+
+    simulation: true
