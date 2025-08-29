@@ -182,18 +182,54 @@ namespace go2_rgc
             pinocchio::framesForwardKinematics(model, *data, q);
             pinocchio::updateGlobalPlacements(model, *data);
 
-            // Get homogeneous transform
+            // --- Centro de Massa (CoM) ---
+            Eigen::Vector3d com = pinocchio::centerOfMass(model, *data, q);
+            std::cout << "Center of Mass: " << com.transpose() << std::endl;
 
-            int aux = 0;
-            for (const auto& name : _frames_names) {
-            auto i = model.getFrameId(name);
+            // Jacobiano do centro de massa (3xnv)
+            // pinocchio::Data::Matrix6x Jcom(6, model.nv);
+            // Jcom.setZero();
+            // pinocchio::jacobianCenterOfMass(model, *data, q, true);
+            // Eigen::MatrixXd Jcom_linear = Jcom.topRows<3>();  // 3x19
+            // std::cout << "Jacobian CoM (3x19):\n" << Jcom_linear << std::endl;
 
-            std::cout<<i<<"-"<< name <<std::endl;
-            aux++;
-            const pinocchio::SE3& H = data->oMf[i];
-            // Print the transform
-            std::cout << H.toHomogeneousMatrix() << std::endl;
-            }
+            // --- Jacobiano de Contato (Jc) ---
+            Eigen::MatrixXd Jc(12, model.nv);
+            Jc.setZero();
+            // _frame_index.size()
+            // for (size_t i = 0; i < 1; ++i) {
+
+                pinocchio::Data::Matrix6x Jframe(6, model.nv);
+                Jframe.setZero();
+                pinocchio::computeFrameJacobian(model, *data, q, model.getFrameId(_frames_names[3]), pinocchio::WORLD, Jframe);
+
+                // Coloca o bloco 3xnv no Jacobiano total
+                // Jc.block(3 * i, 0, 3, model.nv) = Jframe.topRows<3>();
+                // Eigen::MatrixXd matriz_J = Jframe.topRows<3>();
+                // std::cout<<_frames_names[i]<<std::endl;
+                std::cout<< Jframe.topRows<3>()<<std::endl;
+            // }
+            // std::cout << "Jacobian de contato (12x" << model.nv << "):\n" << Jc << std::endl;
+
+
+            // Eigen::MatrixXd Jcom_reduced = Jcom_linear.rightCols(12);  // 3x12
+            // Eigen::MatrixXd Jc_reduced = Jc.rightCols(12);              // 12x12
+
+
+
+
+            // // Get homogeneous transform
+
+            // int aux = 0;
+            // for (const auto& name : _frames_names) {
+            // auto i = model.getFrameId(name);
+
+            // std::cout<<i<<"-"<< name <<std::endl;
+            // aux++;
+            // const pinocchio::SE3& H = data->oMf[i];
+            // // Print the transform
+            // std::cout << H.toHomogeneousMatrix() << std::endl;
+            // }
             // for (const auto& index : _frame_index) {
 
 
@@ -240,18 +276,19 @@ namespace go2_rgc
         }
     }
 
-    void RGCModel::computeLinearizedModel() {
+    void Go2RGC::computeLinearizedModel() {
     const int n_j = 7;  // Número de juntas ativas (ajuste conforme seu robô)
     const int n_x = 17; // Dimensão do estado: [r_dot (3), ω (3), q (7), r (3), ε (4)]
     
     // 1. Jacobiano de contato concatenado (Jc)
-    Eigen::MatrixXd Jc(3 * contact_frames_.size(), model_.nv);
-    for (size_t i = 0; i < contact_frames_.size(); ++i) {
-        pinocchio::Data::Matrix6x J(6, model_.nv);
-        pinocchio::computeFrameJacobian(model_, data_, q_, 
-                                      model_.getFrameId(contact_frames_[i]), 
+    Eigen::MatrixXd Jc(3 * 4, model.nv);
+    for (size_t i = 0; i < 4; ++i) {
+        pinocchio::Data::Matrix6x J(6, model.nv);
+        J.setZero();
+        pinocchio::computeFrameJacobian(model, *data, _q, 
+                                      model.getFrameId("1_FR_foot"), 
                                       pinocchio::LOCAL_WORLD_ALIGNED, J);
-        Jc.block(3 * i, 0, 3, model_.nv) = J.topRows<3>();
+        Jc.block(3 * i, 0, 3, model.nv) = J.topRows<3>();
     }
 
     // 2. Matrizes Γ₁* e Γₐ* (equação 14 do artigo)
@@ -290,6 +327,15 @@ namespace go2_rgc
     B_.setZero();
     B_.block(0, 0, 3, n_j) = K1;  // K₁
     B_.block(3, 0, 3, n_j) = K3;  // K₃
+}
+
+Eigen::Matrix<double, 4, 3> Go2RGC::rpy2Q(const Eigen::Quaterniond& Q) {
+    Eigen::Matrix<double, 4, 3> T;
+    T << -Q.x(), -Q.y(), -Q.z(),
+          Q.w(), -Q.z(),  Q.y(),
+          Q.z(),  Q.w(), -Q.x(),
+         -Q.y(),  Q.x(),  Q.w();
+    return 0.5 * T;
 }
 }
 

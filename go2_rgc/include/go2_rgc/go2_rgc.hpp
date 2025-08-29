@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <mutex>
+#include <iostream>
 #include <filesystem>
 
 #include "controller_interface/controller_interface.hpp"
@@ -18,7 +19,10 @@
 #include "pinocchio/algorithm/kinematics.hpp"
 #include "pinocchio/algorithm/jacobian.hpp"
 #include "pinocchio/algorithm/frames.hpp"
+#include "pinocchio/algorithm/center-of-mass.hpp"
 #include "ament_index_cpp/get_package_share_directory.hpp"
+#include "pinocchio/algorithm/joint-configuration.hpp"
+
 
 
 namespace go2_rgc
@@ -57,7 +61,7 @@ namespace go2_rgc
         controller_interface::CallbackReturn on_deactivate(
             const rclcpp_lifecycle::State &previous_state) override;
 
-        void RGCModel::computeLinearizedModel();
+        void computeLinearizedModel();
 
     protected:
         pinocchio::Model model;
@@ -105,6 +109,21 @@ namespace go2_rgc
             "3_RR_hip",  "3_RR_thigh",  "3_RR_calf",  "3_RR_foot",
             "4_RL_hip",  "4_RL_thigh",  "4_RL_calf",  "4_RL_foot"
         };
+        // Matrizes do modelo linearizado
+        Eigen::MatrixXd A_;
+        Eigen::MatrixXd B_;
+
+        // Jacobianos
+        Eigen::MatrixXd Jc;
+        Eigen::MatrixXd Jcom_linear;
+
+        // Centro de massa e orientação
+        Eigen::Vector3d com;
+        Eigen::Quaterniond Q_;
+
+        // Funções auxiliares
+        Eigen::Matrix<double, 4, 3> rpy2Q(const Eigen::Quaterniond& Q);
+
 
     };
 
