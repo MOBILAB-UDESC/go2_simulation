@@ -188,7 +188,8 @@ namespace go2_rgc
             Eigen::Vector3d com = pinocchio::centerOfMass(model, *data, q);
             std::cout << "Center of Mass: " << com.transpose() << std::endl;
             
-            this->computeJacobians(q);
+            // this->computeJacobians(q);
+            this->computeLinearizedModel(q);
             // Jacobiano do centro de massa (3xnv)
             // pinocchio::Data::Matrix6x Jcom(6, model.nv);
             // Jcom.setZero();
@@ -288,7 +289,7 @@ namespace go2_rgc
 
     }
 
-    void Go2RGC::computeLinearizedModel() {
+    void Go2RGC::computeLinearizedModel(const Eigen::VectorXd &q) {
     const int n_j = 7;  // Número de juntas ativas (ajuste conforme seu robô)
     const int n_x = 17; // Dimensão do estado: [r_dot (3), ω (3), q (7), r (3), ε (4)]
     
@@ -304,6 +305,7 @@ namespace go2_rgc
     // }
 
     Eigen::MatrixXd Jcom_full = pinocchio::jacobianCenterOfMass(model, *data, q);
+        // const int num_contacts = 4;
     // Remove os 6 DoF da base → pega apenas as colunas das juntas
     Jcom = Jcom_full.block(0, 6, 3, 12); // 3 linhas (x,y,z), 12 colunas (juntas)
 
@@ -378,15 +380,15 @@ Eigen::Matrix<double, 4, 3> Go2RGC::rpy2Q(const Eigen::Quaterniond& Q) {
 }
 void Go2RGC::computeJacobians(const Eigen::VectorXd &q)
 {
-    // Jacobiano do centro de massa completo (com base flutuante)
-    Eigen::MatrixXd Jcom_full = pinocchio::jacobianCenterOfMass(model, *data, q);
-    // Remove os 6 DoF da base → pega apenas as colunas das juntas
-    Jcom = Jcom_full.block(0, 6, 3, 12); // 3 linhas (x,y,z), 12 colunas (juntas)
+    // // Jacobiano do centro de massa completo (com base flutuante)
+    // Eigen::MatrixXd Jcom_full = pinocchio::jacobianCenterOfMass(model, *data, q);
+    // // Remove os 6 DoF da base → pega apenas as colunas das juntas
+    // Jcom = Jcom_full.block(0, 6, 3, 12); // 3 linhas (x,y,z), 12 colunas (juntas)
 
-    // Jacobiano de contato (um bloco 3x12 por pé)
+    // // Jacobiano de contato (um bloco 3x12 por pé)
     const int num_contacts = 4;
-    Jc.resize(3 * num_contacts, 12); // 12x12 no total
-    Jc.setZero();
+    // Jc.resize(3 * num_contacts, 12); // 12x12 no total
+    // Jc.setZero();
 
     for (int i = 0; i < num_contacts; ++i)
     {

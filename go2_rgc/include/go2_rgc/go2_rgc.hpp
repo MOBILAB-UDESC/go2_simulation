@@ -61,7 +61,7 @@ namespace go2_rgc
         controller_interface::CallbackReturn on_deactivate(
             const rclcpp_lifecycle::State &previous_state) override;
 
-        void computeLinearizedModel();
+        void computeLinearizedModel(const Eigen::VectorXd &q);
 
     protected:
         // Jacobianos usados no controle (ignorando base)
