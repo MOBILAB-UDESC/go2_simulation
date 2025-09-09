@@ -64,6 +64,12 @@ namespace go2_rgc
         void computeLinearizedModel();
 
     protected:
+        // Jacobianos usados no controle (ignorando base)
+        Eigen::MatrixXd Jc;    // Jacobiano de contato (12x12)
+        Eigen::MatrixXd Jcom;  // Jacobiano do centro de massa (3x12)
+
+        // Função para calcular esses jacobianos
+        void computeJacobians(const Eigen::VectorXd &q);
         pinocchio::Model model;
         std::shared_ptr<pinocchio::Data> data;
 
@@ -113,8 +119,7 @@ namespace go2_rgc
         Eigen::MatrixXd A_;
         Eigen::MatrixXd B_;
 
-        // Jacobianos
-        Eigen::MatrixXd Jc;
+     
         Eigen::MatrixXd Jcom_linear;
 
         // Centro de massa e orientação

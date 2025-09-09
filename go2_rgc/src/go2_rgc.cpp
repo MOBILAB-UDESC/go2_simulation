@@ -80,6 +80,8 @@ namespace go2_rgc
             auto_declare<int>("control_mode", control_mode);
             
             auto_declare<int>("update_rate", update_rate);
+            // computeJacobians(q);
+
         }
         catch (const std::exception &e)
         {
@@ -176,7 +178,7 @@ namespace go2_rgc
             // Corrigir q para ter 19 elementos
             Eigen::VectorXd q(model.nq);
             q.head<3>() = r_base;
-            q.segment<4>(3) << Q_base.w(), Q_base.x(), Q_base.y(), Q_base.z();  // w, x, y, z
+            q.segment<4>(3) << Q_base.x(), Q_base.y(), Q_base.z(), Q_base.w(); // w, x, y, z
             q.tail<12>() = _q; 
             pinocchio::forwardKinematics(model, *data, q);
             pinocchio::framesForwardKinematics(model, *data, q);
@@ -185,7 +187,8 @@ namespace go2_rgc
             // --- Centro de Massa (CoM) ---
             Eigen::Vector3d com = pinocchio::centerOfMass(model, *data, q);
             std::cout << "Center of Mass: " << com.transpose() << std::endl;
-
+            
+            this->computeJacobians(q);
             // Jacobiano do centro de massa (3xnv)
             // pinocchio::Data::Matrix6x Jcom(6, model.nv);
             // Jcom.setZero();
@@ -194,20 +197,20 @@ namespace go2_rgc
             // std::cout << "Jacobian CoM (3x19):\n" << Jcom_linear << std::endl;
 
             // --- Jacobiano de Contato (Jc) ---
-            Eigen::MatrixXd Jc(12, model.nv);
-            Jc.setZero();
+            // Eigen::MatrixXd Jc(12, model.nv);
+            // Jc.setZero();
             // _frame_index.size()
             // for (size_t i = 0; i < 1; ++i) {
 
-                pinocchio::Data::Matrix6x Jframe(6, model.nv);
-                Jframe.setZero();
-                pinocchio::computeFrameJacobian(model, *data, q, model.getFrameId(_frames_names[3]), pinocchio::WORLD, Jframe);
+                // pinocchio::Data::Matrix6x Jframe(6, model.nv);
+                // Jframe.setZero();
+                // pinocchio::computeFrameJacobian(model, *data, q, model.getFrameId(_frames_names[3]), pinocchio::LOCAL_WORLD_ALIGNED, Jframe);
 
                 // Coloca o bloco 3xnv no Jacobiano total
                 // Jc.block(3 * i, 0, 3, model.nv) = Jframe.topRows<3>();
                 // Eigen::MatrixXd matriz_J = Jframe.topRows<3>();
                 // std::cout<<_frames_names[i]<<std::endl;
-                std::cout<< Jframe.topRows<3>()<<std::endl;
+                // std::cout<< Jframe.topRows<3>()<<std::endl;
             // }
             // std::cout << "Jacobian de contato (12x" << model.nv << "):\n" << Jc << std::endl;
 
@@ -274,21 +277,57 @@ namespace go2_rgc
             RCLCPP_ERROR(logger, "Exception in update(): %s", e.what());
             return controller_interface::return_type::ERROR;
         }
+       
+
+    //    std::cout << "\n==========================" << std::endl;
+    //     std::cout << "Jcom (3x12):\n" << Jcom << std::endl;
+
+    //     std::cout << "\n--------------------------" << std::endl;
+    //     std::cout << "Jc (12x12):\n" << Jc << std::endl;
+    //     std::cout << "==========================" << std::endl;
+
     }
 
     void Go2RGC::computeLinearizedModel() {
     const int n_j = 7;  // Número de juntas ativas (ajuste conforme seu robô)
     const int n_x = 17; // Dimensão do estado: [r_dot (3), ω (3), q (7), r (3), ε (4)]
     
-    // 1. Jacobiano de contato concatenado (Jc)
-    Eigen::MatrixXd Jc(3 * 4, model.nv);
-    for (size_t i = 0; i < 4; ++i) {
-        pinocchio::Data::Matrix6x J(6, model.nv);
-        J.setZero();
-        pinocchio::computeFrameJacobian(model, *data, _q, 
-                                      model.getFrameId("1_FR_foot"), 
-                                      pinocchio::LOCAL_WORLD_ALIGNED, J);
-        Jc.block(3 * i, 0, 3, model.nv) = J.topRows<3>();
+    // // 1. Jacobiano de contato concatenado (Jc)
+    // Eigen::MatrixXd Jc(3 * 4, model.nv);
+    // for (size_t i = 0; i < 4; ++i) {
+    //     pinocchio::Data::Matrix6x J(6, model.nv);
+    //     J.setZero();
+    //     pinocchio::computeFrameJacobian(model, *data, _q, 
+    //                                   model.getFrameId("1_FR_foot"), 
+    //                                   pinocchio::LOCAL_WORLD_ALIGNED, J);
+    //     Jc.block(3 * i, 0, 3, model.nv) = J.topRows<3>();
+    // }
+
+    Eigen::MatrixXd Jcom_full = pinocchio::jacobianCenterOfMass(model, *data, q);
+    // Remove os 6 DoF da base → pega apenas as colunas das juntas
+    Jcom = Jcom_full.block(0, 6, 3, 12); // 3 linhas (x,y,z), 12 colunas (juntas)
+
+    // Jacobiano de contato (um bloco 3x12 por pé)
+    const int num_contacts = 4;
+    Jc.resize(3 * num_contacts, 12); // 12x12 no total
+    Jc.setZero();
+
+    for (int i = 0; i < num_contacts; ++i)
+    {
+        // ID do frame do pé (último frame de cada perna)
+        int frame_id = _frame_index[i * 4 + 3];
+
+        // Jacobiano 6x18 completo
+        pinocchio::Data::Matrix6x Jframe(6, model.nv);
+        Jframe.setZero();
+
+        pinocchio::computeFrameJacobian(model, *data, q, frame_id, pinocchio::LOCAL_WORLD_ALIGNED, Jframe);
+
+        // Pegamos só as 3 primeiras linhas (linear) e as 12 colunas das juntas
+        Eigen::MatrixXd J_leg = Jframe.topRows<3>().block(0, 6, 3, 12);
+
+        // Inserimos na linha correspondente do Jc
+        Jc.block(3 * i, 0, 3, 12) = J_leg;
     }
 
     // 2. Matrizes Γ₁* e Γₐ* (equação 14 do artigo)
@@ -337,7 +376,48 @@ Eigen::Matrix<double, 4, 3> Go2RGC::rpy2Q(const Eigen::Quaterniond& Q) {
          -Q.y(),  Q.x(),  Q.w();
     return 0.5 * T;
 }
+void Go2RGC::computeJacobians(const Eigen::VectorXd &q)
+{
+    // Jacobiano do centro de massa completo (com base flutuante)
+    Eigen::MatrixXd Jcom_full = pinocchio::jacobianCenterOfMass(model, *data, q);
+    // Remove os 6 DoF da base → pega apenas as colunas das juntas
+    Jcom = Jcom_full.block(0, 6, 3, 12); // 3 linhas (x,y,z), 12 colunas (juntas)
+
+    // Jacobiano de contato (um bloco 3x12 por pé)
+    const int num_contacts = 4;
+    Jc.resize(3 * num_contacts, 12); // 12x12 no total
+    Jc.setZero();
+
+    for (int i = 0; i < num_contacts; ++i)
+    {
+        // ID do frame do pé (último frame de cada perna)
+        int frame_id = _frame_index[i * 4 + 3];
+
+        // Jacobiano 6x18 completo
+        pinocchio::Data::Matrix6x Jframe(6, model.nv);
+        Jframe.setZero();
+
+        pinocchio::computeFrameJacobian(model, *data, q, frame_id, pinocchio::LOCAL_WORLD_ALIGNED, Jframe);
+
+        // Pegamos só as 3 primeiras linhas (linear) e as 12 colunas das juntas
+        Eigen::MatrixXd J_leg = Jframe.topRows<3>().block(0, 6, 3, 12);
+
+        // Inserimos na linha correspondente do Jc
+        Jc.block(3 * i, 0, 3, 12) = J_leg;
+        // std::cout<<frame_id<<std::endl;
+        // std::cout<< J_leg<<std::endl;
+
+    }
+
+    // // DEBUG opcional:
+    // std::cout << "Jcom (3x12):\n" << Jcom << std::endl;
+    // std::cout << "Jc (12x12):\n" << Jc << std::endl;
+
 }
+
+}
+
+
 
 
 
