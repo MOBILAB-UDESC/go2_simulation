@@ -186,7 +186,7 @@ namespace go2_rgc
 
             // --- Centro de Massa (CoM) ---
             Eigen::Vector3d com = pinocchio::centerOfMass(model, *data, q);
-            std::cout << "Center of Mass: " << com.transpose() << std::endl;
+          //  std::cout << "Center of Mass: " << com.transpose() << std::endl;
             
             // this->computeJacobians(q);
             this->computeLinearizedModel(q);
@@ -332,10 +332,66 @@ namespace go2_rgc
         Jc.block(3 * i, 0, 3, 12) = J_leg;
     }
 
-    // 2. Matrizes Γ₁* e Γₐ* (equação 14 do artigo)
-    Eigen::MatrixXd Gamma = Jc;  // Simplificado (Γ = Jc no artigo)
-    Eigen::MatrixXd Gamma_1_star = Gamma.block(0, 0, 3, n_j);  // Primeiras 3 linhas
-    Eigen::MatrixXd Gamma_a_star = Gamma.block(3, 0, 3, n_j);  // Próximas 3 linhas
+    //// 2. Matrizes Γ₁* e Γₐ* (equação 14 do artigo)
+   // Eigen::MatrixXd Gamma = Jc;  // Simplificado (Γ = Jc no artigo)
+   // Eigen::MatrixXd Gamma_1_star = Gamma.block(0, 0, 3, n_j);  // Primeiras 3 linhas
+    //Eigen::MatrixXd Gamma_a_star = Gamma.block(3, 0, 3, n_j);  // Próximas 3 linhas
+
+    // Supondo que já temos: Jcom (3x12), Jc (12x12) e r_base (posição da base)
+
+    // === Cálculo de Gamma ===
+    Eigen::MatrixXd Gamma(12, 12);
+    Gamma.block(0, 0, 3, 12) = Jcom;
+    Gamma.block(3, 0, 3, 12) = Jcom;
+    Gamma.block(6, 0, 3, 12) = Jcom;
+    Gamma.block(9, 0, 3, 12) = Jcom;
+    Gamma -= Jc;  // Gamma = [J_CoM; J_CoM; J_CoM; J_CoM] - Jc
+
+    // === Inversa de Gamma ===
+    Eigen::MatrixXd Gamma_inv = Gamma.inverse();
+    // === Blocos Gamma_1_star e Gamma_a_star ===
+    Eigen::MatrixXd Gamma_1_star = Gamma.block(0, 0, 3, 12);   // linhas 0-2
+    Eigen::MatrixXd Gamma_a_star = Gamma.block(3, 0, 3, 12);   // linhas 3-5
+
+
+    // === Cálculo de GAMMA_lin e GAMMA_ang ===
+    Eigen::MatrixXd GAMMA_lin = Eigen::MatrixXd::Zero(12, 3);
+    Eigen::MatrixXd GAMMA_ang = Eigen::MatrixXd::Zero(12, 3);
+
+    // === Criação da matriz S_gamma ===
+    // Assumindo que você já tem os frames dos pés em LOCAL_WORLD_ALIGNED
+    std::vector<Eigen::Vector3d> foot_positions;
+
+    for (int i = 0; i < 4; ++i) {
+        int frame_id = _frame_index[i * 4 + 3];  // índice do pé
+        const auto& foot_placement = data->oMf[frame_id];
+        foot_positions.push_back(foot_placement.translation());
+    }
+
+    Eigen::MatrixXd S_gamma(3, 12);
+    Eigen::Vector3d r_base(0, 0, 0); // centro de massa estimado
+
+    for (int i = 0; i < 4; ++i) {
+        Eigen::Matrix3d cross;
+        Eigen::Vector3d rel = foot_positions[i] - r_base;
+        cross <<      0, -rel.z(),  rel.y(),
+                rel.z(),       0, -rel.x(),
+                -rel.y(),  rel.x(),       0;
+        S_gamma.block(0, 3 * i, 3, 3) = cross;
+    }
+
+    // === Loop de soma GAMMA_lin e GAMMA_ang ===
+    for (int i = 0; i < 4; ++i) {
+        GAMMA_lin += Gamma_inv.block(0, 3 * i, 12, 3);
+        GAMMA_ang += Gamma_inv.block(0, 3 * i, 12, 3) * S_gamma.block(0, 3 * i, 3, 3);
+    }
+
+    // === Impressão ===
+    std::cout << "Gamma:\n" << Gamma << std::endl;
+    std::cout << "Gamma_inv:\n" << Gamma_inv << std::endl;
+    std::cout << "GAMMA_lin:\n" << GAMMA_lin << std::endl;
+    std::cout << "GAMMA_ang:\n" << GAMMA_ang << std::endl;
+
 
     // 3. Matrizes K₁, K₂, K₃, K₄ (ganhos do controlador PD)
     double Kp = 100.0, Kd = 10.0;
