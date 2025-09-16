@@ -294,18 +294,8 @@ namespace go2_rgc
     const int n_x = 17; // Dimensão do estado: [r_dot (3), ω (3), q (7), r (3), ε (4)]
     
     // // 1. Jacobiano de contato concatenado (Jc)
-    // Eigen::MatrixXd Jc(3 * 4, model.nv);
-    // for (size_t i = 0; i < 4; ++i) {
-    //     pinocchio::Data::Matrix6x J(6, model.nv);
-    //     J.setZero();
-    //     pinocchio::computeFrameJacobian(model, *data, _q, 
-    //                                   model.getFrameId("1_FR_foot"), 
-    //                                   pinocchio::LOCAL_WORLD_ALIGNED, J);
-    //     Jc.block(3 * i, 0, 3, model.nv) = J.topRows<3>();
-    // }
 
     Eigen::MatrixXd Jcom_full = pinocchio::jacobianCenterOfMass(model, *data, q);
-        // const int num_contacts = 4;
     // Remove os 6 DoF da base → pega apenas as colunas das juntas
     Jcom = Jcom_full.block(0, 6, 3, 12); // 3 linhas (x,y,z), 12 colunas (juntas)
 
@@ -474,9 +464,6 @@ void Go2RGC::computeJacobians(const Eigen::VectorXd &q)
 }
 
 }
-
-
-
 
 
 #include <pluginlib/class_list_macros.hpp>
