@@ -172,12 +172,12 @@ namespace go2_rgc
         try
         {
 
-            Eigen::Vector3d r_base(0, 0, 0);  // ou a posição real se tiver
+            Eigen::Vector3d base(0, 0, 0);  // ou a posição real se tiver
             Eigen::Quaterniond Q_base(1, 0, 0, 0);  // orientação do torso em quaternion (w, x, y, z)
 
             // Corrigir q para ter 19 elementos
             Eigen::VectorXd q(model.nq);
-            q.head<3>() = r_base;
+            q.head<3>() = base; // b -> base 
             q.segment<4>(3) << Q_base.x(), Q_base.y(), Q_base.z(), Q_base.w(); // w, x, y, z
             q.tail<12>() = _q; 
             pinocchio::forwardKinematics(model, *data, q);
@@ -186,7 +186,7 @@ namespace go2_rgc
 
             // --- Centro de Massa (CoM) ---
             Eigen::Vector3d com = pinocchio::centerOfMass(model, *data, q);
-          //  std::cout << "Center of Mass: " << com.transpose() << std::endl;
+           std::cout << "Center of Mass: " << com.transpose() << std::endl;
             
             // this->computeJacobians(q);
             this->computeLinearizedModel(q);
@@ -359,11 +359,11 @@ namespace go2_rgc
     }
 
     Eigen::MatrixXd S_gamma(3, 12);
-    Eigen::Vector3d r_base(0, 0, 0); // centro de massa estimado
+
 
     for (int i = 0; i < 4; ++i) {
         Eigen::Matrix3d cross;
-        Eigen::Vector3d rel = foot_positions[i] - r_base;
+        Eigen::Vector3d rel = foot_positions[i] - com;
         cross <<      0, -rel.z(),  rel.y(),
                 rel.z(),       0, -rel.x(),
                 -rel.y(),  rel.x(),       0;
