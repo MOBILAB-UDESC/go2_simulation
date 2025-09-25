@@ -1,0 +1,1002 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rosidl_adapter: 4.6.6 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+-- Found ament_cmake_ros: 0.12.0 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found python_cmake_module: 0.11.1 (/opt/ros/jazzy/share/python_cmake_module/cmake)
+-- Found PythonExtra: /usr/bin/python3  
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development NumPy Development.Module Development.Embed 
+-- Configuring done (6.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/samsung/go2_ws/src/go2_simulation/build/go2_interfaces
+[  0%] [34m[1mGenerating type hashes for ROS interfaces[0m
+[  0%] Built target ament_cmake_python_copy_go2_interfaces
+running egg_info
+creating go2_interfaces.egg-info
+writing go2_interfaces.egg-info/PKG-INFO
+writing dependency_links to go2_interfaces.egg-info/dependency_links.txt
+writing top-level names to go2_interfaces.egg-info/top_level.txt
+writing manifest file 'go2_interfaces.egg-info/SOURCES.txt'
+reading manifest file 'go2_interfaces.egg-info/SOURCES.txt'
+writing manifest file 'go2_interfaces.egg-info/SOURCES.txt'
+[  0%] Built target ament_cmake_python_build_go2_interfaces_egg
+[  0%] Built target go2_interfaces__rosidl_generator_type_description
+[  1%] [34m[1mGenerating C code for ROS interfaces[0m
+[  1%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[  1%] Built target go2_interfaces__cpp
+[  2%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/bms_cmd__functions.c.o[0m
+[  2%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/bms_cmd__description.c.o[0m
+[  2%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/audio_data__description.c.o[0m
+[  3%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/audio_data__type_support.c.o[0m
+[  3%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/audio_data__functions.c.o[0m
+[  3%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/bms_cmd__type_support.c.o[0m
+[  4%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/bms_state__functions.c.o[0m
+[  4%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/bms_state__description.c.o[0m
+[  4%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/bms_state__type_support.c.o[0m
+[  5%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/error__functions.c.o[0m
+[  5%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/error__description.c.o[0m
+[  5%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/error__type_support.c.o[0m
+[  6%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/go2_front_video_data__description.c.o[0m
+[  6%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/go2_front_video_data__functions.c.o[0m
+[  7%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/height_map__description.c.o[0m
+[  7%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/go2_front_video_data__type_support.c.o[0m
+[  7%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/height_map__functions.c.o[0m
+[  7%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/height_map__type_support.c.o[0m
+[  8%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/imu_state__type_support.c.o[0m
+[  9%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/imu_state__description.c.o[0m
+[  9%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/imu_state__functions.c.o[0m
+[  9%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/interface_config__functions.c.o[0m
+[  9%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/interface_config__description.c.o[0m
+[ 10%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/interface_config__type_support.c.o[0m
+[ 10%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/lidar_state__description.c.o[0m
+[ 10%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/lidar_state__functions.c.o[0m
+[ 10%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/low_cmd__description.c.o[0m
+[ 11%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/lidar_state__type_support.c.o[0m
+[ 12%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/low_cmd__functions.c.o[0m
+[ 12%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/low_cmd__type_support.c.o[0m
+[ 12%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/low_state__description.c.o[0m
+[ 13%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/low_state__functions.c.o[0m
+[ 13%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/low_state__type_support.c.o[0m
+[ 14%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_cmd__description.c.o[0m
+[ 14%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_cmd__functions.c.o[0m
+[ 14%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_cmd__type_support.c.o[0m
+[ 15%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_cmds__description.c.o[0m
+[ 15%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_cmds__functions.c.o[0m
+[ 15%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_cmds__type_support.c.o[0m
+[ 16%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_state__description.c.o[0m
+[ 16%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_state__functions.c.o[0m
+[ 16%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_states__description.c.o[0m
+[ 17%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_state__type_support.c.o[0m
+[ 17%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_states__functions.c.o[0m
+[ 17%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/path_point__description.c.o[0m
+[ 18%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/motor_states__type_support.c.o[0m
+[ 18%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/path_point__functions.c.o[0m
+[ 19%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/path_point__type_support.c.o[0m
+[ 19%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/req__description.c.o[0m
+[ 20%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/req__functions.c.o[0m
+[ 20%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/res__description.c.o[0m
+[ 20%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/req__type_support.c.o[0m
+[ 20%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/sport_mode_cmd__description.c.o[0m
+[ 20%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/res__type_support.c.o[0m
+[ 21%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/res__functions.c.o[0m
+[ 22%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/sport_mode_cmd__functions.c.o[0m
+[ 23%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/sport_mode_state__description.c.o[0m
+[ 23%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/sport_mode_cmd__type_support.c.o[0m
+[ 23%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/sport_mode_state__functions.c.o[0m
+[ 23%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/sport_mode_state__type_support.c.o[0m
+[ 24%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/time_spec__description.c.o[0m
+[ 24%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/time_spec__functions.c.o[0m
+[ 24%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/uwb_state__description.c.o[0m
+[ 25%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/time_spec__type_support.c.o[0m
+[ 25%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/uwb_state__functions.c.o[0m
+[ 25%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/uwb_switch__description.c.o[0m
+[ 26%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/uwb_state__type_support.c.o[0m
+[ 26%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/uwb_switch__functions.c.o[0m
+[ 27%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/uwb_switch__type_support.c.o[0m
+[ 27%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/wireless_controller__description.c.o[0m
+[ 28%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/wireless_controller__functions.c.o[0m
+[ 28%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_c.dir/rosidl_generator_c/go2_interfaces/msg/detail/wireless_controller__type_support.c.o[0m
+[ 28%] [32m[1mLinking C shared library libgo2_interfaces__rosidl_generator_c.so[0m
+[ 28%] Built target go2_interfaces__rosidl_generator_c
+[ 28%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[ 28%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[ 29%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[ 29%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[ 30%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[ 30%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[ 30%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/bms_cmd__type_support.cpp.o[0m
+[ 30%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/audio_data__type_support.cpp.o[0m
+[ 31%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/bms_state__type_support.cpp.o[0m
+[ 31%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/go2_front_video_data__type_support.cpp.o[0m
+[ 31%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/error__type_support.cpp.o[0m
+[ 32%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/height_map__type_support.cpp.o[0m
+[ 32%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/imu_state__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/interface_config__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/lidar_state__type_support.cpp.o[0m
+[ 34%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/audio_data__type_support.cpp.o[0m
+[ 34%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/low_cmd__type_support.cpp.o[0m
+[ 34%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/bms_cmd__type_support.cpp.o[0m
+[ 35%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/low_state__type_support.cpp.o[0m
+[ 36%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/bms_state__type_support.cpp.o[0m
+[ 36%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/motor_cmd__type_support.cpp.o[0m
+[ 36%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/motor_cmds__type_support.cpp.o[0m
+[ 37%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/motor_state__type_support.cpp.o[0m
+[ 37%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/motor_states__type_support.cpp.o[0m
+[ 38%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/path_point__type_support.cpp.o[0m
+[ 38%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/error__type_support.cpp.o[0m
+[ 38%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/req__type_support.cpp.o[0m
+[ 38%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/audio_data__type_support.c.o[0m
+[ 39%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/bms_cmd__type_support.c.o[0m
+[ 39%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/res__type_support.cpp.o[0m
+[ 40%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/sport_mode_cmd__type_support.cpp.o[0m
+[ 40%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/bms_state__type_support.c.o[0m
+[ 40%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/go2_front_video_data__type_support.cpp.o[0m
+[ 40%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/sport_mode_state__type_support.cpp.o[0m
+[ 40%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/error__type_support.c.o[0m
+[ 40%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/audio_data__type_support.cpp.o[0m
+[ 41%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/bms_cmd__type_support.cpp.o[0m
+[ 42%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/go2_front_video_data__type_support.c.o[0m
+[ 42%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/time_spec__type_support.cpp.o[0m
+[ 43%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/height_map__type_support.cpp.o[0m
+[ 43%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/height_map__type_support.c.o[0m
+[ 44%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/uwb_state__type_support.cpp.o[0m
+[ 45%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/imu_state__type_support.c.o[0m
+[ 45%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/uwb_switch__type_support.cpp.o[0m
+[ 45%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/interface_config__type_support.c.o[0m
+[ 46%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/go2_interfaces/msg/wireless_controller__type_support.cpp.o[0m
+[ 46%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/lidar_state__type_support.c.o[0m
+[ 46%] [32m[1mLinking CXX shared library libgo2_interfaces__rosidl_typesupport_c.so[0m
+[ 47%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/low_cmd__type_support.c.o[0m
+[ 47%] Built target go2_interfaces__rosidl_typesupport_c
+[ 47%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/bms_state__type_support.cpp.o[0m
+[ 47%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/imu_state__type_support.cpp.o[0m
+[ 47%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/low_state__type_support.c.o[0m
+[ 47%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/interface_config__type_support.cpp.o[0m
+[ 47%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/audio_data__type_support.cpp.o[0m
+[ 47%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/motor_cmd__type_support.c.o[0m
+[ 47%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/error__type_support.cpp.o[0m
+[ 48%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/lidar_state__type_support.cpp.o[0m
+[ 49%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/audio_data__type_support_c.cpp.o[0m
+[ 50%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/motor_cmds__type_support.c.o[0m
+[ 50%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/motor_state__type_support.c.o[0m
+[ 51%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/motor_states__type_support.c.o[0m
+[ 51%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/path_point__type_support.c.o[0m
+[ 51%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/req__type_support.c.o[0m
+[ 52%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/go2_front_video_data__type_support.cpp.o[0m
+[ 53%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/res__type_support.c.o[0m
+[ 53%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/low_cmd__type_support.cpp.o[0m
+[ 53%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/sport_mode_cmd__type_support.c.o[0m
+[ 54%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/bms_cmd__type_support.cpp.o[0m
+[ 54%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/sport_mode_state__type_support.c.o[0m
+[ 55%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/time_spec__type_support.c.o[0m
+[ 55%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/uwb_state__type_support.c.o[0m
+[ 55%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/bms_cmd__type_support_c.cpp.o[0m
+[ 55%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/bms_state__type_support.cpp.o[0m
+[ 56%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/uwb_switch__type_support.c.o[0m
+[ 56%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/go2_interfaces/msg/detail/wireless_controller__type_support.c.o[0m
+[ 56%] [32m[1mLinking C shared library libgo2_interfaces__rosidl_typesupport_introspection_c.so[0m
+[ 57%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/low_state__type_support.cpp.o[0m
+[ 57%] Built target go2_interfaces__rosidl_typesupport_introspection_c
+[ 58%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/error__type_support.cpp.o[0m
+[ 58%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/bms_state__type_support_c.cpp.o[0m
+[ 58%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/height_map__type_support.cpp.o[0m
+[ 58%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/imu_state__type_support.cpp.o[0m
+[ 58%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/motor_cmd__type_support.cpp.o[0m
+[ 58%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/go2_front_video_data__type_support.cpp.o[0m
+[ 59%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/interface_config__type_support.cpp.o[0m
+[ 60%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/error__type_support_c.cpp.o[0m
+[ 60%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/motor_cmds__type_support.cpp.o[0m
+[ 60%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/height_map__type_support.cpp.o[0m
+[ 60%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/lidar_state__type_support.cpp.o[0m
+[ 60%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/go2_front_video_data__type_support_c.cpp.o[0m
+[ 61%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/imu_state__type_support.cpp.o[0m
+[ 62%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/low_cmd__type_support.cpp.o[0m
+[ 62%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/height_map__type_support_c.cpp.o[0m
+[ 63%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/motor_state__type_support.cpp.o[0m
+[ 63%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/interface_config__type_support.cpp.o[0m
+[ 64%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/imu_state__type_support_c.cpp.o[0m
+[ 64%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/motor_states__type_support.cpp.o[0m
+[ 64%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/interface_config__type_support_c.cpp.o[0m
+[ 64%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/low_state__type_support.cpp.o[0m
+[ 64%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/motor_cmd__type_support.cpp.o[0m
+[ 64%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/lidar_state__type_support.cpp.o[0m
+[ 64%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/path_point__type_support.cpp.o[0m
+[ 65%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/req__type_support.cpp.o[0m
+[ 65%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/res__type_support.cpp.o[0m
+[ 66%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/motor_cmds__type_support.cpp.o[0m
+[ 67%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/lidar_state__type_support_c.cpp.o[0m
+[ 68%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/low_cmd__type_support.cpp.o[0m
+[ 68%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/low_state__type_support.cpp.o[0m
+[ 68%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/motor_state__type_support.cpp.o[0m
+[ 68%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/motor_states__type_support.cpp.o[0m
+[ 69%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/sport_mode_cmd__type_support.cpp.o[0m
+[ 70%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/motor_cmd__type_support.cpp.o[0m
+[ 70%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/low_cmd__type_support_c.cpp.o[0m
+[ 70%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/sport_mode_state__type_support.cpp.o[0m
+[ 70%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/motor_cmds__type_support.cpp.o[0m
+[ 70%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/time_spec__type_support.cpp.o[0m
+[ 71%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/uwb_state__type_support.cpp.o[0m
+[ 72%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/path_point__type_support.cpp.o[0m
+[ 72%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/req__type_support.cpp.o[0m
+[ 72%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/low_state__type_support_c.cpp.o[0m
+[ 72%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/motor_state__type_support.cpp.o[0m
+[ 72%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/uwb_switch__type_support.cpp.o[0m
+[ 73%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/res__type_support.cpp.o[0m
+[ 73%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/go2_interfaces/msg/wireless_controller__type_support.cpp.o[0m
+[ 73%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/path_point__type_support.cpp.o[0m
+[ 73%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/motor_cmds__type_support_c.cpp.o[0m
+[ 73%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/sport_mode_state__type_support.cpp.o[0m
+[ 74%] [32m[1mLinking CXX shared library libgo2_interfaces__rosidl_typesupport_cpp.so[0m
+[ 74%] Built target go2_interfaces__rosidl_typesupport_cpp
+[ 75%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/motor_cmd__type_support_c.cpp.o[0m
+[ 75%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/sport_mode_cmd__type_support.cpp.o[0m
+[ 76%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/sport_mode_state__type_support.cpp.o[0m
+[ 77%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/motor_state__type_support_c.cpp.o[0m
+[ 78%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/time_spec__type_support.cpp.o[0m
+[ 78%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/uwb_state__type_support.cpp.o[0m
+[ 78%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/time_spec__type_support.cpp.o[0m
+[ 78%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/motor_states__type_support_c.cpp.o[0m
+[ 78%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/uwb_switch__type_support.cpp.o[0m
+[ 78%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/sport_mode_cmd__type_support.cpp.o[0m
+[ 79%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/req__type_support_c.cpp.o[0m
+[ 80%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/go2_interfaces/msg/detail/wireless_controller__type_support.cpp.o[0m
+[ 80%] [32m[1mLinking CXX shared library libgo2_interfaces__rosidl_typesupport_introspection_cpp.so[0m
+[ 80%] Built target go2_interfaces__rosidl_typesupport_introspection_cpp
+[ 81%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/uwb_switch__type_support.cpp.o[0m
+[ 81%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/res__type_support_c.cpp.o[0m
+[ 81%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/wireless_controller__type_support.cpp.o[0m
+[ 81%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/sport_mode_cmd__type_support_c.cpp.o[0m
+[ 81%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/uwb_state__type_support.cpp.o[0m
+[ 81%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/time_spec__type_support_c.cpp.o[0m
+[ 81%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/res__type_support.cpp.o[0m
+[ 81%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/uwb_switch__type_support_c.cpp.o[0m
+[ 82%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/req__type_support.cpp.o[0m
+[ 82%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/wireless_controller__type_support_c.cpp.o[0m
+[ 83%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/go2_interfaces/msg/detail/dds_fastrtps/motor_states__type_support.cpp.o[0m
+[ 84%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/uwb_state__type_support_c.cpp.o[0m
+[ 85%] [32m[1mLinking CXX shared library libgo2_interfaces__rosidl_typesupport_fastrtps_cpp.so[0m
+[ 85%] Built target go2_interfaces__rosidl_typesupport_fastrtps_cpp
+[ 86%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/sport_mode_state__type_support_c.cpp.o[0m
+[ 86%] [32mBuilding CXX object CMakeFiles/go2_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/go2_interfaces/msg/detail/path_point__type_support_c.cpp.o[0m
+[ 87%] [32m[1mLinking CXX shared library libgo2_interfaces__rosidl_typesupport_fastrtps_c.so[0m
+[ 87%] Built target go2_interfaces__rosidl_typesupport_fastrtps_c
+[ 87%] Built target go2_interfaces
+[ 87%] [34m[1mGenerating Python code for ROS interfaces[0m
+[ 87%] Built target go2_interfaces__py
+[ 87%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_bms_state_s.c.o[0m
+[ 87%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_bms_cmd_s.c.o[0m
+[ 88%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_audio_data_s.c.o[0m
+[ 88%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_imu_state_s.c.o[0m
+[ 88%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_interface_config_s.c.o[0m
+[ 89%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_lidar_state_s.c.o[0m
+[ 89%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_low_cmd_s.c.o[0m
+[ 89%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_low_state_s.c.o[0m
+[ 90%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_motor_cmd_s.c.o[0m
+[ 90%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_motor_cmds_s.c.o[0m
+[ 91%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_motor_state_s.c.o[0m
+[ 91%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_motor_states_s.c.o[0m
+[ 91%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_path_point_s.c.o[0m
+[ 92%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_req_s.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_height_map_s.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_res_s.c.o[0m
+[ 93%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_sport_mode_cmd_s.c.o[0m
+[ 94%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_sport_mode_state_s.c.o[0m
+[ 94%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_time_spec_s.c.o[0m
+[ 95%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_uwb_state_s.c.o[0m
+[ 95%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_uwb_switch_s.c.o[0m
+[ 95%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_wireless_controller_s.c.o[0m
+[ 95%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_go2_front_video_data_s.c.o[0m
+[ 96%] [32mBuilding C object CMakeFiles/go2_interfaces__rosidl_generator_py.dir/rosidl_generator_py/go2_interfaces/msg/_error_s.c.o[0m
+[ 97%] [32m[1mLinking C shared library libgo2_interfaces__rosidl_generator_py.so[0m
+[ 97%] Built target go2_interfaces__rosidl_generator_py
+[ 98%] [32mBuilding C object CMakeFiles/go2_interfaces_s__rosidl_typesupport_c.dir/rosidl_generator_py/go2_interfaces/_go2_interfaces_s.ep.rosidl_typesupport_c.c.o[0m
+[ 98%] [32mBuilding C object CMakeFiles/go2_interfaces_s__rosidl_typesupport_fastrtps_c.dir/rosidl_generator_py/go2_interfaces/_go2_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[ 98%] [32mBuilding C object CMakeFiles/go2_interfaces_s__rosidl_typesupport_introspection_c.dir/rosidl_generator_py/go2_interfaces/_go2_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[ 99%] [32m[1mLinking C shared module rosidl_generator_py/go2_interfaces/go2_interfaces_s__rosidl_typesupport_fastrtps_c.so[0m
+[ 99%] Built target go2_interfaces_s__rosidl_typesupport_fastrtps_c
+[ 99%] [32m[1mLinking C shared module rosidl_generator_py/go2_interfaces/go2_interfaces_s__rosidl_typesupport_c.so[0m
+[100%] [32m[1mLinking C shared module rosidl_generator_py/go2_interfaces/go2_interfaces_s__rosidl_typesupport_introspection_c.so[0m
+[100%] Built target go2_interfaces_s__rosidl_typesupport_c
+[100%] Built target go2_interfaces_s__rosidl_typesupport_introspection_c
+-- Install configuration: ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/ament_index/resource_index/rosidl_interfaces/go2_interfaces
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/AudioData.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/BmsCmd.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/BmsState.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Error.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Go2FrontVideoData.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/HeightMap.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/IMUState.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/InterfaceConfig.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/LidarState.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/LowCmd.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/LowState.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorCmd.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorCmds.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorState.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorStates.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/PathPoint.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Req.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Res.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/SportModeCmd.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/SportModeState.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/TimeSpec.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/UwbState.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/UwbSwitch.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/WirelessController.json
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__struct.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__type_support.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__functions.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__description.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__functions.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/bms_cmd.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/imu_state.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/motor_cmds.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/go2_front_video_data.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/wireless_controller.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/motor_states.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/error.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/uwb_state.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/audio_data.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/interface_config.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/req.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/motor_state.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/uwb_switch.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/low_cmd.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/rosidl_generator_c__visibility_control.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/motor_cmd.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/sport_mode_state.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/path_point.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/low_state.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/time_spec.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/res.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/sport_mode_cmd.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/lidar_state.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/height_map.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/bms_state.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/environment/library_path.sh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/environment/library_path.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_generator_c.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_generator_c.so" to ""
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_fastrtps_c.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_fastrtps_c.so" to ""
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__rosidl_typesupport_introspection_c.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__type_support.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_introspection_c.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_introspection_c.so" to ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_c.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_c.so" to ""
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/res.hpp
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__builder.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__type_support.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__struct.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__traits.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/lidar_state.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/height_map.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/uwb_state.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/imu_state.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/motor_state.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/interface_config.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/time_spec.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/low_cmd.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/sport_mode_cmd.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/path_point.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/motor_cmd.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/motor_states.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/bms_cmd.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/error.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/go2_front_video_data.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/bms_state.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/low_state.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/sport_mode_state.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/motor_cmds.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/audio_data.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/uwb_switch.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/req.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/wireless_controller.hpp
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/dds_fastrtps
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_fastrtps_cpp.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_fastrtps_cpp.so" to ""
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg
+-- Up-to-date: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/lidar_state__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_cmd__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmds__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_cmd__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_state__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_state__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/audio_data__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/height_map__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/imu_state__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/error__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/res__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/wireless_controller__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/motor_states__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_state__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/interface_config__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/low_cmd__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_state__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/req__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/bms_cmd__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/uwb_switch__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/path_point__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/sport_mode_state__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/go2_front_video_data__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/include/go2_interfaces/go2_interfaces/msg/detail/time_spec__type_support.cpp
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_introspection_cpp.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_introspection_cpp.so" to ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_cpp.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_typesupport_cpp.so" to ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/environment/pythonpath.sh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/environment/pythonpath.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces-0.0.0-py3.12.egg-info
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces-0.0.0-py3.12.egg-info/SOURCES.txt
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces-0.0.0-py3.12.egg-info/top_level.txt
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces-0.0.0-py3.12.egg-info/dependency_links.txt
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces-0.0.0-py3.12.egg-info/PKG-INFO
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/__init__.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/_go2_interfaces_s.ep.rosidl_typesupport_introspection_c.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/_go2_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/go2_interfaces_s__rosidl_typesupport_fastrtps_c.so
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_height_map_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_low_state_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/__init__.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_bms_cmd_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_states.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_audio_data.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_uwb_state.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_sport_mode_cmd.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_sport_mode_state.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_go2_front_video_data.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_req_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_uwb_state_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_uwb_switch_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_bms_state_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_cmds.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_time_spec_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_cmds_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_uwb_switch.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_interface_config.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_bms_state.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_state_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_state.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_cmd_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_time_spec.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_imu_state.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_path_point_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_low_state.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_low_cmd_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_error.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_states_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_imu_state_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_low_cmd.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_cmd.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_req.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_wireless_controller.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_lidar_state_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_path_point.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_interface_config_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_sport_mode_state_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_go2_front_video_data_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_res.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_audio_data_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_wireless_controller_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_bms_cmd.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_res_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_lidar_state.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_height_map.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_error_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_sport_mode_cmd_s.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/go2_interfaces_s__rosidl_typesupport_introspection_c.so
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/_go2_interfaces_s.ep.rosidl_typesupport_c.c
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/go2_interfaces_s__rosidl_typesupport_c.so
+Listing '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/__init__.py'...
+Listing '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/__init__.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_audio_data.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_bms_cmd.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_bms_state.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_error.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_go2_front_video_data.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_height_map.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_imu_state.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_interface_config.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_lidar_state.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_low_cmd.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_low_state.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_cmd.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_cmds.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_state.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_motor_states.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_path_point.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_req.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_res.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_sport_mode_cmd.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_sport_mode_state.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_time_spec.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_uwb_state.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_uwb_switch.py'...
+Compiling '/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/msg/_wireless_controller.py'...
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/go2_interfaces_s__rosidl_typesupport_fastrtps_c.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/go2_interfaces_s__rosidl_typesupport_fastrtps_c.so" to ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/go2_interfaces_s__rosidl_typesupport_introspection_c.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/go2_interfaces_s__rosidl_typesupport_introspection_c.so" to ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/go2_interfaces_s__rosidl_typesupport_c.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/python3.12/site-packages/go2_interfaces/go2_interfaces_s__rosidl_typesupport_c.so" to ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_generator_py.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/lib/libgo2_interfaces__rosidl_generator_py.so" to ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/AudioData.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/BmsCmd.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/BmsState.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Error.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Go2FrontVideoData.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/HeightMap.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/IMUState.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/InterfaceConfig.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/LidarState.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/LowCmd.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/LowState.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorCmd.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorCmds.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorState.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorStates.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/PathPoint.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Req.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Res.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/SportModeCmd.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/SportModeState.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/TimeSpec.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/UwbState.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/UwbSwitch.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/WirelessController.idl
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/AudioData.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/BmsCmd.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/BmsState.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Error.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Go2FrontVideoData.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/HeightMap.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/IMUState.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/InterfaceConfig.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/LidarState.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/LowCmd.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/LowState.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorCmd.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorCmds.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorState.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/MotorStates.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/PathPoint.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Req.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/Res.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/SportModeCmd.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/SportModeState.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/TimeSpec.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/UwbState.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/UwbSwitch.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/msg/WirelessController.msg
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/ament_index/resource_index/package_run_dependencies/go2_interfaces
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/ament_index/resource_index/parent_prefix_path/go2_interfaces
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/environment/ament_prefix_path.sh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/environment/ament_prefix_path.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/environment/path.sh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/environment/path.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/local_setup.bash
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/local_setup.sh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/local_setup.zsh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/local_setup.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/package.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/ament_index/resource_index/packages/go2_interfaces
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/export_go2_interfaces__rosidl_generator_cExport.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/export_go2_interfaces__rosidl_generator_cExport-noconfig.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/export_go2_interfaces__rosidl_typesupport_fastrtps_cExport.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/export_go2_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/go2_interfaces__rosidl_typesupport_introspection_cExport.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/go2_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/go2_interfaces__rosidl_typesupport_cExport.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/go2_interfaces__rosidl_typesupport_cExport-noconfig.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/export_go2_interfaces__rosidl_generator_cppExport.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/export_go2_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/export_go2_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/go2_interfaces__rosidl_typesupport_introspection_cppExport.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/go2_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/go2_interfaces__rosidl_typesupport_cppExport.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/go2_interfaces__rosidl_typesupport_cppExport-noconfig.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/export_go2_interfaces__rosidl_generator_pyExport.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/export_go2_interfaces__rosidl_generator_pyExport-noconfig.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/rosidl_cmake-extras.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/ament_cmake_export_libraries-extras.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/ament_cmake_export_targets-extras.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/go2_interfacesConfig.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/cmake/go2_interfacesConfig-version.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_interfaces/share/go2_interfaces/package.xml

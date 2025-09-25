@@ -1,0 +1,99 @@
+[0.029s] Invoking command in '/home/samsung/go2_ws/src/go2_simulation/build/go2_rgc': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/samsung/go2_ws/src/go2_simulation/go2_rgc -DCMAKE_INSTALL_PREFIX=/home/samsung/go2_ws/src/go2_simulation/install/go2_rgc
+[0.170s] -- The C compiler identification is GNU 13.3.0
+[0.328s] -- The CXX compiler identification is GNU 13.3.0
+[0.379s] -- Detecting C compiler ABI info
+[0.565s] -- Detecting C compiler ABI info - done
+[0.590s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.591s] -- Detecting C compile features
+[0.592s] -- Detecting C compile features - done
+[0.616s] -- Detecting CXX compiler ABI info
+[0.868s] -- Detecting CXX compiler ABI info - done
+[0.897s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.898s] -- Detecting CXX compile features
+[0.898s] -- Detecting CXX compile features - done
+[0.905s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[1.224s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.597s] -- Found rclcpp: 28.1.11 (/opt/ros/jazzy/share/rclcpp/cmake)
+[1.698s] -- Found rosidl_generator_c: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[1.731s] -- Found rosidl_generator_cpp: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[1.765s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.808s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.071s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[2.081s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[2.318s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[2.374s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[2.447s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.675s] -- Found sensor_msgs: 5.3.6 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[2.856s] -- Found nav_msgs: 5.3.6 (/opt/ros/jazzy/share/nav_msgs/cmake)
+[2.956s] -- pinocchio_default FOUND. pinocchio_default at /opt/ros/jazzy/lib/x86_64-linux-gnu/libpinocchio_default.so
+[2.957s] -- pinocchio_parsers FOUND. pinocchio_parsers at /opt/ros/jazzy/lib/x86_64-linux-gnu/libpinocchio_parsers.so
+[2.959s] -- boost_filesystem FOUND. boost_filesystem at /lib/x86_64-linux-gnu/libboost_filesystem.so
+[2.960s] -- boost_serialization FOUND. boost_serialization at /lib/x86_64-linux-gnu/libboost_serialization.so
+[2.962s] -- boost_system FOUND. boost_system at /lib/x86_64-linux-gnu/libboost_system.so
+[3.170s] -- Found Boost: /usr/include (found version "1.83.0") found components: filesystem serialization system 
+[3.176s] -- eigenpy FOUND. eigenpy at /opt/ros/jazzy/lib/x86_64-linux-gnu/libeigenpy.so
+[3.214s] -- Checking for NumPy
+[3.639s] --   NUMPY_INCLUDE_DIRS=/usr/lib/python3/dist-packages/numpy/core/include
+[3.849s] --   NUMPY_VERSION=1.26.4
+[4.519s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development.Module NumPy 
+[4.521s] -- PythonLibraryDirs: 
+[4.521s] -- PythonLibVersionString: 3.12.3
+[4.556s] -- Python site lib: lib/python3.12/site-packages
+[4.557s] -- Python include dirs: /usr/include/python3.12
+[4.635s] -- Checking for NumPy
+[4.826s] --   NUMPY_INCLUDE_DIRS=/usr/lib/python3/dist-packages/numpy/core/include
+[5.028s] --   NUMPY_VERSION=1.26.4
+[5.028s] -- NumPy include dir: /usr/lib/python3/dist-packages/numpy/core/include
+[5.051s] -- Found Boost: /usr/include (found version "1.83.0") found components: python312 
+[5.768s] -- Default C++ standard: 201703
+[5.769s] -- Minimal C++ standard upgraded to 11
+[5.769s] -- C++ standard sufficient: Minimal required 11, currently defined: 17
+[5.769s] -- CMAKE_CXX_STANDARD was not set: automatically set to currently defined standard 17
+[5.797s] -- hpp-fcl FOUND. hpp-fcl at /opt/ros/jazzy/lib/x86_64-linux-gnu/libhpp-fcl.so
+[5.824s] -- Found Boost: /usr/include (found version "1.83.0") found components: chrono serialization filesystem 
+[5.841s] -- Minimal C++ standard upgraded to 14
+[5.842s] -- C++ standard sufficient: Minimal required 14, currently defined: 17
+[5.844s] -- C++ standard sufficient: Minimal required 14, currently defined: 17
+[5.847s] -- Found unitree_go: 0.0.1 (/home/samsung/go2_ws/install/unitree_go/share/unitree_go/cmake)
+[5.894s] -- Found controller_interface: 4.35.0 (/opt/ros/jazzy/share/controller_interface/cmake)
+[6.857s] -- Configuring done (6.8s)
+[6.929s] -- Generating done (0.0s)
+[6.940s] -- Build files have been written to: /home/samsung/go2_ws/src/go2_simulation/build/go2_rgc
+[6.964s] Invoked command in '/home/samsung/go2_ws/src/go2_simulation/build/go2_rgc' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/samsung/go2_ws/src/go2_simulation/go2_rgc -DCMAKE_INSTALL_PREFIX=/home/samsung/go2_ws/src/go2_simulation/install/go2_rgc
+[6.966s] Invoking command in '/home/samsung/go2_ws/src/go2_simulation/build/go2_rgc': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/samsung/go2_ws/src/go2_simulation/build/go2_rgc -- -j8 -l8
+[7.052s] [ 50%] [32mBuilding CXX object CMakeFiles/go2_rgc.dir/src/go2_rgc.cpp.o[0m
+[117.807s] [100%] [32m[1mLinking CXX shared library libgo2_rgc.so[0m
+[122.013s] [100%] Built target go2_rgc
+[122.048s] Invoked command in '/home/samsung/go2_ws/src/go2_simulation/build/go2_rgc' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/samsung/go2_ws/src/go2_simulation/build/go2_rgc -- -j8 -l8
+[122.051s] Invoking command in '/home/samsung/go2_ws/src/go2_simulation/build/go2_rgc': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/samsung/go2_ws/src/go2_simulation/build/go2_rgc
+[122.069s] -- Install configuration: ""
+[122.069s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/go2_rgc.xml
+[122.070s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/lib/libgo2_rgc.so
+[122.084s] -- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/lib/libgo2_rgc.so" to ""
+[122.084s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/include/go2_rgc/include
+[122.085s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/include/go2_rgc/include/go2_rgc
+[122.085s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/include/go2_rgc/include/go2_rgc/go2_rgc_stup.hpp
+[122.085s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/include/go2_rgc/include/go2_rgc/go2_rgc.hpp
+[122.086s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/include/go2_rgc/include/go2_rgc/rgc_node_.hpp
+[122.086s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/environment/library_path.sh
+[122.086s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/environment/library_path.dsv
+[122.087s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/ament_index/resource_index/package_run_dependencies/go2_rgc
+[122.087s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/ament_index/resource_index/parent_prefix_path/go2_rgc
+[122.087s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/environment/ament_prefix_path.sh
+[122.087s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/environment/ament_prefix_path.dsv
+[122.088s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/environment/path.sh
+[122.088s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/environment/path.dsv
+[122.088s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/local_setup.bash
+[122.089s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/local_setup.sh
+[122.089s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/local_setup.zsh
+[122.089s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/local_setup.dsv
+[122.090s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/package.dsv
+[122.090s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/ament_index/resource_index/packages/go2_rgc
+[122.090s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/ament_index/resource_index/controller_interface__pluginlib__plugin/go2_rgc
+[122.091s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/cmake/ament_cmake_export_include_directories-extras.cmake
+[122.091s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/cmake/ament_cmake_export_libraries-extras.cmake
+[122.091s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/cmake/ament_cmake_export_dependencies-extras.cmake
+[122.092s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/cmake/go2_rgcConfig.cmake
+[122.092s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/cmake/go2_rgcConfig-version.cmake
+[122.092s] -- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_rgc/share/go2_rgc/package.xml
+[122.095s] Invoked command in '/home/samsung/go2_ws/src/go2_simulation/build/go2_rgc' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/samsung/go2_ws/src/go2_simulation/build/go2_rgc

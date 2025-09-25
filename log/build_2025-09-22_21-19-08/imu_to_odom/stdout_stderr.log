@@ -1,0 +1,63 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found rclcpp: 28.1.11 (/opt/ros/jazzy/share/rclcpp/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Found rosidl_generator_c: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+-- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found sensor_msgs: 5.3.6 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+-- Found nav_msgs: 5.3.6 (/opt/ros/jazzy/share/nav_msgs/cmake)
+-- Found unitree_go: 0.0.1 (/home/samsung/go2_ws/src/go2_simulation/install/unitree_go/share/unitree_go/cmake)
+-- Found tf2: 0.36.14 (/opt/ros/jazzy/share/tf2/cmake)
+-- Found tf2_geometry_msgs: 0.36.14 (/opt/ros/jazzy/share/tf2_geometry_msgs/cmake)
+-- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)
+-- Found Eigen3: TRUE (found version "3.4.0") 
+-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+-- Configuring done (5.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/samsung/go2_ws/src/go2_simulation/build/imu_to_odom
+[ 25%] [32mBuilding CXX object CMakeFiles/imu_to_odom.dir/src/imu_to_odom.cpp.o[0m
+[ 50%] [32m[1mLinking CXX shared library libimu_to_odom.so[0m
+[ 50%] Built target imu_to_odom
+[ 75%] [32mBuilding CXX object CMakeFiles/imu_to_odom_node.dir/src/imu_to_odom_node.cpp.o[0m
+[100%] [32m[1mLinking CXX executable imu_to_odom_node[0m
+[100%] Built target imu_to_odom_node
+-- Install configuration: ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/lib/imu_to_odom/libimu_to_odom.so
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/lib/imu_to_odom/libimu_to_odom.so" to ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/lib/imu_to_odom/imu_to_odom_node
+-- Set non-toolchain portion of runtime path of "/home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/lib/imu_to_odom/imu_to_odom_node" to ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/include/
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/include//imu_to_odom
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/include//imu_to_odom/imu_to_odom.h
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/ament_index/resource_index/package_run_dependencies/imu_to_odom
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/ament_index/resource_index/parent_prefix_path/imu_to_odom
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/environment/ament_prefix_path.sh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/environment/ament_prefix_path.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/environment/path.sh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/environment/path.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/local_setup.bash
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/local_setup.sh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/local_setup.zsh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/local_setup.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/package.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/ament_index/resource_index/packages/imu_to_odom
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/cmake/imu_to_odomConfig.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/cmake/imu_to_odomConfig-version.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/imu_to_odom/share/imu_to_odom/package.xml

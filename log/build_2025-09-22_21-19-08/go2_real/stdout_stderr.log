@@ -1,0 +1,54 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Found controller_interface: 4.35.0 (/opt/ros/jazzy/share/controller_interface/cmake)
+-- Found rosidl_generator_c: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found TinyXML2 via Config file: /usr/lib/x86_64-linux-gnu/cmake/tinyxml2
+-- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+-- Found TinyXML2 via Config file: /usr/lib/x86_64-linux-gnu/cmake/tinyxml2
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+-- Found TinyXML2 via Config file: /usr/lib/x86_64-linux-gnu/cmake/tinyxml2
+-- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+-- Found TinyXML2 via Config file: /usr/lib/x86_64-linux-gnu/cmake/tinyxml2
+-- Found TinyXML2 via Config file: /usr/lib/x86_64-linux-gnu/cmake/tinyxml2
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found controller_manager: 4.35.0 (/opt/ros/jazzy/share/controller_manager/cmake)
+-- Found go2_description: 0.1.0 (/home/samsung/go2_ws/src/go2_simulation/install/go2_description/share/go2_description/cmake)
+-- Found go2_remap: 0.0.0 (/home/samsung/go2_ws/src/go2_simulation/install/go2_remap/share/go2_remap/cmake)
+-- Configuring done (3.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/samsung/go2_ws/src/go2_simulation/build/go2_real
+-- Install configuration: ""
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/launch
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/launch/go2.robot.launch.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/launch/go2.operator.launch.py
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/ament_index/resource_index/package_run_dependencies/go2_real
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/ament_index/resource_index/parent_prefix_path/go2_real
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/environment/ament_prefix_path.sh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/environment/ament_prefix_path.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/environment/path.sh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/environment/path.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/local_setup.bash
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/local_setup.sh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/local_setup.zsh
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/local_setup.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/package.dsv
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/ament_index/resource_index/packages/go2_real
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/cmake/go2_realConfig.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/cmake/go2_realConfig-version.cmake
+-- Installing: /home/samsung/go2_ws/src/go2_simulation/install/go2_real/share/go2_real/package.xml

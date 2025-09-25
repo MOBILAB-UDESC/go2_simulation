@@ -1,0 +1,29 @@
+{
+  "package_name": "go2_interfaces",
+  "non_idl_tuples": [
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/AudioData.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/BmsCmd.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/BmsState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/Error.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/Go2FrontVideoData.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/HeightMap.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/IMUState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/InterfaceConfig.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/LidarState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/LowCmd.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/LowState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/MotorCmd.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/MotorCmds.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/MotorState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/MotorStates.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/PathPoint.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/Req.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/Res.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/SportModeCmd.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/SportModeState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/TimeSpec.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/UwbState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/UwbSwitch.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/go2_interfaces:msg/WirelessController.msg"
+  ]
+}

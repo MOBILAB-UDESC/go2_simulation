@@ -1,0 +1,33 @@
+{
+  "package_name": "unitree_go",
+  "output_dir": "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_generator_type_description/unitree_go",
+  "idl_tuples": [
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/AudioData.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/BmsCmd.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/BmsState.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/Error.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/HeightMap.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/IMUState.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/InterfaceConfig.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/LidarState.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/LowCmd.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/LowState.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/MotorCmd.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/MotorCmds.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/MotorState.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/MotorStates.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/PathPoint.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/Req.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/Res.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/SportModeCmd.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/SportModeState.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/TimeSpec.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/UwbState.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/UwbSwitch.idl",
+    "/home/samsung/go2_ws/src/go2_simulation/build/unitree_go/rosidl_adapter/unitree_go:msg/WirelessController.idl"
+  ],
+  "include_paths": [
+    "geometry_msgs:/opt/ros/jazzy/share/geometry_msgs",
+    "std_msgs:/opt/ros/jazzy/share/std_msgs"
+  ]
+}

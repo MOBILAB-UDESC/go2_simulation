@@ -1,0 +1,28 @@
+{
+  "package_name": "unitree_go",
+  "non_idl_tuples": [
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/AudioData.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/BmsCmd.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/BmsState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/Error.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/HeightMap.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/IMUState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/InterfaceConfig.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/LidarState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/LowCmd.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/LowState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/MotorCmd.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/MotorCmds.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/MotorState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/MotorStates.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/PathPoint.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/Req.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/Res.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/SportModeCmd.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/SportModeState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/TimeSpec.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/UwbState.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/UwbSwitch.msg",
+    "/home/samsung/go2_ws/src/go2_simulation/unitree_go:msg/WirelessController.msg"
+  ]
+}

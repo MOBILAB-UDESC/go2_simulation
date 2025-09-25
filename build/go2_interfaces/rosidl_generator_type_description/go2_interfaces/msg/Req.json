@@ -1,0 +1,36 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "go2_interfaces/msg/Req",
+      "fields": [
+        {
+          "name": "uuid",
+          "type": {
+            "type_id": 17,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        },
+        {
+          "name": "body",
+          "type": {
+            "type_id": 17,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": []
+  },
+  "type_hashes": [
+    {
+      "type_name": "go2_interfaces/msg/Req",
+      "hash_string": "RIHS01_7096e1731eadea742bf2c0b8c5afb331b86ae3264e216a5308b052f7ae72e5f2"
+    }
+  ]
+}

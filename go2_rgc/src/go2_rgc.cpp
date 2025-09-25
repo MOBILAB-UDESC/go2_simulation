@@ -1,6 +1,8 @@
 #include "go2_rgc/go2_rgc.hpp"
-
 #include <string>
+#include "pinocchio/algorithm/crba.hpp"
+
+
 
 constexpr double PosStopF = (2.146E+9f);
 constexpr double VelStopF = (16000.0f);
@@ -293,6 +295,9 @@ namespace go2_rgc
     const int n_j = 7;  // Número de juntas ativas (ajuste conforme seu robô)
     const int n_x = 17; // Dimensão do estado: [r_dot (3), ω (3), q (7), r (3), ε (4)]
     
+    Eigen::Vector3d base(0, 0, 0);
+    
+
     // // 1. Jacobiano de contato concatenado (Jc)
 
     Eigen::MatrixXd Jcom_full = pinocchio::jacobianCenterOfMass(model, *data, q);
@@ -381,27 +386,67 @@ namespace go2_rgc
     std::cout << "Gamma_inv:\n" << Gamma_inv << std::endl;
     std::cout << "GAMMA_lin:\n" << GAMMA_lin << std::endl;
     std::cout << "GAMMA_ang:\n" << GAMMA_ang << std::endl;
+     // === Massa total do robô (ajuste para o seu caso real) ===
+        double M_total = 80.51;
+
+        // === Matriz S (Ia) ===
+        // S = [cross(foot_i - 2*r + b)]
+        Eigen::MatrixXd S(3, 12);
+        for (int i = 0; i < 4; ++i) {
+            Eigen::Matrix3d cross;
+            Eigen::Vector3d rel = foot_positions[i] - 2.0 * base + base; // (foot - 2*r + b)
+            cross <<      0, -rel.z(),  rel.y(),
+                    rel.z(),       0, -rel.x(),
+                    -rel.y(),  rel.x(),       0;
+            S.block(0, 3 * i, 3, 3) = cross;
+        }
+
+        // === Inércia rotacional da base (3x3) ===
+        Eigen::Matrix3d Ib_base = pinocchio::crba(model, *data, q).block<3,3>(3,3);  // usa CRBA
+        Eigen::Matrix3d Ib_inv = Ib_base.inverse();
+
+        // === Inverso de Jc ===
+        Eigen::MatrixXd inv_Jc = Jc.inverse().transpose(); // (Jc⁻¹)ᵗ = (Jcᵗ)⁻¹
+
+        // === SF e SM ===
+        Eigen::MatrixXd I_sum = Eigen::MatrixXd::Zero(3, 12);  // [I I I I]
+        I_sum.block(0, 0, 3, 3) = Eigen::Matrix3d::Identity();
+        I_sum.block(0, 3, 3, 3) = Eigen::Matrix3d::Identity();
+        I_sum.block(0, 6, 3, 3) = Eigen::Matrix3d::Identity();
+        I_sum.block(0, 9, 3, 3) = Eigen::Matrix3d::Identity();
+
+        Eigen::MatrixXd SF = I_sum * inv_Jc / M_total;
+        Eigen::MatrixXd SM = Ib_inv * S * inv_Jc;
+
+        // === Impressão para debug ===
+        std::cout << "S:\n" << S << std::endl;
+        std::cout << "Ib_inv:\n" << Ib_inv << std::endl;
+        std::cout << "SF:\n" << SF << std::endl;
+        std::cout << "SM:\n" << SM << std::endl;
 
 
-    // 3. Matrizes K₁, K₂, K₃, K₄ (ganhos do controlador PD)
-    double Kp = 100.0, Kd = 10.0;
-    Eigen::MatrixXd K1 = Eigen::MatrixXd::Identity(3, n_j) * Kp;
-    Eigen::MatrixXd K2 = Eigen::MatrixXd::Identity(3, n_j) * Kd;
-    Eigen::MatrixXd K3 = Eigen::MatrixXd::Identity(3, n_j) * Kp;
-    Eigen::MatrixXd K4 = Eigen::MatrixXd::Identity(3, n_j) * Kd;
+
+        double Kp = 100.0, Kd = 10.0;
+        K1_ = Eigen::MatrixXd::Identity(3, 12) * Kp;
+        K2_ = Eigen::MatrixXd::Identity(3, 12) * Kd;
+        K3_ = Eigen::MatrixXd::Identity(3, 12) * Kp;
+        K4_ = Eigen::MatrixXd::Identity(3, 12) * Kd;
+
+
+
 
     // 4. Matriz A (17x17)
     A_.resize(n_x, n_x);
     A_.setZero();
 
     // Preenche blocos conforme a equação da imagem
-    A_.block(0, 0, 3, 3) = -K2 * Gamma_1_star;  // -K₂Γ₁*
-    A_.block(0, 3, 3, 3) = K2 * Gamma_a_star;    // K₂Γₐ*
-    A_.block(0, 6, 3, n_j) = -K1;                // -K₁
+    A_.block(0, 0, 3, 3) = -K2_ * Gamma_1_star;  // -K₂Γ₁*
+    A_.block(0, 3, 3, 3) = K2_ * Gamma_a_star;    // K₂Γₐ*
+    A_.block(0, 6, 3, n_j) = -K1_;                // -K₁
 
-    A_.block(3, 0, 3, 3) = -K4 * Gamma_1_star;   // -K₄Γ₁*
-    A_.block(3, 3, 3, 3) = K4 * Gamma_a_star;    // K₄Γₐ*
-    A_.block(3, 6, 3, n_j) = -K3;                // -K₃
+    A_.block(3, 0, 3, 3) = -K4_ * Gamma_1_star;   // -K₄Γ₁*
+    A_.block(3, 3, 3, 3) = K4_ * Gamma_a_star;    // K₄Γₐ*
+    A_.block(3, 6, 3, n_j) = -K3_;                // -K₃
 
     A_.block(6, 0, n_j, 3) = Gamma_1_star;       // Γ₁*
     A_.block(6, 3, n_j, 3) = -Gamma_a_star;      // -Γₐ*
@@ -412,8 +457,8 @@ namespace go2_rgc
     // 5. Matriz B (17x7) - Apenas B_u (K₁ e K₃)
     B_.resize(n_x, n_j);
     B_.setZero();
-    B_.block(0, 0, 3, n_j) = K1;  // K₁
-    B_.block(3, 0, 3, n_j) = K3;  // K₃
+    B_.block(0, 0, 3, n_j) = K1_;  // K₁
+    B_.block(3, 0, 3, n_j) = K3_;  // K₃
 }
 
 Eigen::Matrix<double, 4, 3> Go2RGC::rpy2Q(const Eigen::Quaterniond& Q) {

@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "go2_interfaces__py",
+		"source" : "/home/samsung/go2_ws/src/go2_simulation/build/go2_interfaces/go2_interfaces__py"
+	}
+}

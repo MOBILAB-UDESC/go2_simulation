@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-45afe357c7d5a1438ad3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "go2_ekf",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "go2_ekf::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-go2_ekf-bbcea0b713e4ddc38c4c.json",
+					"name" : "go2_ekf",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "go2_ekf_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-go2_ekf_uninstall-d50798200f7ec5c7ca48.json",
+					"name" : "go2_ekf_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "go2_fixed_covariance::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-go2_fixed_covariance-a3ebd3bc4711794e4455.json",
+					"name" : "go2_fixed_covariance",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-e52de4b2fe35067b64c3.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/samsung/go2_ws/src/go2_simulation/build/go2_ekf",
+		"source" : "/home/samsung/go2_ws/src/go2_simulation/go2_ekf"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

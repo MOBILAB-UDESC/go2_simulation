@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<robot name="go2" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Declare arguments at top -->
+  <xacro:arg name="simulation" default="false"/>
+  <xacro:arg name="fixed_base" default="false"/>
+
+  <!-- Include xacro files -->
+  <xacro:include filename="$(find go2_description)/urdf/const.xacro"/>
+  <xacro:include filename="$(find go2_description)/urdf/materials.xacro"/>
+  <xacro:include filename="$(find go2_description)/urdf/leg.xacro"/>
+
+  <!-- Include the body (Torso) -->
+  <xacro:include filename="$(find go2_description)/urdf/torso.xacro"/>
+  <!-- Call the torso -->
+  <xacro:torso simulation="$(arg simulation)" fixed_base="$(arg fixed_base)"/>
+
+  <!-- Instantiate the four legs -->
+  
+    <xacro:leg name="1_FR" mirror="-1" mirror_dae="False"  front_hind="1"  front_hind_dae="True"  />
+    <xacro:leg name="2_FL" mirror="1"  mirror_dae="True"   front_hind="1"  front_hind_dae="True"  />
+    <xacro:leg name="3_RR" mirror="-1" mirror_dae="False"  front_hind="-1" front_hind_dae="False" />
+    <xacro:leg name="4_RL" mirror="1"  mirror_dae="True"   front_hind="-1" front_hind_dae="False" />
+    
+  <!-- Include the sensors -->
+  <xacro:include filename="$(find go2_description)/urdf/sensors.xacro"/>
+  <xacro:sensors/>
+
+
+  <!-- Include ROS 2 Control System -->
+  <xacro:include filename="$(find go2_description)/urdf/ros2_control.xacro"/>
+
+ <xacro:if value="$(arg simulation)">
+  <xacro:include filename="$(find go2_description)/gz/gz.xacro"/>
+  <xacro:gz_simulation/>
+ </xacro:if> 
+
+</robot>
+

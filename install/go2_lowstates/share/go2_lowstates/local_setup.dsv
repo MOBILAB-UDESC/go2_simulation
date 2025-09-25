@@ -1,0 +1,3 @@
+source;share/go2_lowstates/environment/ament_prefix_path.sh
+source;share/go2_lowstates/environment/library_path.sh
+source;share/go2_lowstates/environment/path.sh

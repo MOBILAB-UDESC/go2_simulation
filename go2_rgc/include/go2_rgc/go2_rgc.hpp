@@ -119,6 +119,17 @@ namespace go2_rgc
         Eigen::MatrixXd A_;
         Eigen::MatrixXd B_;
 
+        // Matrizes auxiliares para modelo estendido (inspirado no artigo)
+        Eigen::MatrixXd Gamma_1_star;   // 3x12
+        Eigen::MatrixXd Gamma_a_star;   // 3x12
+        Eigen::MatrixXd Gamma_inv;      // 12x12
+        Eigen::MatrixXd GAMMA_lin;      // 12x3
+        Eigen::MatrixXd GAMMA_ang;      // 12x3
+        Eigen::MatrixXd S_gamma;        // 3x12
+        Eigen::MatrixXd S;              // 3x12
+        Eigen::MatrixXd SF;             // 3x12
+        Eigen::MatrixXd SM;             // 3x12
+
      
         Eigen::MatrixXd Jcom_linear;
 
