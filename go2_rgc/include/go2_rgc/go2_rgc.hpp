@@ -67,6 +67,14 @@ namespace go2_rgc
         // Jacobianos usados no controle (ignorando base)
         Eigen::MatrixXd Jc;    // Jacobiano de contato (12x12)
         Eigen::MatrixXd Jcom;  // Jacobiano do centro de massa (3x12)
+        
+
+        // Ganhos PD (matrizes 3x12)
+        Eigen::MatrixXd K1_;
+        Eigen::MatrixXd K2_;
+        Eigen::MatrixXd K3_;
+        Eigen::MatrixXd K4_;
+
 
         // Função para calcular esses jacobianos
         void computeJacobians(const Eigen::VectorXd &q);
