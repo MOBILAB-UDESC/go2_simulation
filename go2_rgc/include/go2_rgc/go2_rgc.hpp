@@ -67,7 +67,14 @@ namespace go2_rgc
         // Jacobianos usados no controle (ignorando base)
         Eigen::MatrixXd Jc;    // Jacobiano de contato (12x12)
         Eigen::MatrixXd Jcom;  // Jacobiano do centro de massa (3x12)
-        
+        double ts_ = 0.01; // tempo de amostragem (ajuste conforme necessário)
+        int N_ = 10;       // horizonte de predição
+        int M_ = 10;       // controle previsto
+
+        Eigen::MatrixXd A_discrete_, B_discrete_;
+        Eigen::MatrixXd A_ext_, B_u_ext_, B_g_ext_;
+        Eigen::MatrixXd G_q_, Phi_q_, Phi_cg_q_;
+
 
         // Ganhos PD (matrizes 3x12)
         Eigen::MatrixXd K1_;

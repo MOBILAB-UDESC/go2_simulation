@@ -423,6 +423,9 @@ namespace go2_rgc
         std::cout << "Ib_inv:\n" << Ib_inv << std::endl;
         std::cout << "SF:\n" << SF << std::endl;
         std::cout << "SM:\n" << SM << std::endl;
+        std::cout << "G_q:\n" << G_q_ << std::endl;
+        std::cout << "Phi_q:\n" << Phi_q_ << std::endl;
+
 
 
 
@@ -432,7 +435,9 @@ namespace go2_rgc
         K3_ = Eigen::MatrixXd::Identity(3, 12) * Kp;
         K4_ = Eigen::MatrixXd::Identity(3, 12) * Kd;
 
-
+            // --- Discretização simples (Euler)
+        A_discrete_ = A_ * ts_ + Eigen::MatrixXd::Identity(A_.rows(), A_.cols());
+        B_discrete_ = B_ * ts_;
 
 
     // 4. Matriz A (17x17)
@@ -459,6 +464,9 @@ namespace go2_rgc
     B_.setZero();
     B_.block(0, 0, 3, n_j) = K1_;  // K₁
     B_.block(3, 0, 3, n_j) = K3_;  // K₃
+
+
+
 }
 
 Eigen::Matrix<double, 4, 3> Go2RGC::rpy2Q(const Eigen::Quaterniond& Q) {
@@ -468,6 +476,24 @@ Eigen::Matrix<double, 4, 3> Go2RGC::rpy2Q(const Eigen::Quaterniond& Q) {
           Q.z(),  Q.w(), -Q.x(),
          -Q.y(),  Q.x(),  Q.w();
     return 0.5 * T;
+        // --- Montagem de A_ext e B_u_ext (Aumentado)
+        int nx = A_discrete_.rows(); // 17
+        int nu = B_discrete_.cols(); // 12
+
+        A_ext_.resize(nx + nu, nx + nu);
+        A_ext_.setZero();
+        A_ext_.block(0, 0, nx, nx) = A_discrete_;
+        A_ext_.block(0, nx, nx, nu) = B_discrete_;
+        A_ext_.block(nx, nx, nu, nu) = Eigen::MatrixXd::Identity(nu, nu);
+
+        B_u_ext_.resize(nx + nu, nu);
+        B_u_ext_.setZero();
+        B_u_ext_.block(0, 0, nx, nu) = B_discrete_;
+        B_u_ext_.block(nx, 0, nu, nu) = Eigen::MatrixXd::Identity(nu, nu);
+
+        // B_g ainda será construído depois com gravidade e torques
+
+
 }
 void Go2RGC::computeJacobians(const Eigen::VectorXd &q)
 {
