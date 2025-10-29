@@ -49,7 +49,7 @@ namespace go2_rgc
             return;
         }
 
-        std::cout << "Converted Xacro to URDF: " << urdf_path << std::endl;
+     
         
         // Create a set of Pinocchio models and data.
         pinocchio::urdf::buildModel(urdf_path, pinocchio::JointModelFreeFlyer(), model);
@@ -110,7 +110,7 @@ namespace go2_rgc
     Go2RGC::on_configure(
         const rclcpp_lifecycle::State &)
     {
-
+        
         for (const auto& name : _frames_names) {
             if (model.existFrame(name)) {
                 _frame_index.push_back(model.getFrameId(name));
@@ -119,8 +119,7 @@ namespace go2_rgc
             }
         }
 
-        // _frame_names
-        // %_frame_idx
+
 
         auto logger = get_node()->get_logger();
 
@@ -174,7 +173,7 @@ namespace go2_rgc
         try
         {
 
-            Eigen::Vector3d base(0, 0, 0);  // ou a posição real se tiver
+            Eigen::Vector3d base(0, 0, 0);  // ou a posição real se tiver, começa posição 0,0,0
             Eigen::Quaterniond Q_base(1, 0, 0, 0);  // orientação do torso em quaternion (w, x, y, z)
 
             // Corrigir q para ter 19 elementos
@@ -188,91 +187,10 @@ namespace go2_rgc
 
             // --- Centro de Massa (CoM) ---
             Eigen::Vector3d com = pinocchio::centerOfMass(model, *data, q);
-           std::cout << "Center of Mass: " << com.transpose() << std::endl;
             
             // this->computeJacobians(q);
             this->computeLinearizedModel(q);
-            // Jacobiano do centro de massa (3xnv)
-            // pinocchio::Data::Matrix6x Jcom(6, model.nv);
-            // Jcom.setZero();
-            // pinocchio::jacobianCenterOfMass(model, *data, q, true);
-            // Eigen::MatrixXd Jcom_linear = Jcom.topRows<3>();  // 3x19
-            // std::cout << "Jacobian CoM (3x19):\n" << Jcom_linear << std::endl;
-
-            // --- Jacobiano de Contato (Jc) ---
-            // Eigen::MatrixXd Jc(12, model.nv);
-            // Jc.setZero();
-            // _frame_index.size()
-            // for (size_t i = 0; i < 1; ++i) {
-
-                // pinocchio::Data::Matrix6x Jframe(6, model.nv);
-                // Jframe.setZero();
-                // pinocchio::computeFrameJacobian(model, *data, q, model.getFrameId(_frames_names[3]), pinocchio::LOCAL_WORLD_ALIGNED, Jframe);
-
-                // Coloca o bloco 3xnv no Jacobiano total
-                // Jc.block(3 * i, 0, 3, model.nv) = Jframe.topRows<3>();
-                // Eigen::MatrixXd matriz_J = Jframe.topRows<3>();
-                // std::cout<<_frames_names[i]<<std::endl;
-                // std::cout<< Jframe.topRows<3>()<<std::endl;
-            // }
-            // std::cout << "Jacobian de contato (12x" << model.nv << "):\n" << Jc << std::endl;
-
-
-            // Eigen::MatrixXd Jcom_reduced = Jcom_linear.rightCols(12);  // 3x12
-            // Eigen::MatrixXd Jc_reduced = Jc.rightCols(12);              // 12x12
-
-
-
-
-            // // Get homogeneous transform
-
-            // int aux = 0;
-            // for (const auto& name : _frames_names) {
-            // auto i = model.getFrameId(name);
-
-            // std::cout<<i<<"-"<< name <<std::endl;
-            // aux++;
-            // const pinocchio::SE3& H = data->oMf[i];
-            // // Print the transform
-            // std::cout << H.toHomogeneousMatrix() << std::endl;
-            // }
-            // for (const auto& index : _frame_index) {
-
-
-            // std::cout<<index <<std::endl;
-            // const pinocchio::SE3& H = data->oMf[index];
-            // // // Print the transform
-            // std::cout << H.toHomogeneousMatrix() << std::endl;
-            // }
-
-
-
-          // 1. Estado base
-        // Eigen::Vector3d r_base(0, 0, 0);
-        // Eigen::Quaterniond Q_base(1, 0, 0, 0); // w, x, y, z
-
-        // // 2. Montar q e v para Pinocchio
-        // Eigen::VectorXd q(model.nq);
-        // q.head<3>() = r_base;
-        // q.segment<4>(3) = Eigen::Vector4d(Q_base.w(), Q_base.x(), Q_base.y(), Q_base.z());
-        // q.tail<12>() = _q;
-
-        // Eigen::VectorXd v(model.nv);
-        // v.head<6>().setZero(); // Velocidade do torso
-        // v.tail<12>() = _qd;
-
-        // // 3. Atualizar Pinocchio
-        // pinocchio::forwardKinematics(model, *data, q, v);
-        // pinocchio::updateFramePlacements(model, *data);
-
-        // // 4. Atualizar modelo RGC e matrizes A/B
-        // rgc_model_->updateState(q, v, r_base, Q_base);
-        
-        // 5. Resolver o controle (em construção)
-        // Eigen::VectorXd tau_command = rgc_model_->solveMPC();
-
-        // 6. Publicar (ainda a definir)
-        // ref_pub_->publish(...);
+;
             return controller_interface::return_type::OK;
         }
         catch (const std::exception &e)
@@ -282,18 +200,13 @@ namespace go2_rgc
         }
        
 
-    //    std::cout << "\n==========================" << std::endl;
-    //     std::cout << "Jcom (3x12):\n" << Jcom << std::endl;
 
-    //     std::cout << "\n--------------------------" << std::endl;
-    //     std::cout << "Jc (12x12):\n" << Jc << std::endl;
-    //     std::cout << "==========================" << std::endl;
 
     }
 
     void Go2RGC::computeLinearizedModel(const Eigen::VectorXd &q) {
     const int n_j = 7;  // Número de juntas ativas (ajuste conforme seu robô)
-    const int n_x = 17; // Dimensão do estado: [r_dot (3), ω (3), q (7), r (3), ε (4)]
+    const int n_x = 26; // Dimensão do estado: [r_dot (3), ω (3), q (7), r (3), ε (4)]
     
     Eigen::Vector3d base(0, 0, 0);
     
@@ -304,7 +217,7 @@ namespace go2_rgc
     // Remove os 6 DoF da base → pega apenas as colunas das juntas
     Jcom = Jcom_full.block(0, 6, 3, 12); // 3 linhas (x,y,z), 12 colunas (juntas)
 
-    // Jacobiano de contato (um bloco 3x12 por pé)
+    // Jacobiano de contato (um bloco 3x12 por pé = 12x12)
     const int num_contacts = 4;
     Jc.resize(3 * num_contacts, 12); // 12x12 no total
     Jc.setZero();
@@ -327,12 +240,6 @@ namespace go2_rgc
         Jc.block(3 * i, 0, 3, 12) = J_leg;
     }
 
-    //// 2. Matrizes Γ₁* e Γₐ* (equação 14 do artigo)
-   // Eigen::MatrixXd Gamma = Jc;  // Simplificado (Γ = Jc no artigo)
-   // Eigen::MatrixXd Gamma_1_star = Gamma.block(0, 0, 3, n_j);  // Primeiras 3 linhas
-    //Eigen::MatrixXd Gamma_a_star = Gamma.block(3, 0, 3, n_j);  // Próximas 3 linhas
-
-    // Supondo que já temos: Jcom (3x12), Jc (12x12) e r_base (posição da base)
 
     // === Cálculo de Gamma ===
     Eigen::MatrixXd Gamma(12, 12);
@@ -381,11 +288,6 @@ namespace go2_rgc
         GAMMA_ang += Gamma_inv.block(0, 3 * i, 12, 3) * S_gamma.block(0, 3 * i, 3, 3);
     }
 
-    // === Impressão ===
-    std::cout << "Gamma:\n" << Gamma << std::endl;
-    std::cout << "Gamma_inv:\n" << Gamma_inv << std::endl;
-    std::cout << "GAMMA_lin:\n" << GAMMA_lin << std::endl;
-    std::cout << "GAMMA_ang:\n" << GAMMA_ang << std::endl;
      // === Massa total do robô (ajuste para o seu caso real) ===
         double M_total = 80.51;
 
@@ -418,31 +320,54 @@ namespace go2_rgc
         Eigen::MatrixXd SF = I_sum * inv_Jc / M_total;
         Eigen::MatrixXd SM = Ib_inv * S * inv_Jc;
 
-        // === Impressão para debug ===
-        std::cout << "S:\n" << S << std::endl;
-        std::cout << "Ib_inv:\n" << Ib_inv << std::endl;
-        std::cout << "SF:\n" << SF << std::endl;
-        std::cout << "SM:\n" << SM << std::endl;
-        std::cout << "G_q:\n" << G_q_ << std::endl;
-        std::cout << "Phi_q:\n" << Phi_q_ << std::endl;
 
 
+        // === Inércia rotacional da base (3x3) ===
+        pinocchio::crba(model, *data, q);  // Atualiza data->Ig corretamente
+        Eigen::Matrix3d I = data->Ig.inertia();//.matrix().block<3,3>(0,0);  // Obtém a matriz de inércia 3x3
+        Eigen::Matrix3d I_inv = I.inverse();  // Inversa
+        // inversão direta (simples)
+        if (I.fullPivLu().isInvertible()) {
+            I_inv = I.inverse();
+        } else {
+            // fallback: regularização para evitar singularidade
+            const double eps = 1e-8;
+            I_inv = (I + eps * Eigen::Matrix3d::Identity()).inverse();
+        }
+        
+      // === Inércia rotacional da base (3x3) ===
 
 
         double Kp = 100.0, Kd = 10.0;
-        K1_ = Eigen::MatrixXd::Identity(3, 12) * Kp;
-        K2_ = Eigen::MatrixXd::Identity(3, 12) * Kd;
-        K3_ = Eigen::MatrixXd::Identity(3, 12) * Kp;
-        K4_ = Eigen::MatrixXd::Identity(3, 12) * Kd;
+        Eigen::MatrixXd I3 = Eigen::MatrixXd::Identity(3, 3);
+        K1_.resize(3, 12);
+        K2_.resize(3, 12);
+        K3_.resize(3, 12);
+        K4_.resize(3, 12);
+
+        K1_ << I3, I3, I3, I3;
+        K2_ << I3, I3, I3, I3;
+        K3_ << I3, I3, I3, I3;
+        K4_ << I3, I3, I3, I3;
+
+        K1_ *= Kp;
+        K2_ *= Kd;
+        K3_ *= Kp;
+        K4_ *= Kd;
+
 
             // --- Discretização simples (Euler)
         A_discrete_ = A_ * ts_ + Eigen::MatrixXd::Identity(A_.rows(), A_.cols());
         B_discrete_ = B_ * ts_;
 
 
-    // 4. Matriz A (17x17)
+    // 4. Matriz A (26x26)
     A_.resize(n_x, n_x);
     A_.setZero();
+
+
+    std::cout<<"Gamma"<<std::endl; 
+    std::cout << Gamma_1_star.rows()<<","<<Gamma_1_star.cols()  << std::endl;
 
     // Preenche blocos conforme a equação da imagem
     A_.block(0, 0, 3, 3) = -K2_ * Gamma_1_star;  // -K₂Γ₁*
@@ -465,7 +390,27 @@ namespace go2_rgc
     B_.block(0, 0, 3, n_j) = K1_;  // K₁
     B_.block(3, 0, 3, n_j) = K3_;  // K₃
 
+        // === Impressão ===
+   // std::cout << "Gamma:\n" << Gamma << std::endl;
+   // std::cout << "Gamma_inv:\n" << Gamma_inv << std::endl;
+   // std::cout << "GAMMA_lin:\n" << GAMMA_lin << std::endl;
+   // std::cout << "GAMMA_ang:\n" << GAMMA_ang << std::endl;
+   // std::cout << "k1_:\n" << K1_ << std::endl;
+    std::cout << "I:\n" << I << std::endl;
+    std::cout << "Jc:\n" << Jc << std::endl;
 
+
+            // === Impressão para debug ===
+    //std::cout << "S:\n" << S << std::endl;
+    //std::cout << "Ib_inv:\n" << Ib_inv << std::endl;
+    //std::cout << "SF:\n" << SF << std::endl;
+    //std::cout << "SM:\n" << SM << std::endl;
+    //std::cout << "G_q:\n" << G_q_ << std::endl;
+    //std::cout << "Phi_q:\n" << Phi_q_ << std::endl;
+
+    // std::cout << "Converted Xacro to URDF: " << urdf_path << std::endl;
+
+    // std::cout << "Center of Mass: " << com.transpose() << std::endl;
 
 }
 
@@ -491,21 +436,17 @@ Eigen::Matrix<double, 4, 3> Go2RGC::rpy2Q(const Eigen::Quaterniond& Q) {
         B_u_ext_.block(0, 0, nx, nu) = B_discrete_;
         B_u_ext_.block(nx, 0, nu, nu) = Eigen::MatrixXd::Identity(nu, nu);
 
-        // B_g ainda será construído depois com gravidade e torques
+        // B_g não existe 
 
 
 }
 void Go2RGC::computeJacobians(const Eigen::VectorXd &q)
 {
-    // // Jacobiano do centro de massa completo (com base flutuante)
-    // Eigen::MatrixXd Jcom_full = pinocchio::jacobianCenterOfMass(model, *data, q);
-    // // Remove os 6 DoF da base → pega apenas as colunas das juntas
-    // Jcom = Jcom_full.block(0, 6, 3, 12); // 3 linhas (x,y,z), 12 colunas (juntas)
+
 
     // // Jacobiano de contato (um bloco 3x12 por pé)
     const int num_contacts = 4;
-    // Jc.resize(3 * num_contacts, 12); // 12x12 no total
-    // Jc.setZero();
+
 
     for (int i = 0; i < num_contacts; ++i)
     {
@@ -523,14 +464,9 @@ void Go2RGC::computeJacobians(const Eigen::VectorXd &q)
 
         // Inserimos na linha correspondente do Jc
         Jc.block(3 * i, 0, 3, 12) = J_leg;
-        // std::cout<<frame_id<<std::endl;
-        // std::cout<< J_leg<<std::endl;
 
     }
 
-    // // DEBUG opcional:
-    // std::cout << "Jcom (3x12):\n" << Jcom << std::endl;
-    // std::cout << "Jc (12x12):\n" << Jc << std::endl;
 
 }
 
