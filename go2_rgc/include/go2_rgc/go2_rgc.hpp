@@ -60,20 +60,37 @@ namespace go2_rgc
         // GO2_RGC_PUBLIC
         controller_interface::CallbackReturn on_deactivate(
             const rclcpp_lifecycle::State &previous_state) override;
+        
+        double getTotalMass() const;
 
         void computeLinearizedModel(const Eigen::VectorXd &q);
+    
+        
 
     protected:
         // Jacobianos usados no controle (ignorando base)
         Eigen::MatrixXd Jc;    // Jacobiano de contato (12x12)
         Eigen::MatrixXd Jcom;  // Jacobiano do centro de massa (3x12)
-        double ts_ = 0.01; // tempo de amostragem (ajuste conforme necessário)
-        int N_ = 10;       // horizonte de predição
-        int M_ = 10;       // controle previsto
+        Eigen::MatrixXd Aa; // discretized A matrix (A * ts + I)
+        Eigen::MatrixXd Ba; 
+        Eigen::MatrixXd Jc_inv; // discretized A matrix (A * ts + I)
+        Eigen::MatrixXd Ib_inv;
+
+        double ts = 0.01; // tempo de amostragem (ajuste conforme necessário)
+        int N = 15;       // horizonte de predição
+        int M = 5;       // controle previsto
+        int nx, nu, ny, nc;
+        double total_mass_ = 0.0;
+        int n_x = 26; // dimensão do estado (linhas de B / A)
+        int n_j = 12; // número de juntas/entradas (colunas de B)
+     
+
 
         Eigen::MatrixXd A_discrete_, B_discrete_;
         Eigen::MatrixXd A_ext_, B_u_ext_, B_g_ext_;
         Eigen::MatrixXd G_q_, Phi_q_, Phi_cg_q_;
+        Eigen::Matrix3d skewSymmetric(const Eigen::Vector3d &v);
+
 
 
         // Ganhos PD (matrizes 3x12)
@@ -81,6 +98,8 @@ namespace go2_rgc
         Eigen::MatrixXd K2_;
         Eigen::MatrixXd K3_;
         Eigen::MatrixXd K4_;
+        Eigen::MatrixXd Sa;  
+        Eigen::MatrixXd gamma;      
 
 
         // Função para calcular esses jacobianos
@@ -135,15 +154,16 @@ namespace go2_rgc
         Eigen::MatrixXd B_;
 
         // Matrizes auxiliares para modelo estendido (inspirado no artigo)
-        Eigen::MatrixXd Gamma_1_star;   // 3x12
-        Eigen::MatrixXd Gamma_a_star;   // 3x12
-        Eigen::MatrixXd Gamma_inv;      // 12x12
+        Eigen::MatrixXd gamma_1_star;   // 3x12
+        Eigen::MatrixXd gamma_a_star;   // 3x12
+        Eigen::MatrixXd gamma_inv;      // 12x12
         Eigen::MatrixXd GAMMA_lin;      // 12x3
         Eigen::MatrixXd GAMMA_ang;      // 12x3
         Eigen::MatrixXd S_gamma;        // 3x12
         Eigen::MatrixXd S;              // 3x12
         Eigen::MatrixXd SF;             // 3x12
         Eigen::MatrixXd SM;             // 3x12
+        Eigen::MatrixXd Jinv; // inversa de 12x12
 
      
         Eigen::MatrixXd Jcom_linear;
@@ -154,7 +174,6 @@ namespace go2_rgc
 
         // Funções auxiliares
         Eigen::Matrix<double, 4, 3> rpy2Q(const Eigen::Quaterniond& Q);
-
 
     };
 
