@@ -64,6 +64,8 @@ namespace go2_rgc
         double getTotalMass() const;
 
         void computeLinearizedModel(const Eigen::VectorXd &q);
+        std::tuple<Eigen::MatrixXd, Eigen::MatrixXd> define_constraints_matrices();
+
     
         
 
@@ -75,15 +77,30 @@ namespace go2_rgc
         Eigen::MatrixXd Ba; 
         Eigen::MatrixXd Jc_inv; // discretized A matrix (A * ts + I)
         Eigen::MatrixXd Ib_inv;
+        Eigen::MatrixXd Phi;        // Matriz de predição do sistema
+        Eigen::MatrixXd Phi_cons;   // Matriz de predição das restrições
+        Eigen::MatrixXd G;          // Matriz de controle do sistema
+        Eigen::MatrixXd G_cons;     // Matriz de controle das restrições
+        Eigen::MatrixXd Ca;         // Matriz de saída
+        Eigen::MatrixXd aux;        // Matriz auxiliar (ny x nu)
+        Eigen::MatrixXd aux_cons;   // Matriz auxiliar de restrição
+
+
+        
 
         double ts = 0.01; // tempo de amostragem (ajuste conforme necessário)
         int N = 15;       // horizonte de predição
         int M = 5;       // controle previsto
         int nx, nu, ny, nc;
         double total_mass_ = 0.0;
-        int n_x = 26; // dimensão do estado (linhas de B / A)
-        int n_j = 12; // número de juntas/entradas (colunas de B)
-     
+        int n_x = 26; // dimensão do estado (linhas de B / A) ok 
+        int n_j = 12; // número de juntas/entradas (colunas de B) = nu 
+        int n_u = 12;
+        int n_y = 5; //ok
+        int n_c = 22;// ok
+
+
+
 
 
         Eigen::MatrixXd A_discrete_, B_discrete_;

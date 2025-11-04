@@ -298,42 +298,73 @@ namespace go2_rgc
                 A_.resize(n_x, n_x);
                 A_.setZero();
 
+                
 
-            
-                // Preenche blocos conforme a equação da imagem
-                A_.block(0, 0, 3, 3) = k2 * gamma_1_star;  // -K₂Γ₁*
-                A_.block(0, 3, 3, 3) = -k2 * gamma_a_star;    // K₂Γₐ*
-                A_.block(0, 6, 3, n_j) = k1;                // -K₁
+                std::cout<<gamma_a_star<<std::endl;
+                // // Preenche blocos conforme a equação da imagem
+                // A_.block(0, 0, 3, 3) = k2 * gamma_1_star;  // -K₂Γ₁*
+                // A_.block(0, 3, 3, 3) = -k2 * gamma_a_star;    // K₂Γₐ*
+                // A_.block(0, 6, 3, n_j) = k1;                // -K₁
 
-                A_.block(3, 0, 3, 3) = k4 * gamma_1_star;   // -K₄Γ₁*
-                A_.block(3, 3, 3, 3) = -k4 * gamma_a_star;    // K₄Γₐ*
-                A_.block(3, 6, 3, n_j) = k3;                // -K₃
+                // A_.block(3, 0, 3, 3) = k4 * gamma_1_star;   // -K₄Γ₁*
+                // A_.block(3, 3, 3, 3) = -k4 * gamma_a_star;    // K₄Γₐ*
+                // A_.block(3, 6, 3, n_j) = k3;                // -K₃
 
-                A_.block(6, 0, n_j, 3) = gamma_1_star;       // Γ₁*
-                A_.block(6, 3, n_j, 3) = -gamma_a_star;     // -Γₐ*
-                A_.block(18, 0, 3, 3) = Eigen::Matrix3d::Identity();  // I (integra r_dot -> r)
-                A_.block(21, 3, 4, 3) = rpy2Q(Q_);              // T_ε (integra ω -> ε)
+                // A_.block(6, 0, n_j, 3) = gamma_1_star;       // Γ₁*
+                // A_.block(6, 3, n_j, 3) = -gamma_a_star;     // -Γₐ*
+                // A_.block(18, 0, 3, 3) = Eigen::Matrix3d::Identity();  // I (integra r_dot -> r)
+                // A_.block(21, 3, 4, 3) = rpy2Q(Q_);              // T_ε (integra ω -> ε)
 
-                // 5. Matriz B - Apenas B_u (K₁ e K₃)
-                B_.resize(n_x, n_j);
-                B_.setZero();
-                B_.block(0, 0, 3, n_j) = -k1;  // K₁
-                B_.block(3, 0, 3, n_j) = -k3;  // K₃
+                // // 5. Matriz B - Apenas B_u (K₁ e K₃)
+                // B_.resize(n_x, n_j);
+                // B_.setZero();
+                // B_.block(0, 0, 3, n_j) = -k1;  // K₁
+                // B_.block(3, 0, 3, n_j) = -k3;  // K₃
 
-                // --- Discretização
-                Aa.resize(n_x + n_j, n_x + n_j);  // 38 x 38
-                Aa.setZero();
+                // // --- Discretização
+                // Aa.resize(n_x + n_j, n_x + n_j);  // 38 x 38
+                // Aa.setZero();
 
-                Ba.resize(n_x + n_j, n_j);      // 38 x 12
-                Ba.setZero();
+                // Ba.resize(n_x + n_j, n_j);      // 38 x 12
+                // Ba.setZero();
 
-                Aa.block(0, 0, n_x, n_x) = Eigen::MatrixXd::Identity(n_x, n_x) + ts * A_;  // topo esquerdo
-                Aa.block(0, n_x, n_x, n_j) = ts * B_;                                      // topo direito
-                Aa.block(n_x, n_x, n_j, n_j) = Eigen::MatrixXd::Identity(n_j, n_j);        // canto inferior direito
+                // Aa.block(0, 0, n_x, n_x) = Eigen::MatrixXd::Identity(n_x, n_x) + ts * A_;  // topo esquerdo
+                // Aa.block(0, n_x, n_x, n_j) = ts * B_;                                      // topo direito
+                // Aa.block(n_x, n_x, n_j, n_j) = Eigen::MatrixXd::Identity(n_j, n_j);        // canto inferior direito
 
-                Ba.block(0, 0, n_x, n_j) = ts * B_;                                      // parte de cima
-                Ba.block(n_x, 0, n_j, n_j) = Eigen::MatrixXd::Identity(n_j, n_j);        // parte de baixo
+                // Ba.block(0, 0, n_x, n_j) = ts * B_;                                      // parte de cima
+                // Ba.block(n_x, 0, n_j, n_j) = Eigen::MatrixXd::Identity(n_j, n_j);        // parte de baixo
 
+
+                // // Matrizes de restrição
+                // G_cons = Eigen::MatrixXd::Zero(nc * N, n_u * M);
+
+                // // Recebe valores das constraints
+                // std::tie(aux_cons, Phi_cons) = define_constraints_matrices();
+
+                // // Inicialização: primeira linha
+                // aux = Ca * Ba;
+                // Phi.block(0, 0, n_y, n_x + n_u) = Ca * Aa;
+
+                // for (int i = 0; i < N; ++i)
+                // {
+                //     int j = 0;
+                //     if (i != 0)
+                //     {
+                //         Phi.block(i * ny, 0, n_y, n_x + n_u) = Phi.block((i - 1) * n_y, 0, n_y, n_x + n_u) * Aa;
+                //         aux = Phi.block((i - 1) * ny, 0, ny, nx + nu) * Ba;
+
+                //         Phi_cons.block(i * nc, 0, nc, nx + nu) = Phi_cons.block((i - 1) * nc, 0, nc, nx + nu) * Aa;
+                //         aux_cons = Phi_cons.block((i - 1) * nc, 0, nc, nx + nu) * Ba;
+                //     }
+
+                //     while (j < M && (i + j) < N)
+                //     {
+                //         G.block((i + j) * ny, j * nu, ny, nu) = aux;
+                //         G_cons.block((i + j) * nc, j * nu, nc, nu) = aux_cons;
+                //         ++j;
+                //     }
+                // }
 
             return controller_interface::return_type::OK;
         }
@@ -547,6 +578,20 @@ std::cout << "Ib_inv:\n" << Ib_inv << std::endl;
 
 }
 
+std::tuple<Eigen::MatrixXd, Eigen::MatrixXd> Go2RGC::define_constraints_matrices()
+{
+    Eigen::MatrixXd aux_cons(n_c, n_j);         // exemplo
+    Eigen::MatrixXd Phi_cons(n_c * N, n_x + n_j);
+
+    aux_cons.setZero();
+    Phi_cons.setZero();
+
+    // aqui vai o conteúdo da função python convertida
+
+    return std::make_tuple(aux_cons, Phi_cons);
+}
+
+
     Eigen::Matrix<double, 4, 3> Go2RGC::rpy2Q(const Eigen::Quaterniond& Q) 
 {
     Eigen::Matrix<double, 4, 3> T;
@@ -600,6 +645,7 @@ std::cout << "Ib_inv:\n" << Ib_inv << std::endl;
 //}
 
 
+
     double Go2RGC::getTotalMass() const
     {
         double total = 0.0;
@@ -611,6 +657,8 @@ std::cout << "Ib_inv:\n" << Ib_inv << std::endl;
         return total;
     }
 }
+
+
 
 
 #include <pluginlib/class_list_macros.hpp>
