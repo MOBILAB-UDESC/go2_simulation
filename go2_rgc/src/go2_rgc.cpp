@@ -2,9 +2,13 @@
 #include <string>
 #include "pinocchio/algorithm/crba.hpp"
 #include "pinocchio/algorithm/crba.hpp"
-#include <Eigen/SVD>   
+#include <Eigen/SVD>
+ 
+
 
 #include "osqp++.h"
+#include <Eigen/Dense>
+#include <Eigen/Sparse>  
 
 constexpr double PosStopF = (2.146E+9f);
 constexpr double VelStopF = (16000.0f);
@@ -90,8 +94,7 @@ namespace go2_rgc
             auto_declare<std::vector<double>>("gain.PIDG.Kp", zeros);
             auto_declare<std::vector<double>>("gain.PIDG.Kd", zeros);
             auto_declare<std::vector<double>>("gain.PIDG.Ki", zeros);
-            auto_declare<int>("control_mode", control_mode);
-            
+            auto_declare<int>("control_mode", control_mode);            
             auto_declare<int>("update_rate", update_rate);
             // computeJacobians(q);
 
@@ -362,25 +365,25 @@ namespace go2_rgc
                 }
             }
 
-            osqp::OsqpInstance instance;
-            instance.objective_matrix = Eigen::SparseMatrix<double>(1, 1);
-            instance.objective_vector.resize(1);
-            instance.objective_vector << -1.0;
-            instance.constraint_matrix = Eigen::SparseMatrix<double>(2, 2);
-            instance.lower_bounds.resize(2);
-            instance.lower_bounds << 0.0, 0.0;
-            instance.upper_bounds.resize(2);
-            instance.upper_bounds << 1.0, 1.0;
+            // osqp::OsqpInstance instance;
+            // instance.objective_matrix = Eigen::SparseMatrix<double>(1, 1);
+            // instance.objective_vector.resize(1);
+            // instance.objective_vector << -1.0;
+            // instance.constraint_matrix = Eigen::SparseMatrix<double>(2, 2);
+            // instance.lower_bounds.resize(2);
+            // instance.lower_bounds << 0.0, 0.0;
+            // instance.upper_bounds.resize(2);
+            // instance.upper_bounds << 1.0, 1.0;
 
-            osqp::OsqpSettings settings;
-            osqp::OsqpSolver solver;
+            // osqp::OsqpSettings settings;
+            // osqp::OsqpSolver solver;
 
-            solver.Init(instance, settings);
+            // solver.Init(instance, settings);
 
-            // solver.Solve();
+          //  // solver.Solve();
             
 
-            // solver.setup(P, q, A, l, u);
+          //  // solver.setup(P, q, A, l, u);
         }
         catch (const std::exception &e)
         {
@@ -422,6 +425,71 @@ namespace go2_rgc
             Q.y(), -Q.x(), -Q.w(),
             -Q.x(), -Q.y(), -Q.z();
         return 0.5 * T;
+    }
+
+
+    Eigen::VectorXd Go2RGC::solve_rgc_osqp(
+        const Eigen::MatrixXd &Phi,
+        const Eigen::MatrixXd &G,
+        const Eigen::MatrixXd &Phi_cons,
+        const Eigen::MatrixXd &G_cons,
+        const Eigen::VectorXd &x,
+        const Eigen::VectorXd &ref,
+        const Eigen::MatrixXd &Q,
+        const Eigen::MatrixXd &R,
+        const Eigen::VectorXd &l,
+        const Eigen::VectorXd &u
+    )
+    {
+        // Build cost
+        Eigen::MatrixXd H_dense = G.transpose() * Q * G + R;
+
+        // q = 2 * G^T * Q * (Phi*x - ref)
+        Eigen::VectorXd diff = (Phi * x - ref);
+        Eigen::VectorXd q = 2.0 * (G.transpose() * (Q * diff));
+
+        Eigen::MatrixXd H_final = 2.0 * H_dense;
+
+        // Convert to sparse (CSC)
+        Eigen::SparseMatrix<double> P = H_final.sparseView();
+        Eigen::SparseMatrix<double> A_cons = G_cons.sparseView();
+
+        // Adjust bounds
+        Eigen::VectorXd l_adj = l - (Phi_cons * x);
+        Eigen::VectorXd u_adj = u - (Phi_cons * x);
+
+        osqp::OsqpInstance instance;
+        instance.objective_matrix = std::move(P);
+        instance.objective_vector = q;
+        instance.constraint_matrix = std::move(A_cons);
+        instance.lower_bounds = l_adj;
+        instance.upper_bounds = u_adj;
+
+        osqp::OsqpSettings settings;
+        settings.verbose = false;
+
+        osqp::OsqpSolver solver;
+        absl::Status st = solver.Init(instance, settings);
+        if (!st.ok())
+        {
+            // Init failed
+            return Eigen::VectorXd::Zero(nu);
+        }
+
+        osqp::OsqpExitCode exitcode = solver.Solve();
+        if (exitcode != osqp::OsqpExitCode::kOptimal && exitcode != osqp::OsqpExitCode::kOptimalInaccurate)
+        {
+            return Eigen::VectorXd::Zero(nu);
+        }
+
+        // Get primal solution (returns Eigen::Map)
+        Eigen::VectorXd sol = solver.primal_solution();
+        if (static_cast<int>(sol.size()) < nu)
+        {
+            return Eigen::VectorXd::Zero(nu);
+        }
+
+        return sol.segment(0, nu);
     }
 
 
