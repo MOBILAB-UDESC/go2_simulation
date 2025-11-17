@@ -1,9 +1,0 @@
-/home/samsung/go2_ws/src/go2_simulation/build/go2_gzsim/CMakeFiles/uninstall.dir
-/home/samsung/go2_ws/src/go2_simulation/build/go2_gzsim/CMakeFiles/go2_gzsim_uninstall.dir
-/home/samsung/go2_ws/src/go2_simulation/build/go2_gzsim/CMakeFiles/test.dir
-/home/samsung/go2_ws/src/go2_simulation/build/go2_gzsim/CMakeFiles/edit_cache.dir
-/home/samsung/go2_ws/src/go2_simulation/build/go2_gzsim/CMakeFiles/rebuild_cache.dir
-/home/samsung/go2_ws/src/go2_simulation/build/go2_gzsim/CMakeFiles/list_install_components.dir
-/home/samsung/go2_ws/src/go2_simulation/build/go2_gzsim/CMakeFiles/install.dir
-/home/samsung/go2_ws/src/go2_simulation/build/go2_gzsim/CMakeFiles/install/local.dir
-/home/samsung/go2_ws/src/go2_simulation/build/go2_gzsim/CMakeFiles/install/strip.dir

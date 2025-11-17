@@ -1,3 +1,0 @@
-source;share/go2_actuator/environment/ament_prefix_path.sh
-source;share/go2_actuator/environment/library_path.sh
-source;share/go2_actuator/environment/path.sh
