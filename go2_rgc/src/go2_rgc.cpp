@@ -4,6 +4,7 @@
 #include "pinocchio/algorithm/crba.hpp"
 #include <Eigen/SVD>   
 
+#include "osqp++.h"
 
 constexpr double PosStopF = (2.146E+9f);
 constexpr double VelStopF = (16000.0f);
@@ -360,6 +361,26 @@ namespace go2_rgc
                     j++;
                 }
             }
+
+            osqp::OsqpInstance instance;
+            instance.objective_matrix = Eigen::SparseMatrix<double>(1, 1);
+            instance.objective_vector.resize(1);
+            instance.objective_vector << -1.0;
+            instance.constraint_matrix = Eigen::SparseMatrix<double>(2, 2);
+            instance.lower_bounds.resize(2);
+            instance.lower_bounds << 0.0, 0.0;
+            instance.upper_bounds.resize(2);
+            instance.upper_bounds << 1.0, 1.0;
+
+            osqp::OsqpSettings settings;
+            osqp::OsqpSolver solver;
+
+            solver.Init(instance, settings);
+
+            // solver.Solve();
+            
+
+            // solver.setup(P, q, A, l, u);
         }
         catch (const std::exception &e)
         {

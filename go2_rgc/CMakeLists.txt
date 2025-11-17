@@ -1,9 +1,13 @@
 cmake_minimum_required(VERSION 3.8)
 project(go2_rgc)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
+# if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+#   add_compile_options(-Wall -Wextra -Wno-pedantic)
+# endif()
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Find dependencies
 find_package(ament_cmake REQUIRED)
@@ -19,6 +23,17 @@ find_package(controller_interface REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
+find_package(osqp REQUIRED)
+# find_package(osqp-cpp REQUIRED)
+
+include(FetchContent)
+FetchContent_Declare(
+    osqp_cpp
+    GIT_REPOSITORY https://github.com/google/osqp-cpp.git
+    GIT_TAG master # or a specific release tag
+)
+FetchContent_MakeAvailable(osqp_cpp)
+
 
 # Include directories
 # include_directories(
@@ -44,6 +59,8 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
   pinocchio::pinocchio
+  osqp::osqp
+  osqp-cpp
 )
 
 ament_target_dependencies(${PROJECT_NAME}
