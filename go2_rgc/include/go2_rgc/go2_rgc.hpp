@@ -66,6 +66,20 @@ namespace go2_rgc
         void computeLinearizedModel(const Eigen::VectorXd &q);
         std::tuple<Eigen::MatrixXd, Eigen::MatrixXd> define_constraints_matrices();
 
+        // Solve the RGC QP using the osqp++ wrapper. Returns the first control
+        // input vector (size nu) from the predicted control sequence.
+        Eigen::VectorXd solve_rgc_osqp(
+            const Eigen::MatrixXd &Phi,
+            const Eigen::MatrixXd &G,
+            const Eigen::MatrixXd &Phi_cons,
+            const Eigen::MatrixXd &G_cons,
+            const Eigen::VectorXd &x,
+            const Eigen::VectorXd &ref,
+            const Eigen::MatrixXd &Q,
+            const Eigen::MatrixXd &R,
+            const Eigen::VectorXd &l,
+            const Eigen::VectorXd &u);
+
     
         
 
@@ -91,12 +105,13 @@ namespace go2_rgc
         double ts = 0.01; // tempo de amostragem (ajuste conforme necessário)
         int N = 15;       // horizonte de predição
         int M = 5;       // controle previsto
-        int nx, nu, ny, nc;
+        int nx, nu, nc;
         double total_mass_ = 0.0;
         int n_x = 26; // dimensão do estado (linhas de B / A) ok 
         int n_j = 12; // número de juntas/entradas (colunas de B) = nu 
         int n_u = 12;
         int n_y = 5; //ok
+        int ny = 5; //ok
         int n_c = 22;// ok
 
 

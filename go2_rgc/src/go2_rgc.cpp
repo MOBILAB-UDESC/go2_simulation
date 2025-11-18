@@ -365,6 +365,25 @@ namespace go2_rgc
                 }
             }
 
+            // --- Construir vetor de referência (equivalente ao Python)
+            // rzRef = 0.25
+            // epsRef = [0, 0, 0, 1]
+            // ref_single = [rzRef; epsRef] -> tamanho ny x 1
+            // self.ref = np.tile(ref_single, (N, 1)) -> (ny*N) x 1
+            Eigen::VectorXd ref_single(ny);
+            if (ny == 5) {
+                ref_single << 0.25, 0.0, 0.0, 0.0, 1.0;
+            } else {
+                // fallback: fill first element with rzRef and remaining zeros
+                ref_single.setZero();
+                if (ny > 0) ref_single(0) = 0.25;
+            }
+
+            Eigen::VectorXd ref = Eigen::VectorXd::Zero(ny * N);
+            for (int i = 0; i < N; ++i) {
+                ref.segment(i * ny, ny) = ref_single;
+            }
+
             // osqp::OsqpInstance instance;
             // instance.objective_matrix = Eigen::SparseMatrix<double>(1, 1);
             // instance.objective_vector.resize(1);
