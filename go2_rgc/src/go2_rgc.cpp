@@ -10,12 +10,20 @@
 #include <Eigen/Dense>
 #include <Eigen/Sparse>  
 
+
+#include "rclcpp/rclcpp.hpp"
+#include <unitree_go/msg/low_state.hpp>
+#include "unitree_go/msg/low_cmd.hpp"
+
+#include <pinocchio/algorithm/centroidal.hpp>
+
 constexpr double PosStopF = (2.146E+9f);
 constexpr double VelStopF = (16000.0f);
 
 
 namespace go2_rgc
 {
+
 
     Go2RGC::Go2RGC()
         : controller_interface::ControllerInterface()
@@ -41,7 +49,7 @@ namespace go2_rgc
         , _lowTick(0)
         , control_mode(1)
     {
-        // Inicialização explícita (redundante se já inicializadas no header)
+        // Inicialização explícita 
         N = 15;
         M = 5;
         ts = 0.01;
@@ -49,6 +57,11 @@ namespace go2_rgc
         nu = 12;
         ny = 5;
         nc = 22;
+
+        Q = Eigen::MatrixXd::Identity(ny * N, ny * N);
+        R = Eigen::MatrixXd::Identity(nu * M, nu * M);
+        l = Eigen::VectorXd::Constant(nc * N, -1.0); // exemplo
+        u = Eigen::VectorXd::Constant(nc * N, 1.0);
 
         const auto package_share_path = ament_index_cpp::get_package_share_directory("go2_description");
         const auto xacro_path = std::filesystem::path(package_share_path) / "urdf" / "go2.xacro";
@@ -150,6 +163,7 @@ namespace go2_rgc
                 _lowTick = msg->tick;
             });
 
+        go2_rgc_publisher = get_node()->create_publisher<lowCmd>("/lowstate", 10);
         return CallbackReturn::SUCCESS;
     }
 
@@ -265,8 +279,8 @@ namespace go2_rgc
             // this->computeJacobians(q);
             // this->computeLinearizedModel(q);
             
-            double Kp = 100.0;
-            double Kd = 10.0;
+            double Kp = 50.0;
+            double Kd = 2.5;
 
             Eigen::MatrixXd k1;
             k1.resize(3,3);
@@ -336,6 +350,62 @@ namespace go2_rgc
             G_cons = Eigen::MatrixXd::Zero(nc * N, n_u * M);
             G = Eigen::MatrixXd::Zero(ny * N, n_u * M);
 
+
+            // até linha 406 ulrimas modificações de 21/11
+            if (first_iteration)
+            {
+                Eigen::VectorXd l0 = Eigen::VectorXd::Constant(nc, -0.2);
+                Eigen::VectorXd u0 = Eigen::VectorXd::Constant(nc,  0.2);
+
+                Eigen::VectorXd f_l = Eigen::VectorXd::Constant(nc - 2, 0.0);
+                Eigen::VectorXd f_u = Eigen::VectorXd::Constant(nc - 2, 200.0);
+
+                l = Eigen::VectorXd::Zero(nc);
+                u = Eigen::VectorXd::Zero(nc);
+                l << l0.head(2), f_l;
+                u << u0.head(2), f_u;
+
+                l = l.replicate(N, 1);
+                u = u.replicate(N, 1);
+                first_iteration = false;
+}
+
+            // Vetores normais e tangentes dos pés (defina corretamente!)
+            Eigen::Vector3d n_fl, n_fr, n_rl, n_rr;
+            Eigen::Vector3d t1_fl, t1_fr, t1_rl, t1_rr;
+            Eigen::Vector3d t2_fl, t2_fr, t2_rl, t2_rr;
+            double mu = 0.7;
+
+            // TODO: Inicialize n_fl, t1_fl, etc. com base nos frames dos pés (LOCAL_WORLD_ALIGNED ou fixos)
+
+            // Cf individual
+        
+            Cf_fl = cf_matrix(n_fl, t1_fl, t2_fl, mu);
+            Cf_fr = cf_matrix(n_fr, t1_fr, t2_fr, mu);
+            Cf_rl = cf_matrix(n_rl, t1_rl, t2_rl, mu);
+            Cf_rr = cf_matrix(n_rr, t1_rr, t2_rr, mu);
+
+            // Cf total (20x12)
+            Cf = Eigen::MatrixXd::Zero(20, 12);
+            Cf.block(0, 0, 5, 3)   = Cf_fl;
+            Cf.block(5, 3, 5, 3)   = Cf_fr;
+            Cf.block(10, 6, 5, 3)  = Cf_rl;
+            Cf.block(15, 9, 5, 3)  = Cf_rr;
+
+            // Fc_mtx = -Cf * Jc^-1
+            Fc_mtx = -Cf * Jc_inv;
+
+            // Atualização da constraint matrix
+            aux_cons.block(0, 0, 2, Ba.cols()) = C_cons.block(0, 0, 2, C_cons.cols()) * Ba;
+            aux_cons.block(2, 0, 20, Ba.cols()) = kp * Fc_mtx;  // kp constante ou vetor → ajuste conforme
+
+            // C_cons parte inferior
+            C_cons.block(2, 0, 20, L.cols()) = Fc_mtx * L;
+
+            // Phi_cons
+            Phi_cons.block(0, 0, nc, Aa.cols()) = C_cons * Aa;
+
+
             // Recebe valores das constraints
             std::tie(aux_cons, Phi_cons) = define_constraints_matrices();
 
@@ -370,6 +440,7 @@ namespace go2_rgc
             // epsRef = [0, 0, 0, 1]
             // ref_single = [rzRef; epsRef] -> tamanho ny x 1
             // self.ref = np.tile(ref_single, (N, 1)) -> (ny*N) x 1
+
             Eigen::VectorXd ref_single(ny);
             if (ny == 5) {
                 ref_single << 0.25, 0.0, 0.0, 0.0, 1.0;
@@ -384,25 +455,139 @@ namespace go2_rgc
                 ref.segment(i * ny, ny) = ref_single;
             }
 
-            // osqp::OsqpInstance instance;
-            // instance.objective_matrix = Eigen::SparseMatrix<double>(1, 1);
-            // instance.objective_vector.resize(1);
-            // instance.objective_vector << -1.0;
-            // instance.constraint_matrix = Eigen::SparseMatrix<double>(2, 2);
-            // instance.lower_bounds.resize(2);
-            // instance.lower_bounds << 0.0, 0.0;
-            // instance.upper_bounds.resize(2);
-            // instance.upper_bounds << 1.0, 1.0;
 
-            // osqp::OsqpSettings settings;
-            // osqp::OsqpSolver solver;
+            // FUNÇÕES E VARIÁVEIS PARA CÁLCULO DE "X"
+            // 1. Linear and angular velocity da base (base_link ou torso)
+            Eigen::Vector3d base_linear_velocity = Eigen::Vector3d::Zero();
+            Eigen::Vector3d base_angular_velocity = Eigen::Vector3d::Zero();
 
-            // solver.Init(instance, settings);
 
-          //  // solver.Solve();
+
+            // 2. Velocidade angular (omega)
+            Eigen::Vector3d omega = base_angular_velocity;  // a melhor fonte ?
+
+            // // 3. Posição do centro de massa (com)
+            // pinocchio::centerOfMass(model, *data, q);  // Atualiza data->com
+            // Eigen::Vector3d com = data->com[0];  // Extrai CoM da base (índice 0)
+
+
+
+
+            // dq_base = [vel_linear_base(3), vel_angular_base(3), dq_juntas(12)]
+            Eigen::VectorXd dq(model.nv);
+            dq.setZero();
+            dq.head<3>() = base_linear_velocity;   // FALTA (omega e vel linear)
+            dq.segment<3>(3) = base_angular_velocity;
+            dq.tail<12>() = _qd;
+
+            // Momento centroidal
+            pinocchio::computeCentroidalMomentum(model, *data, q, dq);
+            Eigen::Vector3d r_vel = data->hg.linear() / total_mass_;   // dr do Python
+
+
+            Eigen::VectorXd x(26);
+            int idx = 0;
+
+            // 1. r_vel (3)
+            x.segment<3>(idx) = r_vel;  
+            idx += 3;
+
+            // 2. omega (3)
+            x.segment<3>(idx) = omega;   //modelo  pinocchio
+            idx += 3;
+
+            // 3. q (12)
+            x.segment<12>(idx) = _q;
+            idx += 12;
+
+            // 4. r_pos (3)
+            x.segment<3>(idx) = com;      // Center of Mass
+            idx += 3;
+
+            // 5. epsilon (4)
+            x.segment<4>(idx) << Q_base.w(), Q_base.x(), Q_base.y(), Q_base.z();
+            idx += 4;
+
+            // 6. gravidade (1)
+            x(idx) = -9.81;
+            idx += 1;
+
+            // 7. qr (12)
+            x.segment<12>(idx) = qr;
+
+
+
+
+
+        // OSQP Solver
+            // Build cost
+                Eigen::MatrixXd H_dense = G.transpose() * Q * G + R;
+
+                // que = 2 * G^T * Q * (Phi*x - ref)
+                Eigen::VectorXd diff = (Phi * x - ref);
+                Eigen::VectorXd que = 2.0 * (G.transpose() * (Q * diff));
+
+                Eigen::MatrixXd H_final = 2.0 * H_dense;
+
+                // Convert to sparse (CSC)
+                Eigen::SparseMatrix<double> P = H_final.sparseView();
+                Eigen::SparseMatrix<double> A_cons = G_cons.sparseView();
+
+                // Adjust bounds
+                Eigen::VectorXd l_adj = l - (Phi_cons * x);
+                Eigen::VectorXd u_adj = u - (Phi_cons * x);
+
+                osqp::OsqpInstance instance;
+                instance.objective_matrix = std::move(P);
+                instance.objective_vector = q;
+                instance.constraint_matrix = std::move(A_cons);
+                instance.lower_bounds = l_adj;
+                instance.upper_bounds = u_adj;
+
+                osqp::OsqpSettings settings;
+                settings.verbose = false;
+
+                osqp::OsqpSolver solver;
+                absl::Status st = solver.Init(instance, settings);
+
+
+                Eigen::VectorXd delta_qr;  
+                osqp::OsqpExitCode exitcode = solver.Solve();
+                if (exitcode != osqp::OsqpExitCode::kOptimal && 
+                    exitcode != osqp::OsqpExitCode::kOptimalInaccurate)
+                {
+                    dqr = Eigen::VectorXd::Zero(nu);  // fallback
+                    RCLCPP_WARN(get_node()->get_logger(), "OSQP solver failed! Exit code: %d", static_cast<int>(exitcode));
+                }
+                else {
+                    Eigen::VectorXd sol = solver.primal_solution();
+                    auto delta_qr = sol.segment(0, nu);
+                }
             
 
-          //  // solver.setup(P, q, A, l, u);
+
+                // // até linha 555 ultimas modificações de  21/11
+            
+                L = Eigen::MatrixXd::Zero(12, 38);
+                L.block(0, 6, 12, 12) = -kp * Eigen::MatrixXd::Identity(12, 12);
+                L.block(0, 26, 12, 12) = kp * Eigen::MatrixXd::Identity(12, 12);
+
+
+
+
+            
+                // Publicar dqr no tópico do controlador de juntas
+                auto low_Cmd = lowCmd(); 
+                for (int j = 0; j < 12; ++j)
+                {
+                    low_Cmd.motor_cmd[j].q = delta_qr(j)+ qr(j); // qr[j] + dqr(j);
+                    low_Cmd.motor_cmd[j].dq = 0;
+                    low_Cmd.motor_cmd[j].kp = 50;
+                    low_Cmd.motor_cmd[j].kd = 2.5;
+                }
+            
+                go2_rgc_publisher->publish(low_Cmd);
+
         }
         catch (const std::exception &e)
         {
@@ -447,69 +632,84 @@ namespace go2_rgc
     }
 
 
-    Eigen::VectorXd Go2RGC::solve_rgc_osqp(
-        const Eigen::MatrixXd &Phi,
-        const Eigen::MatrixXd &G,
-        const Eigen::MatrixXd &Phi_cons,
-        const Eigen::MatrixXd &G_cons,
-        const Eigen::VectorXd &x,
-        const Eigen::VectorXd &ref,
-        const Eigen::MatrixXd &Q,
-        const Eigen::MatrixXd &R,
-        const Eigen::VectorXd &l,
-        const Eigen::VectorXd &u
-    )
+    // Eigen::MatrixXd Cf_fl, Cf_fr, Cf_rl, Cf_rr, Cf;
+    // Eigen::MatrixXd Fc_mtx;
+    Eigen::MatrixXd Go2RGC::cf_matrix(const Eigen::Vector3d& n, const Eigen::Vector3d& t1, const Eigen::Vector3d& t2, double mu)
     {
-        // Build cost
-        Eigen::MatrixXd H_dense = G.transpose() * Q * G + R;
-
-        // q = 2 * G^T * Q * (Phi*x - ref)
-        Eigen::VectorXd diff = (Phi * x - ref);
-        Eigen::VectorXd q = 2.0 * (G.transpose() * (Q * diff));
-
-        Eigen::MatrixXd H_final = 2.0 * H_dense;
-
-        // Convert to sparse (CSC)
-        Eigen::SparseMatrix<double> P = H_final.sparseView();
-        Eigen::SparseMatrix<double> A_cons = G_cons.sparseView();
-
-        // Adjust bounds
-        Eigen::VectorXd l_adj = l - (Phi_cons * x);
-        Eigen::VectorXd u_adj = u - (Phi_cons * x);
-
-        osqp::OsqpInstance instance;
-        instance.objective_matrix = std::move(P);
-        instance.objective_vector = q;
-        instance.constraint_matrix = std::move(A_cons);
-        instance.lower_bounds = l_adj;
-        instance.upper_bounds = u_adj;
-
-        osqp::OsqpSettings settings;
-        settings.verbose = false;
-
-        osqp::OsqpSolver solver;
-        absl::Status st = solver.Init(instance, settings);
-        if (!st.ok())
-        {
-            // Init failed
-            return Eigen::VectorXd::Zero(nu);
-        }
-
-        osqp::OsqpExitCode exitcode = solver.Solve();
-        if (exitcode != osqp::OsqpExitCode::kOptimal && exitcode != osqp::OsqpExitCode::kOptimalInaccurate)
-        {
-            return Eigen::VectorXd::Zero(nu);
-        }
-
-        // Get primal solution (returns Eigen::Map)
-        Eigen::VectorXd sol = solver.primal_solution();
-        if (static_cast<int>(sol.size()) < nu)
-        {
-            return Eigen::VectorXd::Zero(nu);
-        }
-
-        return sol.segment(0, nu);
+        Eigen::MatrixXd Cf(5, 3);
+        Cf.row(0) = -mu * n + t1;
+        Cf.row(1) = -mu * n + t2;
+        Cf.row(2) =  mu * n + t2;
+        Cf.row(3) =  mu * n + t1;
+        Cf.row(4) =  n;
+        return Cf;
     }
+
+
+
+    // Eigen::VectorXd Go2RGC::solve_rgc_osqp(
+    //     const Eigen::MatrixXd &Phi,
+    //     const Eigen::MatrixXd &G,
+    //     const Eigen::MatrixXd &Phi_cons,
+    //     const Eigen::MatrixXd &G_cons,
+    //     const Eigen::VectorXd &x,
+    //     const Eigen::VectorXd &ref,
+    //     const Eigen::MatrixXd &Q,
+    //     const Eigen::MatrixXd &R,
+    //     const Eigen::VectorXd &l,
+    //     const Eigen::VectorXd &u
+    // )
+    // {
+    //     // Build cost
+    //     Eigen::MatrixXd H_dense = G.transpose() * Q * G + R;
+
+    //     // q = 2 * G^T * Q * (Phi*x - ref)
+    //     Eigen::VectorXd diff = (Phi * x - ref);
+    //     Eigen::VectorXd q = 2.0 * (G.transpose() * (Q * diff));
+
+    //     Eigen::MatrixXd H_final = 2.0 * H_dense;
+
+    //     // Convert to sparse (CSC)
+    //     Eigen::SparseMatrix<double> P = H_final.sparseView();
+    //     Eigen::SparseMatrix<double> A_cons = G_cons.sparseView();
+
+    //     // Adjust bounds
+    //     Eigen::VectorXd l_adj = l - (Phi_cons * x);
+    //     Eigen::VectorXd u_adj = u - (Phi_cons * x);
+
+    //     osqp::OsqpInstance instance;
+    //     instance.objective_matrix = std::move(P);
+    //     instance.objective_vector = q;
+    //     instance.constraint_matrix = std::move(A_cons);
+    //     instance.lower_bounds = l_adj;
+    //     instance.upper_bounds = u_adj;
+
+    //     osqp::OsqpSettings settings;
+    //     settings.verbose = false;
+
+    //     osqp::OsqpSolver solver;
+    //     absl::Status st = solver.Init(instance, settings);
+    //     if (!st.ok())
+    //     {
+    //         // Init failed
+    //         return Eigen::VectorXd::Zero(nu);
+    //     }
+
+    //     osqp::OsqpExitCode exitcode = solver.Solve();
+    //     if (exitcode != osqp::OsqpExitCode::kOptimal && exitcode != osqp::OsqpExitCode::kOptimalInaccurate)
+    //     {
+    //         return Eigen::VectorXd::Zero(nu);
+    //     }
+
+    //     // Get primal solution (returns Eigen::Map)
+    //     Eigen::VectorXd sol = solver.primal_solution();
+    //     if (static_cast<int>(sol.size()) < nu)
+    //     {
+    //         return Eigen::VectorXd::Zero(nu);
+    //     }
+
+    //     return sol.segment(0, nu);
+    // }
 
 
     double Go2RGC::getTotalMass() const

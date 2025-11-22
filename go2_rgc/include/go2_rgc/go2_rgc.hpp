@@ -22,6 +22,9 @@
 #include "pinocchio/algorithm/center-of-mass.hpp"
 #include "ament_index_cpp/get_package_share_directory.hpp"
 #include "pinocchio/algorithm/joint-configuration.hpp"
+#include "rclcpp/rclcpp.hpp"
+#include <unitree_go/msg/low_state.hpp>
+#include "unitree_go/msg/low_cmd.hpp"
 
 
 
@@ -66,21 +69,19 @@ namespace go2_rgc
         void computeLinearizedModel(const Eigen::VectorXd &q);
         std::tuple<Eigen::MatrixXd, Eigen::MatrixXd> define_constraints_matrices();
 
-        // Solve the RGC QP using the osqp++ wrapper. Returns the first control
-        // input vector (size nu) from the predicted control sequence.
-        Eigen::VectorXd solve_rgc_osqp(
-            const Eigen::MatrixXd &Phi,
-            const Eigen::MatrixXd &G,
-            const Eigen::MatrixXd &Phi_cons,
-            const Eigen::MatrixXd &G_cons,
-            const Eigen::VectorXd &x,
-            const Eigen::VectorXd &ref,
-            const Eigen::MatrixXd &Q,
-            const Eigen::MatrixXd &R,
-            const Eigen::VectorXd &l,
-            const Eigen::VectorXd &u);
-
-    
+        // // Solve the RGC QP using the osqp++ wrapper. Returns the first control
+        // // input vector (size nu) from the predicted control sequence.
+        // Eigen::VectorXd solve_rgc_osqp(
+        //     const Eigen::MatrixXd &Phi,
+        //     const Eigen::MatrixXd &G,
+        //     const Eigen::MatrixXd &Phi_cons,
+        //     const Eigen::MatrixXd &G_cons,
+        //     const Eigen::VectorXd &x,
+        //     const Eigen::VectorXd &ref,
+        //     const Eigen::MatrixXd &Q,
+        //     const Eigen::MatrixXd &R,
+        //     const Eigen::VectorXd &l,
+        //     const Eigen::VectorXd &u);    
         
 
     protected:
@@ -98,6 +99,30 @@ namespace go2_rgc
         Eigen::MatrixXd Ca;         // Matriz de saída
         Eigen::MatrixXd aux;        // Matriz auxiliar (ny x nu)
         Eigen::MatrixXd aux_cons;   // Matriz auxiliar de restrição
+        Eigen::MatrixXd Q;
+        Eigen::MatrixXd R;
+        Eigen::VectorXd l;
+        Eigen::VectorXd u;
+
+
+        // --- Matrizes auxiliares para restrições
+        Eigen::MatrixXd cf_matrix(const Eigen::Vector3d &n, const Eigen::Vector3d &t1, const Eigen::Vector3d &t2, double mu);
+        Eigen::MatrixXd Cf_fl, Cf_fr, Cf_rl, Cf_rr;
+        Eigen::MatrixXd Cf;              // 20x12
+        Eigen::MatrixXd Fc_mtx;          // 20x12
+        Eigen::MatrixXd C_cons;          // 20x38
+        // Eigen::MatrixXd Phi_cons;        // (nc*N)x(nx+nu)
+        // Eigen::MatrixXd aux_cons;        // 20xnu
+        Eigen::MatrixXd L;               // 12x38
+
+        // --- Parâmetros de restrição
+        double mu;                       // coeficiente de atrito
+        bool first_iteration = true;
+
+        // --- Limites de restrição
+        Eigen::VectorXd f_l, f_u;
+        // Eigen::VectorXd l, u;
+
 
 
         
@@ -113,6 +138,10 @@ namespace go2_rgc
         int n_y = 5; //ok
         int ny = 5; //ok
         int n_c = 22;// ok
+        // int Kp = 50;
+        // double Kd = 2.5;
+
+        rclcpp::Publisher<lowCmd>::SharedPtr go2_rgc_publisher;
 
 
 
@@ -144,8 +173,10 @@ namespace go2_rgc
         Eigen::VectorXd _tau;
         Eigen::VectorXd _effort;
 
-        std::vector<double> kp;
-        std::vector<double> kd;
+        double kp = 50.0;
+
+        double kd = 2.5;
+
         std::vector<double> ki;
         Eigen::VectorXd q_e;
         Eigen::VectorXd qi_e;
