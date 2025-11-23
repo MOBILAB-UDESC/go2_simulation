@@ -25,13 +25,15 @@
 #include "rclcpp/rclcpp.hpp"
 #include <unitree_go/msg/low_state.hpp>
 #include "unitree_go/msg/low_cmd.hpp"
-
-
+#include "nav_msgs/msg/odometry.hpp"
+#include <std_msgs/msg/bool.hpp>
 
 namespace go2_rgc
 {
+    using odometry = nav_msgs::msg::Odometry;
     using lowCmd = unitree_go::msg::LowCmd;
     using lowStates = unitree_go::msg::LowState;
+    using boolmsgs = std_msgs::msg::Bool;
 
     class Go2RGC : public controller_interface::ControllerInterface
     {
@@ -63,10 +65,10 @@ namespace go2_rgc
         // GO2_RGC_PUBLIC
         controller_interface::CallbackReturn on_deactivate(
             const rclcpp_lifecycle::State &previous_state) override;
-        
+
         double getTotalMass() const;
 
-        void computeLinearizedModel(const Eigen::VectorXd &q);
+        // void computeLinearizedModel(const Eigen::VectorXd &q);
         std::tuple<Eigen::MatrixXd, Eigen::MatrixXd> define_constraints_matrices();
 
         // // Solve the RGC QP using the osqp++ wrapper. Returns the first control
@@ -81,87 +83,77 @@ namespace go2_rgc
         //     const Eigen::MatrixXd &Q,
         //     const Eigen::MatrixXd &R,
         //     const Eigen::VectorXd &l,
-        //     const Eigen::VectorXd &u);    
-        
+        //     const Eigen::VectorXd &u);
 
     protected:
         // Jacobianos usados no controle (ignorando base)
-        Eigen::MatrixXd Jc;    // Jacobiano de contato (12x12)
-        Eigen::MatrixXd Jcom;  // Jacobiano do centro de massa (3x12)
-        Eigen::MatrixXd Aa; // discretized A matrix (A * ts + I)
-        Eigen::MatrixXd Ba; 
+        Eigen::MatrixXd Jc;   // Jacobiano de contato (12x12)
+        Eigen::MatrixXd Jcom; // Jacobiano do centro de massa (3x12)
+        Eigen::MatrixXd Aa;   // discretized A matrix (A * ts + I)
+        Eigen::MatrixXd Ba;
         Eigen::MatrixXd Jc_inv; // discretized A matrix (A * ts + I)
         Eigen::MatrixXd Ib_inv;
-        Eigen::MatrixXd Phi;        // Matriz de predição do sistema
-        Eigen::MatrixXd Phi_cons;   // Matriz de predição das restrições
-        Eigen::MatrixXd G;          // Matriz de controle do sistema
-        Eigen::MatrixXd G_cons;     // Matriz de controle das restrições
-        Eigen::MatrixXd Ca;         // Matriz de saída
-        Eigen::MatrixXd aux;        // Matriz auxiliar (ny x nu)
-        Eigen::MatrixXd aux_cons;   // Matriz auxiliar de restrição
+        Eigen::MatrixXd Phi;      // Matriz de predição do sistema
+        Eigen::MatrixXd Phi_cons; // Matriz de predição das restrições
+        Eigen::MatrixXd G;        // Matriz de controle do sistema
+        Eigen::MatrixXd G_cons;   // Matriz de controle das restrições
+        Eigen::MatrixXd Ca;       // Matriz de saída
+        Eigen::MatrixXd aux;      // Matriz auxiliar (ny x nu)
+        Eigen::MatrixXd aux_cons; // Matriz auxiliar de restrição
         Eigen::MatrixXd Q;
         Eigen::MatrixXd R;
         Eigen::VectorXd l;
         Eigen::VectorXd u;
-
+        Eigen::VectorXd ref;
 
         // --- Matrizes auxiliares para restrições
         Eigen::MatrixXd cf_matrix(const Eigen::Vector3d &n, const Eigen::Vector3d &t1, const Eigen::Vector3d &t2, double mu);
         Eigen::MatrixXd Cf_fl, Cf_fr, Cf_rl, Cf_rr;
-        Eigen::MatrixXd Cf;              // 20x12
-        Eigen::MatrixXd Fc_mtx;          // 20x12
-        Eigen::MatrixXd C_cons;          // 20x38
+        Eigen::MatrixXd Cf;     // 20x12
+        Eigen::MatrixXd Fc_mtx; // 20x12
+        Eigen::MatrixXd C_cons; // 20x38
         // Eigen::MatrixXd Phi_cons;        // (nc*N)x(nx+nu)
         // Eigen::MatrixXd aux_cons;        // 20xnu
-        Eigen::MatrixXd L;               // 12x38
+        Eigen::MatrixXd L; // 12x38
 
         // --- Parâmetros de restrição
-        double mu;                       // coeficiente de atrito
+        double mu; // coeficiente de atrito
         bool first_iteration = true;
 
         // --- Limites de restrição
         Eigen::VectorXd f_l, f_u;
         // Eigen::VectorXd l, u;
 
-
-
-        
-
-        double ts = 0.01; // tempo de amostragem (ajuste conforme necessário)
-        int N = 15;       // horizonte de predição
-        int M = 5;       // controle previsto
+        double ts = 0.01;
+        int N = 15; // horizonte de predição
+        int M = 5;  // controle previsto
         int nx, nu, nc;
         double total_mass_ = 0.0;
-        int n_x = 26; // dimensão do estado (linhas de B / A) ok 
-        int n_j = 12; // número de juntas/entradas (colunas de B) = nu 
+        int n_x = 26; // dimensão do estado (linhas de B / A) ok
+        int n_j = 12; // número de juntas/entradas (colunas de B) = nu
         int n_u = 12;
-        int n_y = 5; //ok
-        int ny = 5; //ok
-        int n_c = 22;// ok
+        int n_y = 5;  // ok
+        int ny = 5;   // ok
+        int n_c = 22; // ok
         // int Kp = 50;
         // double Kd = 2.5;
 
         rclcpp::Publisher<lowCmd>::SharedPtr go2_rgc_publisher;
-
-
-
-
 
         Eigen::MatrixXd A_discrete_, B_discrete_;
         Eigen::MatrixXd A_ext_, B_u_ext_, B_g_ext_;
         Eigen::MatrixXd G_q_, Phi_q_, Phi_cg_q_;
         Eigen::Matrix3d skewSymmetric(const Eigen::Vector3d &v);
 
-
-
         // Ganhos PD (matrizes 3x12)
         Eigen::MatrixXd K1_;
         Eigen::MatrixXd K2_;
         Eigen::MatrixXd K3_;
         Eigen::MatrixXd K4_;
-        Eigen::MatrixXd Sa;  
-        Eigen::MatrixXd gamma;      
+        Eigen::MatrixXd Sa;
+        Eigen::MatrixXd gamma;
 
+        Eigen::MatrixXd I_stack = Eigen::MatrixXd::Zero(3, 12);
 
         // Função para calcular esses jacobianos
         void computeJacobians(const Eigen::VectorXd &q);
@@ -185,6 +177,11 @@ namespace go2_rgc
         Eigen::VectorXd qr;
         Eigen::VectorXd dqr;
 
+        Eigen::VectorXd base_pos;
+        Eigen::VectorXd base_lin_vel;
+        Eigen::VectorXd base_ori;
+        Eigen::VectorXd base_ang_vel;
+
         int update_rate;
 
         lowCmd lowCmd_msg;
@@ -197,38 +194,38 @@ namespace go2_rgc
         uint32_t _lowTick;
 
         rclcpp::Publisher<lowCmd>::SharedPtr joints_cmd_publisher_;
-
-        rclcpp::Subscription<lowCmd>::SharedPtr controller_reference_subscriber_;
         rclcpp::Subscription<lowStates>::SharedPtr lowstate_subscriber_;
+        rclcpp::Subscription<odometry>::SharedPtr odometry_subscriber_;
+        rclcpp::Subscription<boolmsgs>::SharedPtr active_rgc_subscriber_;
+
+        bool active_rgc = false;
 
         uint32_t control_mode;
 
         std::mutex mutex_controller;
 
-        std::vector<int> _frame_index; 
+        std::vector<int> _frame_index;
         std::vector<std::string> _frames_names = {
-            "1_FR_hip",  "1_FR_thigh",  "1_FR_calf",  "1_FR_foot",
-            "2_FL_hip",  "2_FL_thigh",  "2_FL_calf",  "2_FL_foot",
-            "3_RR_hip",  "3_RR_thigh",  "3_RR_calf",  "3_RR_foot",
-            "4_RL_hip",  "4_RL_thigh",  "4_RL_calf",  "4_RL_foot"
-        };
+            "1_FR_hip", "1_FR_thigh", "1_FR_calf", "1_FR_foot",
+            "2_FL_hip", "2_FL_thigh", "2_FL_calf", "2_FL_foot",
+            "3_RR_hip", "3_RR_thigh", "3_RR_calf", "3_RR_foot",
+            "4_RL_hip", "4_RL_thigh", "4_RL_calf", "4_RL_foot"};
         // Matrizes do modelo linearizado
         Eigen::MatrixXd A_;
         Eigen::MatrixXd B_;
 
         // Matrizes auxiliares para modelo estendido (inspirado no artigo)
-        Eigen::MatrixXd gamma_1_star;   // 3x12
-        Eigen::MatrixXd gamma_a_star;   // 3x12
-        Eigen::MatrixXd gamma_inv;      // 12x12
-        Eigen::MatrixXd GAMMA_lin;      // 12x3
-        Eigen::MatrixXd GAMMA_ang;      // 12x3
-        Eigen::MatrixXd S_gamma;        // 3x12
-        Eigen::MatrixXd S;              // 3x12
-        Eigen::MatrixXd SF;             // 3x12
-        Eigen::MatrixXd SM;             // 3x12
-        Eigen::MatrixXd Jinv; // inversa de 12x12
+        Eigen::MatrixXd gamma_1_star; // 3x12
+        Eigen::MatrixXd gamma_a_star; // 3x12
+        Eigen::MatrixXd gamma_inv;    // 12x12
+        Eigen::MatrixXd GAMMA_lin;    // 12x3
+        Eigen::MatrixXd GAMMA_ang;    // 12x3
+        Eigen::MatrixXd S_gamma;      // 3x12
+        Eigen::MatrixXd S;            // 3x12
+        Eigen::MatrixXd SF;           // 3x12
+        Eigen::MatrixXd SM;           // 3x12
+        Eigen::MatrixXd Jinv;         // inversa de 12x12
 
-     
         Eigen::MatrixXd Jcom_linear;
 
         // Centro de massa e orientação
@@ -236,8 +233,7 @@ namespace go2_rgc
         Eigen::Quaterniond Q_;
 
         // Funções auxiliares
-        Eigen::Matrix<double, 4, 3> rpy2Q(const Eigen::Quaterniond& Q);
-
+        Eigen::Matrix<double, 4, 3> rpy2Q(const Eigen::VectorXd &q);
     };
 
 }

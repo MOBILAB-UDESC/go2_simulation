@@ -93,6 +93,6 @@ go2_jointcontroller:
 
 go2_rgc:
   ros__parameters:
-    update_rate: 1
+    update_rate: 250
 
     simulation: true

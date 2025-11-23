@@ -14,20 +14,17 @@ def generate_launch_description():
     simulation_arg = DeclareLaunchArgument(
         "simulation",
         default_value="true",
-        description='Set to "true" for simulation mode'
-    )
+        description='Set to "true" for simulation mode')
 
     fixed_base_arg = DeclareLaunchArgument(
         "fixed_base",
         default_value="false",
-        description='Set to "true" to fix the robot base'
-    )
+        description='Set to "true" to fix the robot base')
 
     use_sim_time_arg = DeclareLaunchArgument(
         "use_sim_time",
         default_value="true",
-        description="If true, use simulated clock"
-    )
+        description="If true, use simulated clock")
 
     simulation = LaunchConfiguration("simulation")
     fixed_base = LaunchConfiguration("fixed_base")
@@ -37,15 +34,14 @@ def generate_launch_description():
     robot_description_content = Command([
         PathJoinSubstitution([FindExecutable(name="xacro")]),
         " ",
-        PathJoinSubstitution([
-            FindPackageShare("go2_description"),
-            "urdf",
-            "go2.xacro"
-        ]),
+        PathJoinSubstitution(
+            [FindPackageShare("go2_description"), "urdf", "go2.xacro"]),
         " ",
-        "simulation:=", simulation,
+        "simulation:=",
+        simulation,
         " ",
-        "fixed_base:=", fixed_base,
+        "fixed_base:=",
+        fixed_base,
     ])
 
     robot_description = {"robot_description": robot_description_content}
@@ -63,10 +59,18 @@ def generate_launch_description():
         executable="create",
         output="screen",
         arguments=[
-            "-topic", "robot_description",
-            "-name", "go2",
-            "-allow_renaming", "true",
-            "-x", "0", "-y", "0", "-z", "0.5",
+            "-topic",
+            "robot_description",
+            "-name",
+            "go2",
+            "-allow_renaming",
+            "true",
+            "-x",
+            "0",
+            "-y",
+            "0",
+            "-z",
+            "0.5",
         ],
     )
 
@@ -80,21 +84,28 @@ def generate_launch_description():
     go2_actuator_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["go2_actuator", "--controller-manager", "/controller_manager"],
+        arguments=[
+            "go2_actuator", "--controller-manager", "/controller_manager"
+        ],
         output="screen",
     )
 
     go2_low_states_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["go2_lowstates", "--controller-manager", "/controller_manager"],
+        arguments=[
+            "go2_lowstates", "--controller-manager", "/controller_manager"
+        ],
         output="screen",
     )
 
     go2_joint_controller = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["go2_jointcontroller", "--controller-manager", "/controller_manager"],
+        arguments=[
+            "go2_jointcontroller", "--controller-manager",
+            "/controller_manager"
+        ],
         output="screen",
     )
 
@@ -103,19 +114,18 @@ def generate_launch_description():
         executable="spawner",
         arguments=["go2_rgc", "--controller-manager", "/controller_manager"],
         output="screen",
-    )  
-
-    bridge_params = os.path.join(
-        get_package_share_directory("go2_gzsim"),
-        "config",
-        "gz_bridge.yaml"
     )
+
+    bridge_params = os.path.join(get_package_share_directory("go2_gzsim"),
+                                 "config", "gz_bridge.yaml")
 
     ros_gz_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
         arguments=[
-            "--ros-args", "-p", f"config_file:={bridge_params}",
+            "--ros-args",
+            "-p",
+            f"config_file:={bridge_params}",
         ],
         output="screen",
     )
@@ -126,11 +136,8 @@ def generate_launch_description():
         output="screen",
     )
 
-    rviz_config_path = PathJoinSubstitution([
-        FindPackageShare("go2_description"),
-        "rviz",
-        "go2.rviz"
-    ])
+    rviz_config_path = PathJoinSubstitution(
+        [FindPackageShare("go2_description"), "rviz", "go2.rviz"])
 
     rviz_node = Node(
         package="rviz2",
@@ -138,52 +145,43 @@ def generate_launch_description():
         name="rviz2",
         output="log",
         arguments=["-d", rviz_config_path],
-        parameters=[
-            {
-                "use_sim_time": use_sim_time,
-                "tf_buffer_duration": 30.0,
-            }
-        ],
+        parameters=[{
+            "use_sim_time": use_sim_time,
+            "tf_buffer_duration": 30.0,
+        }],
     )
 
     # ───── Launch events ─────
-    spawn_then_actuator = RegisterEventHandler(
-        event_handler=OnProcessStart(
-            target_action=gz_spawn_entity,
-            on_start=[go2_actuator_spawner, go2_low_states_spawner, go2_remap_node],
-        )
-    )
+    spawn_then_actuator = RegisterEventHandler(event_handler=OnProcessStart(
+        target_action=gz_spawn_entity,
+        on_start=[
+            go2_actuator_spawner, go2_low_states_spawner, go2_remap_node
+        ],
+    ))
 
     joint_controller_then_remap = RegisterEventHandler(
         event_handler=OnExecutionComplete(
             target_action=go2_actuator_spawner,
             on_completion=[go2_joint_controller],
-        )
-    )
+        ))
 
     joint_controller_then_rgc = RegisterEventHandler(
         event_handler=OnExecutionComplete(
             target_action=go2_joint_controller,
             on_completion=[go2_rgc],
-        )
-    )
+        ))
 
     # ───── Gazebo launch ─────
     gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
-            PathJoinSubstitution([
-                FindPackageShare("ros_gz_sim"),
-                "launch",
-                "gz_sim.launch.py"
-            ])
+            PathJoinSubstitution(
+                [FindPackageShare("ros_gz_sim"), "launch", "gz_sim.launch.py"])
         ]),
         launch_arguments={
-            "gz_args": "-r -v 4 " + os.path.join(
-                get_package_share_directory("go2_gzsim"),
-                "worlds/empty_world.sdf"
-            )
-        }.items()
-    )
+            "gz_args":
+            "-r -v 4 " + os.path.join(get_package_share_directory("go2_gzsim"),
+                                      "worlds/empty_world.sdf")
+        }.items())
 
     # ───── Assemble description ─────
     return LaunchDescription([

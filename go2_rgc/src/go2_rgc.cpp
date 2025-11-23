@@ -3,13 +3,10 @@
 #include "pinocchio/algorithm/crba.hpp"
 #include "pinocchio/algorithm/crba.hpp"
 #include <Eigen/SVD>
- 
-
 
 #include "osqp++.h"
 #include <Eigen/Dense>
-#include <Eigen/Sparse>  
-
+#include <Eigen/Sparse>
 
 #include "rclcpp/rclcpp.hpp"
 #include <unitree_go/msg/low_state.hpp>
@@ -20,36 +17,13 @@
 constexpr double PosStopF = (2.146E+9f);
 constexpr double VelStopF = (16000.0f);
 
-
 namespace go2_rgc
 {
 
-
     Go2RGC::Go2RGC()
-        : controller_interface::ControllerInterface()
-        , model()
-        , _q(12)
-        , _qd(12)
-        , _tau(12)
-        , _effort(12)
-        , kp(12)
-        , kd(12)
-        , ki(12)
-        , q_e(12)
-        , qi_e(12)
-        , dq_e(12)
-        , qr(12)
-        , dqr(12)
-        , update_rate(0)
-        , _percent(0)
-        , _duration(1000)
-        , _started(false)
-        , _startPos(12)
-        , _targetPos(12)
-        , _lowTick(0)
-        , control_mode(1)
+        : controller_interface::ControllerInterface(), model(), _q(12), _qd(12), _tau(12), _effort(12), kp(12), kd(12), ki(12), q_e(12), qi_e(12), dq_e(12), qr(12), dqr(12), update_rate(0), _percent(0), _duration(1000), _started(false), _startPos(12), _targetPos(12), _lowTick(0), control_mode(1)
     {
-        // Inicialização explícita 
+        // Inicialização explícita
         N = 15;
         M = 5;
         ts = 0.01;
@@ -58,10 +32,79 @@ namespace go2_rgc
         ny = 5;
         nc = 22;
 
+        A_.resize(n_x, n_x);
+        A_.setZero();
+        A_(2, 25) = 1;
+        A_.block(18, 0, 3, 3) = Eigen::MatrixXd::Identity(3, 3);
+
+        B_.resize(n_x, n_j);
+        B_.setZero();
+
+        Aa.resize(n_x + n_j, n_x + n_j); // 38 x 38
+        Aa.setZero();
+
+        Ba.resize(n_x + n_j, n_j); // 38 x 12
+        Ba.setZero();
+
+        Ca.resize(n_y, n_x + n_j); // 5 x 38
+        Ca.setZero();
+
+        Ca(0, 20) = 1;
+        Ca.block(1, 21, 4, 4) = Eigen::MatrixXd::Identity(4, 4);
+
         Q = Eigen::MatrixXd::Identity(ny * N, ny * N);
         R = Eigen::MatrixXd::Identity(nu * M, nu * M);
         l = Eigen::VectorXd::Constant(nc * N, -1.0); // exemplo
         u = Eigen::VectorXd::Constant(nc * N, 1.0);
+
+        base_pos.resize(3);
+        base_ori.resize(4);
+        base_lin_vel.resize(3);
+        base_ang_vel.resize(3);
+
+        base_pos.setZero();
+        base_ori.setZero();
+        base_lin_vel.setZero();
+        base_ang_vel.setZero();
+
+        I_stack.block(0, 0, 3, 3) = Eigen::Matrix3d::Identity();
+        I_stack.block(0, 3, 3, 3) = Eigen::Matrix3d::Identity();
+        I_stack.block(0, 6, 3, 3) = Eigen::Matrix3d::Identity();
+        I_stack.block(0, 9, 3, 3) = Eigen::Matrix3d::Identity();
+
+        //  Creatimg the reference for the rz position and the body orientation
+        ref.resize(n_y * N, 1);
+        ref.setZero();
+
+        double rz_ref = 0.25;
+        Eigen::VectorXd Q_ref(4);
+        Q_ref << 0, 0, 0, 1;
+
+        Eigen::VectorXd _ref(5);
+        _ref << rz_ref, Q_ref;
+        for (int i = 0; i < N; ++i)
+        {
+            ref.segment<5>(i * 5) = _ref;
+        }
+
+        // Q weight matrices
+        Eigen::MatrixXd _Q;
+        _Q.resize(ny, ny);
+        _Q.setZero();
+        _Q(0, 0) = 0.8;
+        _Q(1, 1) = 0.025;
+        _Q(2, 2) = 0.025;
+        _Q(3, 3) = 0.025;
+        _Q(4, 4) = 0.025;
+        for (int i = 0; i < N; ++i)
+        {
+            Q.block(i * 5, i * 5, 5, 5) = _Q; // q_zr, q_ep
+        }
+
+        // R weight matrices
+        R = Eigen::MatrixXd::Identity(M * nu, M * nu);
+
+        // Load URDF file
 
         const auto package_share_path = ament_index_cpp::get_package_share_directory("go2_description");
         const auto xacro_path = std::filesystem::path(package_share_path) / "urdf" / "go2.xacro";
@@ -76,7 +119,7 @@ namespace go2_rgc
             std::cerr << "Error: Failed to convert Xacro to URDF!" << std::endl;
             return;
         }
-     
+
         // Create a set of Pinocchio models and data.
         pinocchio::urdf::buildModel(urdf_path, pinocchio::JointModelFreeFlyer(), model);
 
@@ -86,7 +129,6 @@ namespace go2_rgc
         // inicializa total_mass_ a partir do modelo
         this->total_mass_ = this->getTotalMass();
     }
-
 
     controller_interface::CallbackReturn Go2RGC::on_init()
     {
@@ -107,10 +149,9 @@ namespace go2_rgc
             auto_declare<std::vector<double>>("gain.PIDG.Kp", zeros);
             auto_declare<std::vector<double>>("gain.PIDG.Kd", zeros);
             auto_declare<std::vector<double>>("gain.PIDG.Ki", zeros);
-            auto_declare<int>("control_mode", control_mode);            
+            auto_declare<int>("control_mode", control_mode);
             auto_declare<int>("update_rate", update_rate);
             // computeJacobians(q);
-
         }
         catch (const std::exception &e)
         {
@@ -135,11 +176,15 @@ namespace go2_rgc
 
     controller_interface::CallbackReturn Go2RGC::on_configure(const rclcpp_lifecycle::State &)
     {
-        
-        for (const auto& name : _frames_names) {
-            if (model.existFrame(name)) {
+
+        for (const auto &name : _frames_names)
+        {
+            if (model.existFrame(name))
+            {
                 _frame_index.push_back(model.getFrameId(name));
-            } else {
+            }
+            else
+            {
                 std::cerr << "Warning: frame \"" << name << "\" not found!" << std::endl;
             }
         }
@@ -163,7 +208,37 @@ namespace go2_rgc
                 _lowTick = msg->tick;
             });
 
-        go2_rgc_publisher = get_node()->create_publisher<lowCmd>("/lowstate", 10);
+        odometry_subscriber_ = get_node()->create_subscription<odometry>(
+            "/odom_gz", rclcpp::SystemDefaultsQoS(),
+            [this](const std::shared_ptr<odometry> msg) -> void
+            {
+                // std::lock_guard<std::mutex> lock(this->mutex_controller);
+                base_pos[0] = msg->pose.pose.position.x;
+                base_pos[1] = msg->pose.pose.position.y;
+                base_pos[2] = msg->pose.pose.position.z;
+
+                base_ori[0] = msg->pose.pose.orientation.x;
+                base_ori[1] = msg->pose.pose.orientation.y;
+                base_ori[2] = msg->pose.pose.orientation.z;
+                base_ori[3] = msg->pose.pose.orientation.w;
+
+                base_lin_vel[0] = msg->twist.twist.linear.x;
+                base_lin_vel[1] = msg->twist.twist.linear.y;
+                base_lin_vel[2] = msg->twist.twist.linear.z;
+
+                base_ang_vel[0] = msg->twist.twist.angular.x;
+                base_ang_vel[1] = msg->twist.twist.angular.y;
+                base_ang_vel[2] = msg->twist.twist.angular.z;
+            });
+
+        active_rgc_subscriber_ = get_node()->create_subscription<boolmsgs>(
+            "/active_rgc", rclcpp::SystemDefaultsQoS(),
+            [this](const std::shared_ptr<boolmsgs> msg) -> void
+            {
+                active_rgc = msg->data;
+            });
+
+        joints_cmd_publisher_ = get_node()->create_publisher<lowCmd>("/go2_jointcontroller/JointControllerReferences", 10);
         return CallbackReturn::SUCCESS;
     }
 
@@ -172,9 +247,10 @@ namespace go2_rgc
         RCLCPP_INFO(get_node()->get_logger(), "Activating Go2RGC...");
 
         // Wait for a valid reading from robot low states
-        while(_lowTick == 0);
+        while (_lowTick == 0)
+            ;
 
-        for(int i=0; i<12; i++)
+        for (int i = 0; i < 12; i++)
         {
             _startPos[i] = _q[i];
             qr[i] = _targetPos[i];
@@ -190,356 +266,257 @@ namespace go2_rgc
         return CallbackReturn::SUCCESS;
     }
 
-    controller_interface::return_type Go2RGC::update( const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
+    controller_interface::return_type Go2RGC::update(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
     {
         const auto logger = get_node()->get_logger();
         try
         {
-            Eigen::Vector3d base(0, 0, 0);  // ou a posição real se tiver, começa posição 0,0,0
-            Eigen::Quaterniond Q_base(1, 0, 0, 0);  // orientação do torso em quaternion (w, x, y, z)
+            if (active_rgc)
+            { // Corrigir
+                if (first_iteration)
+                {
+                    for (int i; i < 12; i++)
+                    {
+                        qr[i] = _q[i];
+                        first_iteration = false;
+                    }
+                }
+                Eigen::VectorXd q(model.nq);
+                q.head<3>() = base_pos;
+                q.segment<4>(3) << base_ori;
+                q.tail<12>() = _q;
 
-            // Corrigir
-            Eigen::VectorXd q(model.nq);
-            q.head<3>() = base; // b -> base 
-            q.segment<4>(3) << Q_base.x(), Q_base.y(), Q_base.z(), Q_base.w(); // w, x, y, z
-            q.tail<12>() = _q; 
-            pinocchio::forwardKinematics(model, *data, q);
-            pinocchio::framesForwardKinematics(model, *data, q);
-            pinocchio::updateGlobalPlacements(model, *data);
+                Eigen::VectorXd dq(model.nv);
+                dq.setZero();
+                dq.head<3>() = base_lin_vel; //
+                dq.segment<3>(3) = base_ang_vel;
+                dq.tail<12>() = _qd;
 
-            // --- Centro de Massa (CoM) ---
-            Eigen::Vector3d com = pinocchio::centerOfMass(model, *data, q);
-    
-            // Jacobiano de contato (um bloco 3x12 por pé = 12x12)
-            const int num_contacts = 4;
-            Jc.resize(3 * num_contacts, 12); // 12x12 no total
-            Jc.setZero();
+                // Forward kinematics
+                pinocchio::forwardKinematics(model, *data, q);
 
-            for (int i = 0; i < num_contacts; ++i)
-            {
-                // ID do frame do pé (último frame de cada perna)
-                int frame_id = _frame_index[i * 4 + 3];
+                // Update frame placements
+                pinocchio::updateFramePlacements(model, *data);
 
-                // Jacobiano 6x18 completo
+                // CCRBA (Composite Rigid Body Algorithm for centroidal)
+                pinocchio::ccrba(model, *data, q, Eigen::VectorXd::Zero(model.nv));
+
+                // Compute center of mass position
+                Eigen::Vector3d r = pinocchio::centerOfMass(model, *data, q);
+
+                // Evaluate the CoM velocity
+                pinocchio::Force centroidal_momentum = pinocchio::computeCentroidalMomentum(model, *data, q, dq);
+                Eigen::Vector3d dr = centroidal_momentum.linear() / data->mass[0];
+
+                // Access the spatial inertia matrix
+                pinocchio::Inertia I = data->Ig;
+
+                auto Iinv = I.inertia().inverse();
+
+                pinocchio::Data::Matrix3x J_com_full_body = pinocchio::jacobianCenterOfMass(model, *data, q, pinocchio::LOCAL_WORLD_ALIGNED);
+
+                Eigen::MatrixXd J_com_full = J_com_full_body.rightCols(J_com_full_body.cols() - 6);
+
+                Eigen::Matrix<double, 12, 12> J_com_stacked;
+
+                J_com_stacked.block<3, 12>(0, 0) = J_com_full;
+                J_com_stacked.block<3, 12>(3, 0) = J_com_full;
+                J_com_stacked.block<3, 12>(6, 0) = J_com_full;
+                J_com_stacked.block<3, 12>(9, 0) = J_com_full;
+
+                // Jacobiano de contato (um bloco 3x12 por pé = 12x12)
+                Eigen::Matrix<double, 4, 3> contacts;
+
+                Jc.resize(12, 12); // 12x12 no total
+                gamma.resize(12, 12);
+                Sa.resize(12, 3);
+
+                Jc.setZero();
+                gamma.setZero();
+                Sa.setZero();
+                contacts.setZero();
                 pinocchio::Data::Matrix6x Jframe(6, model.nv);
-                Jframe.setZero();
-
-                pinocchio::computeFrameJacobian(model, *data, q, frame_id, pinocchio::LOCAL_WORLD_ALIGNED, Jframe);
-
-                // Pegamos só as 3 primeiras linhas (linear) e as 12 colunas das juntas
-                Eigen::MatrixXd J_leg = Jframe.topRows<3>().block(0, 6, 3, 12);
-
-                // Inserimos na linha correspondente do Jc
-                Jc.block(3 * i, 0, 3, 12) = J_leg;
-            }
-
-
-            // Jcom (3x12)
-            Eigen::MatrixXd Jcom_full = pinocchio::jacobianCenterOfMass(model, *data, q);
-            // Remove os 6 DoF da base → pega apenas as colunas das juntas
-            Jcom = Jcom_full.block(0, 3, 3, 12); // 3 linhas (x,y,z), 12 colunas (juntas)
-
-
-            // gamma e Sa
-            gamma.resize(12, 12);
-            gamma.setZero();
-            Sa.resize(3, 12);
-            Sa.setZero();
-            for (int i = 0; i < 4; ++i)
-            {
-                // Extrair posição do pé i
-                int frame_id = _frame_index[i * 4 + 3];
-                Eigen::Vector3d foot_pos = data->oMf[frame_id].translation(); // verificar 
-                // Gamma linha i = Jcom - Jc linha i
-                gamma.block(3 * i, 0, 3, 12) = Jcom - Jc.block(3 * i, 0, 3, 12);
-                // Sa coluna i = skew(foot_pos - com)
-                Eigen::Matrix3d mat = skewSymmetric(foot_pos - com);  // CORRETO
-                Sa.block(0, 3 * i, 3, 3) = mat ;
-            }
-    
-            // Jc_inv        
-            Jc_inv = Jc.inverse();   
-
-            // I_sum e Ib_inv 
-            Eigen::MatrixXd I_sum = Eigen::MatrixXd::Zero(3, 12);  // [I I I I]
-            I_sum.block(0, 0, 3, 3) = Eigen::Matrix3d::Identity();
-            I_sum.block(0, 3, 3, 3) = Eigen::Matrix3d::Identity();
-            I_sum.block(0, 6, 3, 3) = Eigen::Matrix3d::Identity();
-            I_sum.block(0, 9, 3, 3) = Eigen::Matrix3d::Identity();
-
-            Eigen::Matrix3d Ib_base = pinocchio::crba(model, *data, q).block<3,3>(3,3);  // usa CRBA
-            auto Ib_inv = Ib_base.inverse();
-
-            // PARTE QUE PEGUEI DO COMPUTE LINEARIZED JACOBIAN 
-
-            // Eigen::MatrixXd SF = I_sum * this->Jc_inv.traspose() / total_mass_;
-            // Eigen::MatrixXd SM = Ib_inv * S * this->J_inv.transpose();
-
-            
-            // this->computeJacobians(q);
-            // this->computeLinearizedModel(q);
-            
-            double Kp = 50.0;
-            double Kd = 2.5;
-
-            Eigen::MatrixXd k1;
-            k1.resize(3,3);
-            k1.setZero();
-
-            k1 = (Kp / total_mass_)*I_sum*Jc_inv;
-            auto k2 = (Kd / total_mass_)*I_sum*Jc_inv;
-            auto k3 = Kp*Ib_inv*Sa*Jc_inv;
-            auto k4 = Kd*Ib_inv*Sa*Jc_inv;
-
-            gamma = gamma.inverse();
-            Eigen::MatrixXd gamma_l_star, gamma_a_star;
-            gamma_l_star.setZero(12, 3);
-            gamma_a_star.setZero(12, 3);
-
-            for(int i=0; i<4; i++)
-            {
-                gamma_l_star += gamma.block(0, 3*i, 12, 3);
-                gamma_a_star += gamma.block(0, 3*i, 12,3)*Sa.block(0, 3*i, 3,3);
-            }
-
-            // 4. Matriz A (26x26)
-            A_.resize(n_x, n_x);
-            A_.setZero();
-
-            // // Preenche blocos conforme a equação da imagem
-            A_.block(0, 0, 3, 3) = k2 * gamma_l_star;  // -K₂Γ₁*
-            A_.block(0, 3, 3, 3) = -k2 * gamma_a_star;    // K₂Γₐ*
-            A_.block(0, 6, 3, n_j) = k1;                // -K₁
-
-            A_.block(3, 0, 3, 3) = k4 * gamma_l_star;   // -K₄Γ₁*
-            A_.block(3, 3, 3, 3) = -k4 * gamma_a_star;    // K₄Γₐ*
-            A_.block(3, 6, 3, n_j) = k3;                // -K₃
-
-            A_.block(6, 0, n_j, 3) = gamma_l_star;       // Γ₁*
-            A_.block(6, 3, n_j, 3) = -gamma_a_star;     // -Γₐ*
-            A_.block(18, 0, 3, 3) = Eigen::Matrix3d::Identity();  // I (integra r_dot -> r)
-            A_.block(21, 3, 4, 3) = rpy2Q(Q_);              // T_ε (integra ω -> ε)
-
-            // 5. Matriz B - Apenas B_u (K₁ e K₃)
-            B_.resize(n_x, n_j);
-            B_.setZero();
-            B_.block(0, 0, 3, n_j) = -k1;  // K₁
-            B_.block(3, 0, 3, n_j) = -k3;  // K₃
-
-            // --- Discretização
-            Aa.resize(n_x + n_j, n_x + n_j);  // 38 x 38
-            Aa.setZero();
-
-            Ba.resize(n_x + n_j, n_j);      // 38 x 12
-            Ba.setZero();
-
-            Ca.resize(n_y, n_x + n_j);  // 5 x 38
-            Ca.setZero();
-
-            Aa.block(0, 0, n_x, n_x) = Eigen::MatrixXd::Identity(n_x, n_x) + ts * A_;  // topo esquerdo
-            Aa.block(0, n_x, n_x, n_j) = ts * B_;                                      // topo direito
-            Aa.block(n_x, n_x, n_j, n_j) = Eigen::MatrixXd::Identity(n_j, n_j);        // canto inferior direito
-
-            Ba.block(0, 0, n_x, n_j) = ts * B_;                                      // parte de cima
-            Ba.block(n_x, 0, n_j, n_j) = Eigen::MatrixXd::Identity(n_j, n_j);        // parte de baixo
-
-            Ca(0, 20) = 1;
-            Ca.block(1, 21, 4, 4) = Eigen::MatrixXd::Identity(4, 4);
-
-            // Matrizes de restrição
-            G_cons = Eigen::MatrixXd::Zero(nc * N, n_u * M);
-            G = Eigen::MatrixXd::Zero(ny * N, n_u * M);
-
-
-            // até linha 406 ulrimas modificações de 21/11
-            if (first_iteration)
-            {
-                Eigen::VectorXd l0 = Eigen::VectorXd::Constant(nc, -0.2);
-                Eigen::VectorXd u0 = Eigen::VectorXd::Constant(nc,  0.2);
-
-                Eigen::VectorXd f_l = Eigen::VectorXd::Constant(nc - 2, 0.0);
-                Eigen::VectorXd f_u = Eigen::VectorXd::Constant(nc - 2, 200.0);
-
-                l = Eigen::VectorXd::Zero(nc);
-                u = Eigen::VectorXd::Zero(nc);
-                l << l0.head(2), f_l;
-                u << u0.head(2), f_u;
-
-                l = l.replicate(N, 1);
-                u = u.replicate(N, 1);
-                first_iteration = false;
-}
-
-            // Vetores normais e tangentes dos pés (defina corretamente!)
-            Eigen::Vector3d n_fl, n_fr, n_rl, n_rr;
-            Eigen::Vector3d t1_fl, t1_fr, t1_rl, t1_rr;
-            Eigen::Vector3d t2_fl, t2_fr, t2_rl, t2_rr;
-            double mu = 0.7;
-
-            // TODO: Inicialize n_fl, t1_fl, etc. com base nos frames dos pés (LOCAL_WORLD_ALIGNED ou fixos)
-
-            // Cf individual
-        
-            Cf_fl = cf_matrix(n_fl, t1_fl, t2_fl, mu);
-            Cf_fr = cf_matrix(n_fr, t1_fr, t2_fr, mu);
-            Cf_rl = cf_matrix(n_rl, t1_rl, t2_rl, mu);
-            Cf_rr = cf_matrix(n_rr, t1_rr, t2_rr, mu);
-
-            // Cf total (20x12)
-            Cf = Eigen::MatrixXd::Zero(20, 12);
-            Cf.block(0, 0, 5, 3)   = Cf_fl;
-            Cf.block(5, 3, 5, 3)   = Cf_fr;
-            Cf.block(10, 6, 5, 3)  = Cf_rl;
-            Cf.block(15, 9, 5, 3)  = Cf_rr;
-
-            // Fc_mtx = -Cf * Jc^-1
-            Fc_mtx = -Cf * Jc_inv;
-
-            // Atualização da constraint matrix
-            aux_cons.block(0, 0, 2, Ba.cols()) = C_cons.block(0, 0, 2, C_cons.cols()) * Ba;
-            aux_cons.block(2, 0, 20, Ba.cols()) = kp * Fc_mtx;  // kp constante ou vetor → ajuste conforme
-
-            // C_cons parte inferior
-            C_cons.block(2, 0, 20, L.cols()) = Fc_mtx * L;
-
-            // Phi_cons
-            Phi_cons.block(0, 0, nc, Aa.cols()) = C_cons * Aa;
-
-
-            // Recebe valores das constraints
-            std::tie(aux_cons, Phi_cons) = define_constraints_matrices();
-
-            // Inicialização: primeira linha
-            aux.resize(n_y, n_j); 
-            aux = Ca * Ba;
-            Phi.resize(n_y * N, n_x + n_u); 
-            Phi.block(0, 0, n_y, n_x + n_u) = Ca * Aa;
-
-            for (int i = 0; i < N; ++i)
-            {
-                int j = 0;
-                if (i != 0)
+                for (int i = 0; i < 4; i++)
                 {
-                    Phi.block(i * ny, 0, n_y, n_x + n_u) = Phi.block((i - 1) * n_y, 0, n_y, n_x + n_u) * Aa;
-                    aux = Phi.block((i - 1) * ny, 0, ny, nx + nu) * Ba;
+                    int frame_id = _frame_index[i * 4 + 3];
 
-                    Phi_cons.block(i * nc, 0, nc, nx + nu) = Phi_cons.block((i - 1) * nc, 0, nc, nx + nu) * Aa;
-                    aux_cons = Phi_cons.block((i - 1) * nc, 0, nc, nx + nu) * Ba;
+                    Jframe.setZero();
+                    pinocchio::computeFrameJacobian(model, *data, q, frame_id, pinocchio::LOCAL_WORLD_ALIGNED, Jframe);
+                    Eigen::MatrixXd J_leg = Jframe.topRows<3>().block(0, 6, 3, 12);
+                    Jc.block<3, 12>(i * 3, 0) = J_leg;
+                    Eigen::Vector3d contact_pos = data->oMf[frame_id].translation();
+                    Sa.block<3, 3>(i * 3, 0) = skewSymmetric(contact_pos - r);
+                    contacts.row(i) = contact_pos.transpose();
+                }
+                gamma = J_com_stacked - Jc;
+                auto gamma_inv = gamma.inverse();
+
+                auto gamma_l_star = gamma_inv * I_stack.transpose();
+                auto gamma_a_star = gamma_inv * Sa;
+
+                // Jc_inv
+                Jc_inv = (Jc.transpose()).inverse();
+
+                double Kp = 50.0;
+                double Kd = 2.5;
+
+                auto k1 = (Kp / total_mass_) * I_stack * Jc_inv;
+                auto k2 = (Kd / total_mass_) * I_stack * Jc_inv;
+                auto k3 = Kp * Iinv * -Sa.transpose() * Jc_inv;
+                auto k4 = Kd * Iinv * -Sa.transpose() * Jc_inv;
+
+                // Preenche blocos conforme a equação da imagem
+                A_.block(0, 0, 3, 3) = k2 * gamma_l_star;
+                A_.block(0, 3, 3, 3) = -k2 * gamma_a_star;
+                A_.block(0, 6, 3, n_j) = k1;
+
+                A_.block(3, 0, 3, 3) = k4 * gamma_l_star;
+                A_.block(3, 3, 3, 3) = -k4 * gamma_a_star;
+                A_.block(3, 6, 3, n_j) = k3;
+
+                A_.block(6, 0, n_j, 3) = gamma_l_star;
+                A_.block(6, 3, n_j, 3) = -gamma_a_star;
+
+                A_.block(21, 3, 4, 3) = rpy2Q(base_ori);
+
+                // 5. Matriz B - Apenas B_u (K₁ e K₃)
+                B_.block(0, 0, 3, n_j) = -k1; // K₁
+                B_.block(3, 0, 3, n_j) = -k3; // K₃
+
+                // --- Discretização
+
+                Aa.block(0, 0, n_x, n_x) = Eigen::MatrixXd::Identity(n_x, n_x) + ts * A_; // topo esquerdo
+                Aa.block(0, n_x, n_x, n_j) = ts * B_;                                     // topo direito
+                Aa.block(n_x, n_x, n_j, n_j) = Eigen::MatrixXd::Identity(n_j, n_j);       // canto inferior direito
+
+                Ba.block(0, 0, n_x, n_j) = ts * B_;                               // parte de cima
+                Ba.block(n_x, 0, n_j, n_j) = Eigen::MatrixXd::Identity(n_j, n_j); // parte de baixo
+
+                Eigen::VectorXd x(38);
+
+                x.segment(0, 3) = dr;
+                x.segment(3, 3) = base_ang_vel;
+                x.segment(6, 12) = _q;
+                x.segment(18, 3) = r;
+                x.segment(21, 4) = base_ori;
+                x(25) = -9.81;
+                x.segment(26, 12) = qr;
+
+                // // Matrizes de restrição
+                // G_cons = Eigen::MatrixXd::Zero(nc * N, n_u * M);
+                G = Eigen::MatrixXd::Zero(ny * N, n_u * M);
+
+                // // até linha 406 ulrimas modificações de 21/11
+                // if (first_iteration)
+                // {
+                //     Eigen::VectorXd l0 = Eigen::VectorXd::Constant(nc, -0.2);
+                //     Eigen::VectorXd u0 = Eigen::VectorXd::Constant(nc, 0.2);
+
+                //     Eigen::VectorXd f_l = Eigen::VectorXd::Constant(nc - 2, 0.0);
+                //     Eigen::VectorXd f_u = Eigen::VectorXd::Constant(nc - 2, 200.0);
+
+                //     l = Eigen::VectorXd::Zero(nc);
+                //     u = Eigen::VectorXd::Zero(nc);
+                //     l << l0.head(2), f_l;
+                //     u << u0.head(2), f_u;
+
+                //     l = l.replicate(N, 1);
+                //     u = u.replicate(N, 1);
+                //     first_iteration = false;
+                // }50
+
+                // Vetores normais e tangentes dos pés (defina corretamente!)
+                // Eigen::Vector3d n_fl, n_fr, n_rl, n_rr;
+                // Eigen::Vector3d t1_fl, t1_fr, t1_rl, t1_rr;
+                // Eigen::Vector3d t2_fl, t2_fr, t2_rl, t2_rr;
+                // double mu = 0.7;
+
+                // // TODO: Inicialize n_fl, t1_fl, etc. com base nos frames dos pés (LOCAL_WORLD_ALIGNED ou fixos)
+
+                // // Cf individual
+
+                // Cf_fl = cf_matrix(n_fl, t1_fl, t2_fl, mu);
+                // Cf_fr = cf_matrix(n_fr, t1_fr, t2_fr, mu);
+                // Cf_rl = cf_matrix(n_rl, t1_rl, t2_rl, mu);
+                // Cf_rr = cf_matrix(n_rr, t1_rr, t2_rr, mu);
+
+                // // Cf total (20x12)
+                // Cf = Eigen::MatrixXd::Zero(20, 12);
+                // Cf.block(0, 0, 5, 3) = Cf_fl;
+                // Cf.block(5, 3, 5, 3) = Cf_fr;
+                // Cf.block(10, 6, 5, 3) = Cf_rl;
+                // Cf.block(15, 9, 5, 3) = Cf_rr;
+
+                // // Fc_mtx = -Cf * Jc^-1
+                // Fc_mtx = -Cf * Jc_inv;
+
+                // // Atualização da constraint matrix
+                // aux_cons.block(0, 0, 2, Ba.cols()) = C_cons.block(0, 0, 2, C_cons.cols()) * Ba;
+                // aux_cons.block(2, 0, 20, Ba.cols()) = kp * Fc_mtx; // kp constante ou vetor → ajuste conforme
+
+                // // C_cons parte inferior
+                // C_cons.block(2, 0, 20, L.cols()) = Fc_mtx * L;
+
+                // // Phi_cons
+                // Phi_cons.block(0, 0, nc, Aa.cols()) = C_cons * Aa;
+
+                // // Recebe valores das constraints
+                // std::tie(aux_cons, Phi_cons) = define_constraints_matrices();
+
+                // // Inicialização: primeira linha
+                aux.resize(n_y, n_j);
+                aux = Ca * Ba;
+                Phi.resize(n_y * N, n_x + n_u);
+                Phi.block(0, 0, n_y, n_x + n_u) = Ca * Aa;
+
+                for (int i = 0; i < N; ++i)
+                {
+                    int j = 0;
+                    if (i != 0)
+                    {
+                        Phi.block(i * ny, 0, n_y, n_x + n_u) = Phi.block((i - 1) * n_y, 0, n_y, n_x + n_u) * Aa;
+                        aux = Phi.block((i - 1) * ny, 0, ny, nx + nu) * Ba;
+
+                        // Phi_cons.block(i * nc, 0, nc, nx + nu) = Phi_cons.block((i - 1) * nc, 0, nc, nx + nu) * Aa;
+                        // aux_cons = Phi_cons.block((i - 1) * nc, 0, nc, nx + nu) * Ba;
+                    }
+
+                    while (j < M && (i + j) < N)
+                    {
+                        G.block((i + j) * ny, j * nu, ny, nu) = aux;
+                        // G_cons.block((i + j) * nc, j * nu, nc, nu) = aux_cons;
+                        j++;
+                    }
                 }
 
-                while(j < M && (i + j) < N)
-                {
-                    G.block((i + j) * ny, j * nu, ny, nu) = aux;
-                    G_cons.block((i + j) * nc, j * nu, nc, nu) = aux_cons;
-                    j++;
-                }
-            }
+                // // OSQP Solver
+                // // Build cost
 
-            // --- Construir vetor de referência (equivalente ao Python)
-            // rzRef = 0.25
-            // epsRef = [0, 0, 0, 1]
-            // ref_single = [rzRef; epsRef] -> tamanho ny x 1
-            // self.ref = np.tile(ref_single, (N, 1)) -> (ny*N) x 1
-
-            Eigen::VectorXd ref_single(ny);
-            if (ny == 5) {
-                ref_single << 0.25, 0.0, 0.0, 0.0, 1.0;
-            } else {
-                // fallback: fill first element with rzRef and remaining zeros
-                ref_single.setZero();
-                if (ny > 0) ref_single(0) = 0.25;
-            }
-
-            Eigen::VectorXd ref = Eigen::VectorXd::Zero(ny * N);
-            for (int i = 0; i < N; ++i) {
-                ref.segment(i * ny, ny) = ref_single;
-            }
-
-
-            // FUNÇÕES E VARIÁVEIS PARA CÁLCULO DE "X"
-            // 1. Linear and angular velocity da base (base_link ou torso)
-            Eigen::Vector3d base_linear_velocity = Eigen::Vector3d::Zero();
-            Eigen::Vector3d base_angular_velocity = Eigen::Vector3d::Zero();
-
-
-
-            // 2. Velocidade angular (omega)
-            Eigen::Vector3d omega = base_angular_velocity;  // a melhor fonte ?
-
-            // // 3. Posição do centro de massa (com)
-            // pinocchio::centerOfMass(model, *data, q);  // Atualiza data->com
-            // Eigen::Vector3d com = data->com[0];  // Extrai CoM da base (índice 0)
-
-
-
-
-            // dq_base = [vel_linear_base(3), vel_angular_base(3), dq_juntas(12)]
-            Eigen::VectorXd dq(model.nv);
-            dq.setZero();
-            dq.head<3>() = base_linear_velocity;   // FALTA (omega e vel linear)
-            dq.segment<3>(3) = base_angular_velocity;
-            dq.tail<12>() = _qd;
-
-            // Momento centroidal
-            pinocchio::computeCentroidalMomentum(model, *data, q, dq);
-            Eigen::Vector3d r_vel = data->hg.linear() / total_mass_;   // dr do Python
-
-
-            Eigen::VectorXd x(26);
-            int idx = 0;
-
-            // 1. r_vel (3)
-            x.segment<3>(idx) = r_vel;  
-            idx += 3;
-
-            // 2. omega (3)
-            x.segment<3>(idx) = omega;   //modelo  pinocchio
-            idx += 3;
-
-            // 3. q (12)
-            x.segment<12>(idx) = _q;
-            idx += 12;
-
-            // 4. r_pos (3)
-            x.segment<3>(idx) = com;      // Center of Mass
-            idx += 3;
-
-            // 5. epsilon (4)
-            x.segment<4>(idx) << Q_base.w(), Q_base.x(), Q_base.y(), Q_base.z();
-            idx += 4;
-
-            // 6. gravidade (1)
-            x(idx) = -9.81;
-            idx += 1;
-
-            // 7. qr (12)
-            x.segment<12>(idx) = qr;
-
-
-
-
-
-        // OSQP Solver
-            // Build cost
                 Eigen::MatrixXd H_dense = G.transpose() * Q * G + R;
 
-                // que = 2 * G^T * Q * (Phi*x - ref)
+                // que = 2 * G^T * Q * (Phi * x - ref);
                 Eigen::VectorXd diff = (Phi * x - ref);
                 Eigen::VectorXd que = 2.0 * (G.transpose() * (Q * diff));
 
                 Eigen::MatrixXd H_final = 2.0 * H_dense;
 
-                // Convert to sparse (CSC)
+                // // Convert to sparse (CSC)
                 Eigen::SparseMatrix<double> P = H_final.sparseView();
-                Eigen::SparseMatrix<double> A_cons = G_cons.sparseView();
 
-                // Adjust bounds
-                Eigen::VectorXd l_adj = l - (Phi_cons * x);
-                Eigen::VectorXd u_adj = u - (Phi_cons * x);
+                // Eigen::SparseMatrix<double> A_cons = G_cons.sparseView();
+                // // Adjust bounds
+                // Eigen::VectorXd l_adj = l - (Phi_cons * x);
+                // Eigen::VectorXd u_adj = u - (Phi_cons * x);
+
+                Eigen::SparseMatrix<double> A_cons;
+                A_cons.resize(0, P.cols());
+                Eigen::VectorXd l_adj, u_adj;
+                l_adj.resize(0); // Empty vector
+                u_adj.resize(0); // Empty vector
 
                 osqp::OsqpInstance instance;
                 instance.objective_matrix = std::move(P);
-                instance.objective_vector = q;
+                instance.objective_vector = que;
                 instance.constraint_matrix = std::move(A_cons);
                 instance.lower_bounds = l_adj;
                 instance.upper_bounds = u_adj;
@@ -550,68 +527,62 @@ namespace go2_rgc
                 osqp::OsqpSolver solver;
                 absl::Status st = solver.Init(instance, settings);
 
-
-                Eigen::VectorXd delta_qr;  
+                Eigen::VectorXd delta_qr;
                 osqp::OsqpExitCode exitcode = solver.Solve();
-                if (exitcode != osqp::OsqpExitCode::kOptimal && 
+                if (exitcode != osqp::OsqpExitCode::kOptimal &&
                     exitcode != osqp::OsqpExitCode::kOptimalInaccurate)
                 {
-                    dqr = Eigen::VectorXd::Zero(nu);  // fallback
-                    RCLCPP_WARN(get_node()->get_logger(), "OSQP solver failed! Exit code: %d", static_cast<int>(exitcode));
+                    delta_qr = Eigen::VectorXd::Zero(nu); // fallback
+                    // RCLCPP_WARN(get_node()->get_logger(), "OSQP solver failed! Exit code: %d", static_cast<int>(exitcode));
                 }
-                else {
+                else
+                {
                     Eigen::VectorXd sol = solver.primal_solution();
-                    auto delta_qr = sol.segment(0, nu);
+                    delta_qr = sol.segment(0, nu);
                 }
-            
 
+                // // // até linha 555 ultimas modificações de  21/11
 
-                // // até linha 555 ultimas modificações de  21/11
-            
-                L = Eigen::MatrixXd::Zero(12, 38);
-                L.block(0, 6, 12, 12) = -kp * Eigen::MatrixXd::Identity(12, 12);
-                L.block(0, 26, 12, 12) = kp * Eigen::MatrixXd::Identity(12, 12);
+                // L = Eigen::MatrixXd::Zero(12, 38);
+                // L.block(0, 6, 12, 12) = -kp * Eigen::MatrixXd::Identity(12, 12);
+                // L.block(0, 26, 12, 12) = kp * Eigen::MatrixXd::Identity(12, 12);
 
-
-
-
-            
-                // Publicar dqr no tópico do controlador de juntas
-                auto low_Cmd = lowCmd(); 
+                // // Publicar dqr no tópico do controlador de juntas
+                auto low_Cmd = lowCmd();
                 for (int j = 0; j < 12; ++j)
                 {
-                    low_Cmd.motor_cmd[j].q = delta_qr(j)+ qr(j); // qr[j] + dqr(j);
+
+                    qr[j] = qr[j] + delta_qr[j];
+                    low_Cmd.motor_cmd[j].q = qr[j];
                     low_Cmd.motor_cmd[j].dq = 0;
                     low_Cmd.motor_cmd[j].kp = 50;
                     low_Cmd.motor_cmd[j].kd = 2.5;
                 }
-            
-                go2_rgc_publisher->publish(low_Cmd);
 
+                joints_cmd_publisher_->publish(low_Cmd);
+            }
         }
         catch (const std::exception &e)
         {
             RCLCPP_ERROR(logger, "Exception in update(): %s", e.what());
             return controller_interface::return_type::ERROR;
         }
-      
+
         return controller_interface::return_type::OK;
     }
-
 
     Eigen::Matrix3d Go2RGC::skewSymmetric(const Eigen::Vector3d &v)
     {
         Eigen::Matrix3d mat;
-        mat <<     0, -v.z(),  v.y(),
-                v.z(),     0, -v.x(),
-            -v.y(),  v.x(),     0;
+        mat << 0, -v.z(), v.y(),
+            v.z(), 0, -v.x(),
+            -v.y(), v.x(), 0;
         return mat;
     }
 
-
     std::tuple<Eigen::MatrixXd, Eigen::MatrixXd> Go2RGC::define_constraints_matrices()
     {
-        Eigen::MatrixXd aux_cons(n_c, n_j);         // exemplo
+        Eigen::MatrixXd aux_cons(n_c, n_j); // exemplo
         Eigen::MatrixXd Phi_cons(n_c * N, n_x + n_j);
 
         aux_cons.setZero();
@@ -620,32 +591,28 @@ namespace go2_rgc
         return std::make_tuple(aux_cons, Phi_cons);
     }
 
-
-    Eigen::Matrix<double, 4, 3> Go2RGC::rpy2Q(const Eigen::Quaterniond& Q) 
+    Eigen::Matrix<double, 4, 3> Go2RGC::rpy2Q(const Eigen::VectorXd &q)
     {
         Eigen::Matrix<double, 4, 3> T;
-        T << -Q.w(),  Q.z(), -Q.y(),
-            -Q.z(),  Q.w(),  Q.x(),
-            Q.y(), -Q.x(), -Q.w(),
-            -Q.x(), -Q.y(), -Q.z();
+        T << q[3], q[2], -q[1],
+            -q[2], q[3], q[0],
+            q[1], -q[0], q[3],
+            -q[0], -q[1], -q[2];
         return 0.5 * T;
     }
 
-
     // Eigen::MatrixXd Cf_fl, Cf_fr, Cf_rl, Cf_rr, Cf;
     // Eigen::MatrixXd Fc_mtx;
-    Eigen::MatrixXd Go2RGC::cf_matrix(const Eigen::Vector3d& n, const Eigen::Vector3d& t1, const Eigen::Vector3d& t2, double mu)
+    Eigen::MatrixXd Go2RGC::cf_matrix(const Eigen::Vector3d &n, const Eigen::Vector3d &t1, const Eigen::Vector3d &t2, double mu)
     {
         Eigen::MatrixXd Cf(5, 3);
         Cf.row(0) = -mu * n + t1;
         Cf.row(1) = -mu * n + t2;
-        Cf.row(2) =  mu * n + t2;
-        Cf.row(3) =  mu * n + t1;
-        Cf.row(4) =  n;
+        Cf.row(2) = mu * n + t2;
+        Cf.row(3) = mu * n + t1;
+        Cf.row(4) = n;
         return Cf;
     }
-
-
 
     // Eigen::VectorXd Go2RGC::solve_rgc_osqp(
     //     const Eigen::MatrixXd &Phi,
@@ -711,7 +678,6 @@ namespace go2_rgc
     //     return sol.segment(0, nu);
     // }
 
-
     double Go2RGC::getTotalMass() const
     {
         double total = 0.0;
@@ -723,8 +689,6 @@ namespace go2_rgc
         return total;
     }
 }
-
-
 
 #include <pluginlib/class_list_macros.hpp>
 PLUGINLIB_EXPORT_CLASS(
