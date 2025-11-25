@@ -102,7 +102,7 @@ namespace go2_rgc
         }
 
         // R weight matrices
-        R = Eigen::MatrixXd::Identity(M * nu, M * nu);
+        R = Eigen::MatrixXd::Identity(M * nu, M * nu)*10;
 
         // Load URDF file
 
@@ -275,11 +275,11 @@ namespace go2_rgc
             { // Corrigir
                 if (first_iteration)
                 {
-                    for (int i; i < 12; i++)
+                    for (int i=0; i < 12; i++)
                     {
                         qr[i] = _q[i];
-                        first_iteration = false;
                     }
+                    first_iteration = false;
                 }
                 Eigen::VectorXd q(model.nq);
                 q.head<3>() = base_pos;
@@ -299,7 +299,7 @@ namespace go2_rgc
                 pinocchio::updateFramePlacements(model, *data);
 
                 // CCRBA (Composite Rigid Body Algorithm for centroidal)
-                pinocchio::ccrba(model, *data, q, Eigen::VectorXd::Zero(model.nv));
+                pinocchio::ccrba(model, *data, q, dq);
 
                 // Compute center of mass position
                 Eigen::Vector3d r = pinocchio::centerOfMass(model, *data, q);
@@ -357,7 +357,7 @@ namespace go2_rgc
                 // Jc_inv
                 Jc_inv = (Jc.transpose()).inverse();
 
-                double Kp = 50.0;
+                double Kp = 50;
                 double Kd = 2.5;
 
                 auto k1 = (Kp / total_mass_) * I_stack * Jc_inv;
@@ -406,7 +406,7 @@ namespace go2_rgc
                 // G_cons = Eigen::MatrixXd::Zero(nc * N, n_u * M);
                 G = Eigen::MatrixXd::Zero(ny * N, n_u * M);
 
-                // // até linha 406 ulrimas modificações de 21/11
+                // // até linha 406 ultimas modificações de 21/11
                 // if (first_iteration)
                 // {
                 //     Eigen::VectorXd l0 = Eigen::VectorXd::Constant(nc, -0.2);
@@ -551,12 +551,12 @@ namespace go2_rgc
                 auto low_Cmd = lowCmd();
                 for (int j = 0; j < 12; ++j)
                 {
-
                     qr[j] = qr[j] + delta_qr[j];
                     low_Cmd.motor_cmd[j].q = qr[j];
                     low_Cmd.motor_cmd[j].dq = 0;
                     low_Cmd.motor_cmd[j].kp = 50;
                     low_Cmd.motor_cmd[j].kd = 2.5;
+                    
                 }
 
                 joints_cmd_publisher_->publish(low_Cmd);
