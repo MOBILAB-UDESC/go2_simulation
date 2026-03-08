@@ -26,20 +26,12 @@ private:
 
     std::mutex tf_mutex_;
     geometry_msgs::msg::TransformStamped world_odom_tf_;
-    bool world_odom_published_ = false;
 
     const std::vector<std::string> joint_names_ = {
         "1_FR_hip_joint", "1_FR_thigh_joint", "1_FR_calf_joint",
         "2_FL_hip_joint", "2_FL_thigh_joint", "2_FL_calf_joint",
         "3_RR_hip_joint", "3_RR_thigh_joint", "3_RR_calf_joint",
         "4_RL_hip_joint", "4_RL_thigh_joint", "4_RL_calf_joint"
-    };        
-
-    const std::vector<std::string> collision_links_ = {
-        "FR_calflower", "FR_calflower1",
-        "FL_calflower", "FL_calflower1",   
-        "RR_calflower", "RR_calflower1",     
-        "RL_calflower", "RL_calflower1"
     };        
 };
 
