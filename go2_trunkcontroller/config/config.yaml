@@ -1,0 +1,16 @@
+#Configuration
+
+go2:
+  # SIM
+  kp: [500, 500, 0, 0, 0, 500]
+  kd: [100, 100, 100, 100, 100, 100]
+
+  friction_coefficients :
+    LF : 0.4
+    RF : 0.4
+    LH : 0.4
+    RH : 0.4
+  proprio_height : 0.33
+  terr_estim_post_adj : false
+  terr_estim_friction_cones : false
+  motion_gen_task : 3 #PUSHUP = 1, CRAWL = 2, PERIODICGAIT = 3

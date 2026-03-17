@@ -1,0 +1,43 @@
+#ifndef RAMP_HPP
+#define RAMP_HPP
+
+#include "math/spline_base.hpp"
+
+namespace math
+{
+
+	/// Simple ramp function
+	///
+	// The ramp is clamped like this:
+	//          ______
+	//         /
+	//        /
+	// ______/
+	template <typename domain_t = double>
+	class Ramp : public SplineBase<domain_t>
+	{
+	public:
+		Ramp
+		(
+			const domain_t &min_domain = 0,
+			const domain_t &max_domain = 1,
+			const domain_t &min_range = 0,
+			const domain_t &max_range = 1
+		);
+
+		/// Evaluate the ramp
+		///
+		/// @param t the point in the domain to evaluate this ramp.
+		/// If `t` is outside of the domain, the ramp will be clamped at its minimum
+		/// or maximum value
+		virtual domain_t eval(domain_t t) override;
+
+	private:
+		domain_t min_range;
+		domain_t max_range;
+	};
+} // namespace math
+
+#include "math/ramp.tpp"
+
+#endif /* end of include guard: RAMP_HPP */

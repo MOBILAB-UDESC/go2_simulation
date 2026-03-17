@@ -1,0 +1,32 @@
+robot_height : 0.366
+duty_factor : 0.55
+step_frequency: 1.5
+step_height: 0.08
+rec_gain: 0.125
+home_configuration :
+  LF_HAA : 0.0
+  LF_HFE : 0.75
+  LF_KFE : -1.5
+  RF_HAA : 0.0
+  RF_HFE : 0.75
+  RF_KFE : -1.5
+  LH_HAA : 0.0
+  LH_HFE : 0.75
+  LH_KFE : -1.5
+  RH_HAA : 0.0
+  RH_HFE : 0.75
+  RH_KFE : -1.5
+fold_configuration :
+  LF_HAA : -0.2
+  LF_HFE : 1.3
+  LF_KFE : -2.7
+  RF_HAA : -0.2
+  RF_HFE : 1.3
+  RF_KFE : -2.7
+  LH_HAA : -0.2
+  LH_HFE : 1.3
+  LH_KFE : -2.7
+  RH_HAA : -0.2
+  RH_HFE : 1.3
+  RH_KFE : -2.7
+  
